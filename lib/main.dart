@@ -4,8 +4,7 @@ import 'database_test.dart';
 void main() {
   runApp(const MainApp());
 }
-// jhgkjhgkjhg
-// hello
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -20,6 +19,3 @@ class MainApp extends StatelessWidget {
     );
   }
 }
-//hi from line 21
-// hi from Matthew Steffens
-// hi again
