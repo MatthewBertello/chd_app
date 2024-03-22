@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -91,4 +88,11 @@ class SignupScreen extends StatelessWidget {
             ],
           ),
         )
+    );
   }
+
+  void _dummyFunction(){
+
+  }
+
+}
