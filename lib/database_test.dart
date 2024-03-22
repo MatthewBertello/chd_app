@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
+import 'test_model.dart';
 
 class DatabaseTest extends StatefulWidget {
-  const DatabaseTest({Key? key}) : super(key: key);
+  const DatabaseTest({Key? key, required this.model}) : super(key: key);
+
+  final TestModel model;
 
   @override
-  State <DatabaseTest> createState() => _DatabaseTestState();
+  State<DatabaseTest> createState() => _DatabaseTestState();
 }
 
 class _DatabaseTestState extends State<DatabaseTest> {
-
   @override
   void initState() {
     super.initState();
     setConnection();
   }
-  late final Connection conn;
+
+  Connection? conn;
   String result = '';
+
+  void setConnection() {
+    setState(() {
+      conn = widget.model.conn;
+    });
+  } 
 
   void execute(String query) async {
     try {
-      final results = await conn.execute(query);
+      while (conn == null) {
+        setConnection();
+      }
+      final results = await conn!.execute(query);
       setState(() {
         result = results.toString();
       });
@@ -29,24 +41,6 @@ class _DatabaseTestState extends State<DatabaseTest> {
         result = e.toString();
       });
     }
-  }
-
-
-  void setConnection() async {
-    final newConn = await Connection.open(
-      Endpoint(
-        port: 26257,
-        host: 'wool-toucan-14257.5xj.gcp-us-central1.cockroachlabs.cloud',
-        database: 'chd_app',
-        username: 'chd_app',
-        password: '5mBo9-e559vGXyBc_rVCMA',
-      ),
-      settings: const ConnectionSettings(sslMode: SslMode.verifyFull),
-    );
-
-    setState(() {
-      conn = newConn;
-    });
   }
 
   TextEditingController queryController = TextEditingController();
