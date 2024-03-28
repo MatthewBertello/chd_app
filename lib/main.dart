@@ -103,6 +103,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(useMaterial3: false),
       home: DefaultTabController(
         length: tabViews.length,
+        // If the user is logged in, display overview with tabbed navigation, otherwise display the launchscreen
         child: (userLoggedIn) ? displayWithNavBar(context): displayLaunchScreen(context)
       ),
     );
