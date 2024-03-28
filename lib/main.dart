@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool userLoggedIn = false; // CHANGE IT TO TRUE TO VIEW TABBED BAR WHEN USER IS LOGGED IN
+  bool userLoggedIn = true; // CHANGE IT TO TRUE TO VIEW TABBED BAR WHEN USER IS LOGGED IN
   int selectedIndex = 0;
   List<Widget> tabViews = [
     Consumer<TestModel>(
@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     ),
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return Text('Overview'); // TODO: Call Overviews constructor
+        return Overview(model: model); // TODO: Call Overviews constructor
       },
     ),
     Consumer<TestModel> (
