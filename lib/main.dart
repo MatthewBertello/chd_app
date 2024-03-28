@@ -82,17 +82,17 @@ class _MyAppState extends State<MyApp> {
                 onTap: _handleTap,
                 items: const [
                   BottomNavigationBarItem(
-                      label: 'Health Monitoring', icon: Icon(Icons.question_mark)),
+                      label: 'Health Monitoring', icon: Icon(Icons.favorite)),
                   BottomNavigationBarItem(
                       label: 'Daily Entry', icon: Icon(Icons.notes)),
                   BottomNavigationBarItem(
-                      label: 'Overview', icon: Icon(Icons.home)),
+                      label: 'Overview', icon: Icon(Icons.dashboard)),
                   BottomNavigationBarItem(
                       label: 'Search', icon: Icon(Icons.search)),
                   BottomNavigationBarItem(
                     label: 'Other Info', icon: Icon(Icons.question_mark)),
                   BottomNavigationBarItem(
-                    label: 'Settings', icon: Icon(Icons.settings))
+                    label: 'Settings', icon: Icon(Icons.settings)),
                 ]),
             body: tabViews[selectedIndex]);
   }
