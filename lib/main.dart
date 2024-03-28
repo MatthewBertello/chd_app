@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'database_test.dart';
 import 'test_model.dart';
 import 'package:provider/provider.dart';
+import 'overview.dart';
+import 'healthMonitering.dart';
+import 'dailyInfo.dart';
+import 'launch.dart';
+import 'otherInfo.dart';
+import 'settings.dart';
 
 
 void main() {
@@ -18,22 +24,38 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool userLoggedIn = false; // CHANGE IT TO TRUE TO VIEW TABBED BAR WHEN USER IS LOGGED IN
   int selectedIndex = 0;
   List<Widget> tabViews = [
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return DatabaseTest(model: model);
+        return Text('Health Monitoring'); // TODO: Call healthmonitering's constructor
       },
     ),
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return Text('Page 2');
+        return Text('Daily Entry'); // TODO: Call dailyInfo's constructor
       },
     ),
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return Text('Page 3');
+        return Text('Overview'); // TODO: Call Overviews constructor
       },
+    ),
+    Consumer<TestModel> (
+      builder: (context, model, child) {
+        return Text('Search'); // TODO: Call SharScreen's constructor 
+      }
+    ),
+    Consumer<TestModel> ( 
+      builder: (context, model, child) {
+        return Text('Other Info'); // TODO: Call OtherInfo's constructor
+      }
+    ),
+    Consumer<TestModel>( 
+      builder: (context, model, child) {
+        return Text('Settings'); // TODO: Call Settings Constructor
+      }
     )
   ];
 
@@ -43,13 +65,14 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: false),
-      home: DefaultTabController(
-        length: tabViews.length,
-        child: Scaffold(
+  // If user is not logged in, display launch screen
+  Widget displayLaunchScreen (BuildContext context) {
+    return const Scaffold(); // TODO: Once you build launch, you can call the constructor from launch
+  }
+
+  // If user is logged in display screens with bottom navigation bar
+  Widget displayWithNavBar (BuildContext context) {
+    return Scaffold(
             bottomNavigationBar: BottomNavigationBar(
                 currentIndex: selectedIndex,
                 showUnselectedLabels: true,
@@ -59,13 +82,28 @@ class _MyAppState extends State<MyApp> {
                 onTap: _handleTap,
                 items: const [
                   BottomNavigationBarItem(
-                      label: 'Page 1', icon: Icon(Icons.question_mark)),
+                      label: 'Health Monitoring', icon: Icon(Icons.question_mark)),
                   BottomNavigationBarItem(
-                      label: 'Page 2', icon: Icon(Icons.add)),
+                      label: 'Daily Entry', icon: Icon(Icons.notes)),
                   BottomNavigationBarItem(
-                      label: 'Page 3', icon: Icon(Icons.numbers))
+                      label: 'Overview', icon: Icon(Icons.home)),
+                  BottomNavigationBarItem(
+                      label: 'Search', icon: Icon(Icons.search)),
+                  BottomNavigationBarItem(
+                    label: 'Other Info', icon: Icon(Icons.question_mark)),
+                  BottomNavigationBarItem(
+                    label: 'Settings', icon: Icon(Icons.settings))
                 ]),
-            body: tabViews[selectedIndex]),
+            body: tabViews[selectedIndex]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(useMaterial3: false),
+      home: DefaultTabController(
+        length: tabViews.length,
+        child: (userLoggedIn) ? displayWithNavBar(context): displayLaunchScreen(context)
       ),
     );
   }
