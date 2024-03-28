@@ -8,6 +8,7 @@ import 'dailyInfo.dart';
 import 'launch.dart';
 import 'otherInfo.dart';
 import 'settings.dart';
+import 'shareScreen.dart';
 
 
 void main() {
@@ -39,12 +40,12 @@ class _MyAppState extends State<MyApp> {
     ),
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return Overview(model: model); // TODO: Call Overviews constructor
+        return Overview(model: model); 
       },
     ),
     Consumer<TestModel> (
       builder: (context, model, child) {
-        return Text('Search'); // TODO: Call SharScreen's constructor 
+        return ShareScreen(model: model);
       }
     ),
     Consumer<TestModel> ( 
