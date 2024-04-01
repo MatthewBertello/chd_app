@@ -45,18 +45,18 @@ class _ShareScreenState extends State<ShareScreen> {
 
   // Displays the members with list tiles
   Widget displayMembers(BuildContext context) {
-    if (widget.model.members.isEmpty) {
+    if (widget.model.membersSearched.isEmpty) {
       return const Expanded(child: Center(child: Text("There is no member found"),));
     } else {
       return Expanded(child: ListView.separated(separatorBuilder: (context, index) => Divider(color: Colors.indigo[900]), 
-      itemCount: widget.model.members.length,
+      itemCount: widget.model.membersSearched.length,
       itemBuilder: (BuildContext context, int index) { 
         // Format the member's birth date
         final DateFormat formatter = DateFormat('yyyy-MM-dd');
-        final String formatedBirthDate = formatter.format(widget.model.members[index].birthDate);
+        final String formatedBirthDate = formatter.format(widget.model.membersSearched[index].birthDate);
 
         return ListTile( // Display the name and date of birth and a share button
-          title: Text(widget.model.members[index].name),
+          title: Text(widget.model.membersSearched[index].name),
           subtitle: Text(formatedBirthDate),
           trailing: IconButton(onPressed: null, icon: Icon(Icons.offline_share, color: Colors.red[200],))
         );

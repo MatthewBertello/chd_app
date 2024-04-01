@@ -5,12 +5,12 @@ import 'member.dart';
 class TestModel extends ChangeNotifier {
   String test = "hello";
   Connection? conn;
-  List members = [];
+  List membersSearched = [];
 
   // A method that searches a member depending on the keyword, 
   // TODO: will need to get it from database later
   searchMember(String keyword) {
-    members = [Member(name: "Jan Doe", birthDate: DateTime(1990, 12, 3)), 
+    membersSearched = [Member(name: "Jan Doe", birthDate: DateTime(1990, 12, 3)), 
             Member(name: "John Doe", birthDate: DateTime(1970, 10, 4))];
     notifyListeners();
   }
