@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:postgres/postgres.dart';
 import 'test_model.dart';
 import 'package:intl/intl.dart';
 
@@ -18,7 +19,12 @@ class _ShareScreenState extends State<ShareScreen> {
   // Builds an app bar with a textfield to search for members in the app
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-        backgroundColor: Colors.red[600],
+        flexibleSpace: Container(
+          decoration: BoxDecoration( // Gives the app bar a gradient red color 
+            gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0)!.withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0)!.withOpacity(0.9)])
+          )
+        ),
+        toolbarHeight: 100,
         title: Container(
           padding: const EdgeInsets.all(3.0),
           height: 45,
