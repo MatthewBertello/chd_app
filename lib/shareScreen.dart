@@ -13,6 +13,7 @@ class ShareScreen extends StatefulWidget {
 }
 
 class _ShareScreenState extends State<ShareScreen> {
+  TextEditingController textController = TextEditingController();
 
   // Builds an app bar with a textfield to search for members in the app
   AppBar buildAppBar(BuildContext context) {
@@ -23,6 +24,7 @@ class _ShareScreenState extends State<ShareScreen> {
           height: 45,
           width: 350, 
           child: TextField(
+            controller: textController,
             textAlign: TextAlign.start,
             maxLines: 1,
             style: TextStyle(fontSize: 15, color: Colors.indigo[900]),
@@ -33,7 +35,7 @@ class _ShareScreenState extends State<ShareScreen> {
               hintText: 'Find a Member',
               filled: true,
               fillColor: Colors.white,
-              suffixIcon: IconButton(onPressed: () => widget.model.searchMember("member"), icon: Icon(Icons.search, color: Colors.blueGrey[400]),
+              suffixIcon: IconButton(onPressed: () => widget.model.searchMember(textController.text), icon: Icon(Icons.search, color: Colors.blueGrey[400]),
             ),
           ),
         ),
