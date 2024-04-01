@@ -77,8 +77,8 @@ class _MyAppState extends State<MyApp> {
             bottomNavigationBar: BottomNavigationBar(
                 currentIndex: selectedIndex,
                 showUnselectedLabels: true,
-                selectedItemColor: Colors.green,
-                unselectedItemColor: Colors.blueAccent,
+                selectedItemColor: Colors.red[600],
+                unselectedItemColor: Colors.indigo[900],
                 backgroundColor: Colors.blue[200],
                 onTap: _handleTap,
                 items: const [
