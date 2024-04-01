@@ -2,6 +2,7 @@
 class Member {
   final String? name;
   final DateTime? birthDate;
+  final DateTime? dueDate;
 
-  const Member({this.name, this.birthDate});
+  const Member({this.name, this.birthDate, this.dueDate});
 }
