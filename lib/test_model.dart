@@ -5,7 +5,7 @@ import 'member.dart';
 class TestModel extends ChangeNotifier {
   String test = "hello";
   Connection? conn;
-  List? members;
+  List members = [];
 
   // A method that searches a member depending on the keyword, 
   // TODO: will need to get it from database later
