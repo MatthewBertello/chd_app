@@ -6,6 +6,7 @@ class TestModel extends ChangeNotifier {
   String test = "hello";
   Connection? conn;
   List membersSearched = [];
+  Member member = Member(name: "Jane Doe", dueDate: DateTime(2024, 9, 1)); // Just a hardcoded member for now
 
   // A method that searches a member depending on the keyword, 
   // TODO: will need to get it from database later
