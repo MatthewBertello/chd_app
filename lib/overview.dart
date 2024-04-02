@@ -28,12 +28,13 @@ class Overview extends StatelessWidget {
               ));
   }
 
+  // Makes the settings button and navigates to settings when pressed
   IconButton buildSettingsButton(BuildContext context) {
     return IconButton(
               onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute( // Navigates to shareScreen
+                    MaterialPageRoute( // Navigates to settings
                         builder: (context) => Consumer<TestModel> (
       builder: (context, model, child) {
         return Settings(model: model);
