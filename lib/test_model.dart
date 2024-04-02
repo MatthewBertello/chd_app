@@ -13,6 +13,21 @@ class TestModel extends ChangeNotifier {
     return member.dueDate!.difference(DateTime.now()).inDays;
   }
 
+  // Method that counts the total number of days in the 9 months of pregnancy
+  int? countTotalPregnantDays() {
+    int month = member.dueDate!.month - 9; // Subtract the due dates month from 9 months
+    int year = member.dueDate!.year;
+
+    while (month <= 0) { // If the month is negative or 0 keep adding 12 until it isn't
+      month += 12;
+      year--;
+    }
+
+    // Put together the last time the pregnant person had their period
+    DateTime lastMenstrualPeriod = DateTime(year, month, member.dueDate!.day);
+    return member.dueDate!.difference(lastMenstrualPeriod).inDays; // Subtract the due date from the last menstrual period
+  }
+
   // A method that searches a member depending on the keyword, 
   // TODO: will need to get it from database later
   searchMember(String keyword) {
