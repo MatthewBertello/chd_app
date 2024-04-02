@@ -34,17 +34,17 @@ class _MyAppState extends State<MyApp> {
     ),
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return Text('Health'); // TODO: Call healthmonitering's constructor
+        return HealthWidget(model: model); // TODO: Call healthmonitering's constructor
       },
     ),
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return Text('Daily Entry'); // TODO: Call dailyInfo's constructor
+        return DailyInfoWidget(); // TODO: Call dailyInfo's constructor
       },
     ),
     Consumer<TestModel> ( 
       builder: (context, model, child) {
-        return Text('Other Info'); // TODO: Call OtherInfo's constructor
+        return OtherInfo(); // TODO: Call OtherInfo's constructor
       }
     )
   ];
