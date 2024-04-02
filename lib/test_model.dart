@@ -8,6 +8,11 @@ class TestModel extends ChangeNotifier {
   List membersSearched = [];
   Member member = Member(name: "Jane Doe", dueDate: DateTime(2024, 9, 1)); // Just a hardcoded member for now
 
+  // Method to get the countdown for the due date in days
+  int? dueDateCountDown() {
+    return member.dueDate!.difference(DateTime.now()).inDays;
+  }
+
   // A method that searches a member depending on the keyword, 
   // TODO: will need to get it from database later
   searchMember(String keyword) {
