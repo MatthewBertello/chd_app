@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   List<Widget> tabViews = [
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return Text('Health Monitoring'); // TODO: Call healthmonitering's constructor
+        return Text('Health'); // TODO: Call healthmonitering's constructor
       },
     ),
     Consumer<TestModel>(
@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                 onTap: _handleTap,
                 items: const [
                   BottomNavigationBarItem(
-                      label: 'Health Monitoring', icon: Icon(Icons.favorite)),
+                      label: 'Health', icon: Icon(Icons.favorite)),
                   BottomNavigationBarItem(
                       label: 'Daily Entry', icon: Icon(Icons.notes)),
                   BottomNavigationBarItem(
