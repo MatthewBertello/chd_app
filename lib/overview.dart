@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'shareScreen.dart';
 import 'package:provider/provider.dart';
 import 'settings.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Overview extends StatelessWidget {
   const Overview({required this.model});
@@ -90,16 +91,59 @@ class Overview extends StatelessWidget {
           );
   }
 
+  // Builds a health meter 
+  Widget buildHealthMeter(BuildContext context) {
+    return Container( // Widget displaying the health meter
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(color: Colors.red[50],
+            borderRadius: const BorderRadius.all(Radius.circular(30))),
+            child: SizedBox(
+              width: 150,
+              height: 150,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [SfCircularChart(series: <CircularSeries> [
+                  DoughnutSeries<String, Object>( // Displays the doughnut according to the user's health
+                    dataSource: const ['Excellent'], // Hardcoded for now, will need to get from database later
+                    xValueMapper: (datum, _) => datum, yValueMapper: (datum, _) => 1,
+                    pointColorMapper: (datum, _) {
+                      switch(datum) {
+                        case 'Excellent':
+                          return Colors.green;
+                        case 'Good':
+                          return Colors.blue;
+                        case 'Fair':
+                          return Colors.yellow;
+                        case 'Poor':
+                          return Colors.orange;
+                        case 'Unhealthy':
+                          return Colors.red;
+                      }
+                      return null;
+                    },
+                    strokeColor: Colors.white,),
+                  ],
+                ),
+                const Icon(Icons.favorite, color: Colors.red,),
+                Text("Health", textAlign: TextAlign.center, style: TextStyle(color: Colors.indigo[900], fontWeight: FontWeight.bold))
+                ]
+              )
+            ),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: buildAppBar(context),
     body: Padding(
-      padding: const EdgeInsets.all(30.0),
+      padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
         Row( 
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             buildPregnancyCountDown(context), // Build and display the pregnancy countdown
+            buildHealthMeter(context)
           ]
         ),
       ],),
