@@ -43,11 +43,6 @@ class _MyAppState extends State<MyApp> {
         return Overview(model: model); 
       },
     ),
-    Consumer<TestModel> (
-      builder: (context, model, child) {
-        return ShareScreen(model: model);
-      }
-    ),
     Consumer<TestModel> ( 
       builder: (context, model, child) {
         return Text('Other Info'); // TODO: Call OtherInfo's constructor
@@ -88,8 +83,6 @@ class _MyAppState extends State<MyApp> {
                       label: 'Daily Entry', icon: Icon(Icons.notes)),
                   BottomNavigationBarItem(
                       label: 'Overview', icon: Icon(Icons.dashboard)),
-                  BottomNavigationBarItem(
-                      label: 'Search', icon: Icon(Icons.search)),
                   BottomNavigationBarItem(
                     label: 'Other Info', icon: Icon(Icons.question_mark)),
                   BottomNavigationBarItem(
