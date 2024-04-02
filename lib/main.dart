@@ -7,8 +7,6 @@ import 'healthMonitering.dart';
 import 'dailyInfo.dart';
 import 'launch.dart';
 import 'otherInfo.dart';
-import 'settings.dart';
-import 'shareScreen.dart';
 
 
 void main() {
