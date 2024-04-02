@@ -11,6 +11,7 @@ class Overview extends StatelessWidget {
   IconButton buildSearchButton(BuildContext context) {
     return IconButton(
               onPressed: () {
+                  model.clearMembersSearched();
                   Navigator.push(
                     context,
                     MaterialPageRoute( // Navigates to shareScreen

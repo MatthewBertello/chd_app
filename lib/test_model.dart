@@ -16,6 +16,11 @@ class TestModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Clears all the members in the membersSearched list
+  clearMembersSearched() {
+    membersSearched = [];
+  }
+
   TestModel() {
     Future<dynamic> newConn = Connection.open(
       Endpoint(
