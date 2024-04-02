@@ -25,7 +25,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool userLoggedIn = true; // CHANGE IT TO TRUE TO VIEW TABBED BAR WHEN USER IS LOGGED IN
   int selectedIndex = 0;
+  
   List<Widget> tabViews = [
+    Consumer<TestModel>(
+      builder: (context, model, child) {
+        return Overview(model: model); 
+      },
+    ),
     Consumer<TestModel>(
       builder: (context, model, child) {
         return Text('Health'); // TODO: Call healthmonitering's constructor
@@ -34,11 +40,6 @@ class _MyAppState extends State<MyApp> {
     Consumer<TestModel>(
       builder: (context, model, child) {
         return Text('Daily Entry'); // TODO: Call dailyInfo's constructor
-      },
-    ),
-    Consumer<TestModel>(
-      builder: (context, model, child) {
-        return Overview(model: model); 
       },
     ),
     Consumer<TestModel> ( 
@@ -71,13 +72,13 @@ class _MyAppState extends State<MyApp> {
                 onTap: _handleTap,
                 items: const [
                   BottomNavigationBarItem(
+                      label: 'Overview', icon: Icon(Icons.dashboard)),
+                  BottomNavigationBarItem(
                       label: 'Health', icon: Icon(Icons.favorite)),
                   BottomNavigationBarItem(
                       label: 'Daily Entry', icon: Icon(Icons.notes)),
                   BottomNavigationBarItem(
-                      label: 'Overview', icon: Icon(Icons.dashboard)),
-                  BottomNavigationBarItem(
-                    label: 'Other Info', icon: Icon(Icons.question_mark)),
+                    label: 'Resources', icon: Icon(Icons.question_mark)),
                 ]),
             body: tabViews[selectedIndex]);
   }
