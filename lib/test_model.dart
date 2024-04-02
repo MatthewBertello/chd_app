@@ -13,6 +13,11 @@ class TestModel extends ChangeNotifier {
     return member.dueDate!.difference(DateTime.now()).inDays;
   }
 
+   // Method that counts the number of pregnant days
+  int? countDay() {
+    return dueDateCountDown()! - countTotalPregnantDays()!; 
+  }
+
   // Method that counts the total number of days in the 9 months of pregnancy
   int? countTotalPregnantDays() {
     int month = member.dueDate!.month - 9; // Subtract the due dates month from 9 months
