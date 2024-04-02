@@ -9,17 +9,17 @@ class TestModel extends ChangeNotifier {
   Member member = Member(name: "Jane Doe", dueDate: DateTime(2024, 9, 1)); // Just a hardcoded member for now
 
   // Method to get the countdown for the due date in days
-  int? dueDateCountDown() {
+  int dueDateCountDown() {
     return member.dueDate!.difference(DateTime.now()).inDays;
   }
 
    // Method that counts the number of pregnant days
-  int? countDay() {
-    return dueDateCountDown()! - countTotalPregnantDays()!; 
+  int countDay() {
+    return (dueDateCountDown() - countTotalPregnantDays()).abs(); 
   }
 
   // Method that counts the total number of days in the 9 months of pregnancy
-  int? countTotalPregnantDays() {
+  int countTotalPregnantDays() {
     int month = member.dueDate!.month - 9; // Subtract the due dates month from 9 months
     int year = member.dueDate!.year;
 
