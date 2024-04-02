@@ -2,6 +2,7 @@ import 'package:chd_app/test_model.dart';
 import 'package:flutter/material.dart';
 import 'shareScreen.dart';
 import 'package:provider/provider.dart';
+import 'settings.dart';
 
 class Overview extends StatelessWidget {
   const Overview({required this.model});
@@ -27,6 +28,24 @@ class Overview extends StatelessWidget {
               ));
   }
 
+  IconButton buildSettingsButton(BuildContext context) {
+    return IconButton(
+              onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( // Navigates to shareScreen
+                        builder: (context) => Consumer<TestModel> (
+      builder: (context, model, child) {
+        return Settings(model: model);
+      })));
+                
+              },
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.white,
+              ));
+  }
+
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
         flexibleSpace: Container(
@@ -38,7 +57,8 @@ class Overview extends StatelessWidget {
         ]))),
         toolbarHeight: 100,
         actions: [
-          buildSearchButton(context)
+          buildSearchButton(context),
+          buildSettingsButton(context)
         ]);
   }
 
