@@ -47,11 +47,6 @@ class _MyAppState extends State<MyApp> {
       builder: (context, model, child) {
         return Text('Other Info'); // TODO: Call OtherInfo's constructor
       }
-    ),
-    Consumer<TestModel>( 
-      builder: (context, model, child) {
-        return Text('Settings'); // TODO: Call Settings Constructor
-      }
     )
   ];
 
@@ -85,8 +80,6 @@ class _MyAppState extends State<MyApp> {
                       label: 'Overview', icon: Icon(Icons.dashboard)),
                   BottomNavigationBarItem(
                     label: 'Other Info', icon: Icon(Icons.question_mark)),
-                  BottomNavigationBarItem(
-                    label: 'Settings', icon: Icon(Icons.settings)),
                 ]),
             body: tabViews[selectedIndex]);
   }
