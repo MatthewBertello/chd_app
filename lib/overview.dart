@@ -104,7 +104,7 @@ class Overview extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [SfCircularChart(series: <CircularSeries> [
                   DoughnutSeries<String, Object>( // Displays the doughnut according to the user's health
-                    dataSource: const ['Excellent'], // Hardcoded for now, will need to get from database later
+                    dataSource: const ['Fair'], // Hardcoded for now, will need to get from database later
                     xValueMapper: (datum, _) => datum, yValueMapper: (datum, _) => 1,
                     pointColorMapper: (datum, _) {
                       switch(datum) {
@@ -132,20 +132,56 @@ class Overview extends StatelessWidget {
           );
   }
 
+  Widget displayRecommendations(BuildContext context) {
+    // List of recommendations, hardcoded for now, will need to get it from database later
+    List recommendations = [{'recommendation': 'Increase sleep', 'icon': const Icon(Icons.night_shelter, color: Colors.red)},
+                                    {'recommendation': 'Increase water intake', 'icon': const Icon(Icons.water_drop, color: Colors.red)},
+                                    {'recommendation': 'Call PMD or OB for swelling in legs', 'icon': const Icon(Icons.call, color: Colors.red)}];
+
+    return Container( // Widget displaying the recommendations
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(color: Colors.red[50],
+            borderRadius: const BorderRadius.all(Radius.circular(30))),
+            child: SizedBox(
+              width: 340,
+              height: 420,
+              child: Column(
+                children: [
+                  Text("Recommendations", style: TextStyle(color: Colors.indigo[900], fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => Divider(color: Colors.white),
+                      itemCount: recommendations.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(  // Display each recommendation and corresponding icon
+                          title: Text(recommendations[index]['recommendation'], style: TextStyle(color: Colors.indigo[900])),
+                          trailing: recommendations[index]['icon'],
+                        );
+                      },)
+                  ,)
+                ]
+              )
+            ),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: buildAppBar(context),
     body: Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
         Row( 
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             buildPregnancyCountDown(context), // Build and display the pregnancy countdown
-            buildHealthMeter(context)
+            buildHealthMeter(context) // Build and display the health meter
           ]
         ),
+        Padding(padding: const EdgeInsets.all(15.0),
+        child: displayRecommendations(context)) // Display the recommendations
       ],),
     ));
   }
