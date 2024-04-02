@@ -21,7 +21,7 @@ class _ShareScreenState extends State<ShareScreen> {
     return AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration( // Gives the app bar a gradient red color 
-            gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0)!.withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0)!.withOpacity(0.9)])
+            gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)])
           )
         ),
         toolbarHeight: 100,
