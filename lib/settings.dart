@@ -61,7 +61,7 @@ class Settings extends StatelessWidget {
                  TextButton(
                 onPressed: () {},
                 style: TextButton.styleFrom(
-                  primary: const Color.fromARGB(255, 3, 46, 81),
+                  foregroundColor: const Color.fromARGB(255, 3, 46, 81),
                 ),
                 child: Text('Delete Account'),
               ),
