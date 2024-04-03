@@ -3,11 +3,22 @@ import 'package:flutter/material.dart';
 class Settings extends StatelessWidget {
   const Settings({super.key});
 
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration( // Gives the app bar a gradient red color 
+            gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)])
+          )
+        ),
+        title: const Text('Settings')
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Settings'), centerTitle: true),
+        appBar: buildAppBar(context), 
         body: SingleChildScrollView( // Wrapped with SingleChildScrollView to avoid overflow when keyboard appears
           padding: const EdgeInsets.all(75),
           child: Column(
