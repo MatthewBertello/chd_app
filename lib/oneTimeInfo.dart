@@ -53,7 +53,13 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
       appBar: AppBar(
         title: Text('Health Information', style: TextStyle(
       color: Colors.white, fontSize: 25)),
-        backgroundColor: Colors.red,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              // Gives the app bar a gradient red color
+              gradient: LinearGradient(colors: <Color>[
+        const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
+        const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
+      ]))),
       ),
       body: Form(
         key: _formKey,
@@ -114,7 +120,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
                 widget.updatePage(1);
               },
               style: ButtonStyle(
-                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                 backgroundColor: MaterialStateProperty.all<Color>(Colors.indigo),
                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero, // Makes the button rectangular
