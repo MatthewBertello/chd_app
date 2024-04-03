@@ -1,6 +1,6 @@
 ///GRACE DO
-import 'login.dart';
-import 'signUp.dart';
+import 'package:chd_app/signUp.dart';
+import 'package:chd_app/login.dart';
 import 'package:flutter/material.dart';
 class LaunchScreen extends StatelessWidget {
   const LaunchScreen({super.key});
@@ -12,15 +12,16 @@ class LaunchScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.network('https://www.conqueringchd.org/wp-content/uploads/2020/07/awareness-ribbon-300x300.png',width:100.0, fit:BoxFit.cover),
+            SizedBox(height:10.0),
             Text('Your personalized CHD asistant'),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => login()),
+                 onPressed: () {
+                  // Navigator.push(
+                   //  context,
+                    //MaterialPageRoute(builder: (context) => login()),
                     // );
                   },
                    style: ButtonStyle(
@@ -33,11 +34,12 @@ class LaunchScreen extends StatelessWidget {
                 ),
                   child: Text('Log in'),
                 ),
+                SizedBox(height:5.0), //space between buttons
                 ElevatedButton(
                   onPressed: () {
                     // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => signUp()),
+                    //  context,
+                     // MaterialPageRoute(builder: (context) => signUp()),
                     // );
                   },
                    style: ButtonStyle(

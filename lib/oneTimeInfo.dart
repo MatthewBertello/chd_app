@@ -24,6 +24,8 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
     'Health concern 1',
     'Health concern 2',
     'Health concern 3',
+    '...',
+    'Health concern n',
   ];
 
   Map<String, bool> selectedConcerns = {};
@@ -41,13 +43,14 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Health Information'),
+        title: Text('Health Information', style: TextStyle(
+      color: Colors.white, fontSize: 25)),
         backgroundColor: Colors.red,
       ),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(30.0),
           children: [
             TextFormField(
               decoration: InputDecoration(
@@ -100,9 +103,19 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             }).toList(),
             ElevatedButton(
               onPressed: () {
-                // TODO: Implement the submit logic
+                // TODO: Implement the submit logic (with db milestone)
               },
-              child: Text('Submit'),
+              style: ButtonStyle(
+                 backgroundColor: const Color.fromARGB(255, 1, 31, 56),
+                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Makes the button rectangular
+                      side: BorderSide( width: 2.0), // blue boarder for the button
+                    ),
+                  ),
+                ),
+              child: Text('Submit'style: TextStyle(
+      color: Colors.white, fontSize: 25)),
             ),
           ],
         ),
