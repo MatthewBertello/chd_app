@@ -1,4 +1,4 @@
-import 'package:chd_app/launch.dart';
+import 'package:chd_app/login.dart';
 import 'package:chd_app/settings.dart';
 import 'package:flutter/material.dart';
 import 'database_test.dart';
@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'overview.dart';
 import 'healthMonitering.dart';
 import 'dailyInfo.dart';
-import 'launch.dart';
 import 'otherInfo.dart';
 
 
@@ -58,8 +57,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   // If user is not logged in, display launch screen
-  Widget displayLaunchScreen (BuildContext context) {
-    return const LaunchScreen(); 
+  Widget displayLogInScreen (BuildContext context) {
+    return Login(); 
   }
 
   // If user is logged in display screens with bottom navigation bar
@@ -91,7 +90,7 @@ class _MyAppState extends State<MyApp> {
       home: DefaultTabController(
         length: tabViews.length,
         // If the user is logged in, display overview with tabbed navigation, otherwise display the launchscreen
-        child: (userLoggedIn) ? displayWithNavBar(context): displayLaunchScreen(context)
+        child: (userLoggedIn) ? displayWithNavBar(context): displayLogInScreen(context)
       ),
     );
   }
