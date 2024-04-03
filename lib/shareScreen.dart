@@ -23,7 +23,7 @@ class _ShareScreenState extends State<ShareScreen> {
             gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)])
           )
         ),
-        title: Container(
+        title: Container( // Contains a textfield
           padding: const EdgeInsets.all(3.0),
           height: 45,
           width: 350, 

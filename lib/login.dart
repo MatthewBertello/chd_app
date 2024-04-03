@@ -55,7 +55,7 @@ class Login extends StatelessWidget {
                       ),
                 ),
                         
-                ElevatedButton(
+                ElevatedButton( // Button that navigates to sign up screen
                   style: const ButtonStyle(fixedSize: MaterialStatePropertyAll<Size>(Size(300, 20))),
                   child: Text('Sign up', style: TextStyle(color: Colors.indigo[900]),),
                   onPressed: () {
@@ -63,7 +63,7 @@ class Login extends StatelessWidget {
                   },
                 ),
 
-                ElevatedButton(
+                ElevatedButton( // Button that logs user in and navigates to the home screen
                   style: const ButtonStyle(fixedSize: MaterialStatePropertyAll<Size>(Size(300, 20))),
                   child: Text('Sign in', style: TextStyle(color: Colors.indigo[900])),
                   onPressed: () {
@@ -71,6 +71,7 @@ class Login extends StatelessWidget {
                   },
                 ),
 
+                // Button for user to change their password incase they forgot their password
                 const TextButton(onPressed: null, child: Text('Forgot Password', style: TextStyle(color: Colors.white))),
               ],
                         ),
