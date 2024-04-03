@@ -1,3 +1,4 @@
+import 'package:chd_app/signUp.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -7,9 +8,7 @@ class Login extends StatelessWidget {
     return AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration( // Gives the app bar a gradient red color 
-            gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)])
-            
-          )
+            gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)]))
         ),
     );
   }
@@ -18,6 +17,13 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
+      body: ElevatedButton(child: Text('Sign up'), onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SignUpScreen()
+          )
+        );
+      },)
     );
   }
 }

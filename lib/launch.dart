@@ -43,7 +43,7 @@ class LaunchScreen extends StatelessWidget {
                   onPressed: () {
                      Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SignupScreen()),
+                      MaterialPageRoute(builder: (context) => const SighupScreen()),
                      );
                   },
                    style: ButtonStyle(
