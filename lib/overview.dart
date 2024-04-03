@@ -38,7 +38,7 @@ class Overview extends StatelessWidget {
                     MaterialPageRoute( // Navigates to settings
                         builder: (context) => Consumer<TestModel> (
       builder: (context, model, child) {
-        return Settings(model: model);
+        return const Settings();
       })));
                 
               },
