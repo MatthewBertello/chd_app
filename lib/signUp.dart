@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+  SignUpScreen({super.key, required this.updatePage});
+
+  void Function(int) updatePage;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _dummyFunction(){
-
+    updatePage(3);
   }
 
 }

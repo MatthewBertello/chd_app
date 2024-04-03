@@ -2,23 +2,31 @@
 import 'package:flutter/material.dart';
 
 class SubstantialEntry extends StatelessWidget {
+  SubstantialEntry({super.key, required this.updatePage});
+
+  final void Function(int) updatePage;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Health Information Form',
-      home: HealthInfoForm(),
+      home: HealthInfoForm(updatePage: updatePage),
     );
   }
 }
 
 class HealthInfoForm extends StatefulWidget {
+  final void Function(int) updatePage;
+
+  HealthInfoForm({required this.updatePage});
+
   @override
   _HealthInfoFormState createState() => _HealthInfoFormState();
 }
 
 class _HealthInfoFormState extends State<HealthInfoForm> {
   final _formKey = GlobalKey<FormState>();
-  
+
   // Assuming you have a class for health concerns that you will fetch from your backend or service
   List<String> healthConcerns = [
     'Health concern 1',
@@ -103,7 +111,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             }).toList(),
             ElevatedButton(
               onPressed: () {
-                // TODO: Implement the submit logic (with db milestone)
+                widget.updatePage(1);
               },
               style: ButtonStyle(
                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
