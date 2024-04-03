@@ -12,7 +12,13 @@ class SignUpScreen extends StatelessWidget {
             title: const Text('Sign Up',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             centerTitle: true,
-            backgroundColor: Colors.red,
+            flexibleSpace: Container(
+          decoration: BoxDecoration(
+              // Gives the app bar a gradient red color
+              gradient: LinearGradient(colors: <Color>[
+        const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
+        const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
+      ]))),
             foregroundColor: Colors.white),
         body: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
