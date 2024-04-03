@@ -1,32 +1,89 @@
+///GRACE DO
 import 'package:flutter/material.dart';
-import 'test_model.dart';
-
-// View screen from overview tab
 class Settings extends StatelessWidget {
-  const Settings({super.key, required this.model});
-  final TestModel model;
+  const Settings({super.key});
 
-  // Builds the app bar
-  // TODO: Make text white
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-        title: const Text("Settings"),
-        flexibleSpace: Container(
-            decoration: BoxDecoration(
-                // Gives the app bar a gradient red color
-                gradient: LinearGradient(colors: <Color>[
-          const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
-          const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
-        ]))),
-        toolbarHeight: 100,
-        );
-  }
-
-  @override 
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context),
-      // TODO: body of scaffold
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Settings'), centerTitle: true),
+        body: SingleChildScrollView( // Wrapped with SingleChildScrollView to avoid overflow when keyboard appears
+          padding: const EdgeInsets.all(75),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start, // Adjusted to start to avoid centering vertically
+            crossAxisAlignment: CrossAxisAlignment.start, // Stretch to width of the screen
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(
+                 hintText: 'Current Email',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0), // Add padding
+                ),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'New Email',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0), // Add padding
+                ),
+              ),
+              SizedBox(height: 60.0),
+              SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Current Password',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0), // Add padding
+                ),
+                obscureText: true, // Hide password
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'New Password',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0), // Add padding
+                ),
+                obscureText: true, // Hide password
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Confirm Password',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0), // Add padding
+                ),
+                obscureText: true, // Hide password
+              ),
+              SizedBox(height: 24.0),
+                 TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                  primary: const Color.fromARGB(255, 3, 46, 81),
+                ),
+                child: Text('Delete Account'),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero, // Makes the button rectangular
+                      side: BorderSide( width: 2.0), // border for button
+                    ),
+                  ),
+                ), 
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.0), // Add padding
+                  child: Text('Submit'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

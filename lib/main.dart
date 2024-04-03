@@ -1,3 +1,5 @@
+import 'package:chd_app/launch.dart';
+import 'package:chd_app/settings.dart';
 import 'package:flutter/material.dart';
 import 'database_test.dart';
 import 'test_model.dart';
