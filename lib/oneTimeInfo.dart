@@ -114,7 +114,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
                     ),
                   ),
                 ),
-              child: Text('Submit'style: TextStyle(
+              child: Text('Submit', style: TextStyle(
       color: Colors.white, fontSize: 25)),
             ),
           ],
