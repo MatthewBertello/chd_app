@@ -9,10 +9,15 @@ class OtherInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text('Healthcare Resources', style: TextStyle(fontWeight: FontWeight.bold)),
+            title: const Text('Healthcare Resources', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
             centerTitle: true,
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white),
+            flexibleSpace: Container(
+          decoration: BoxDecoration(
+              // Gives the app bar a gradient red color
+              gradient: LinearGradient(colors: <Color>[
+        const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
+        const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
+      ]))),),
         body: Padding(
             padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 8.0),
             child: Column(
