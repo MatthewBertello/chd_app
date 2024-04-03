@@ -6,6 +6,7 @@ class Settings extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      
       title: const Text("Settings",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       flexibleSpace: Container(
