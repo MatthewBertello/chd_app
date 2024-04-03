@@ -54,7 +54,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
           children: [
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Date of birth',
+                hintText: 'Date of birth',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.datetime,
@@ -62,7 +62,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             SizedBox(height: 16.0),
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Weight',
+                hintText: 'Weight',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
@@ -70,7 +70,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             SizedBox(height: 16.0),
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Height',
+                hintText: 'Height',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
@@ -78,7 +78,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             SizedBox(height: 16.0),
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Other health information',
+                hintText: 'Other health information',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.text,
