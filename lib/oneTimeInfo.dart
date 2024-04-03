@@ -106,7 +106,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
                 // TODO: Implement the submit logic (with db milestone)
               },
               style: ButtonStyle(
-                 backgroundColor: const Color.fromARGB(255, 1, 31, 56),
+                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero, // Makes the button rectangular
