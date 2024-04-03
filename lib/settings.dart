@@ -88,21 +88,20 @@ class Settings extends StatelessWidget {
               ),
               child: const Text('Delete Account'),
             ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  const RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.zero, // Makes the button rectangular
-                    side: BorderSide(width: 2.0), // border for button
-                  ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.indigo,
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
                 ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0), // Add padding
-                child: Text('Submit'),
-              ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.0), // Add padding
+                  child: Text('Submit', style: TextStyle(color: Colors.white)),
+                ),
+              ),]
             ),
           ],
         ),
