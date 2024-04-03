@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool userLoggedIn = true; // CHANGE IT TO TRUE TO VIEW TABBED BAR WHEN USER IS LOGGED IN
+  bool userLoggedIn = false; // CHANGE IT TO TRUE TO VIEW TABBED BAR WHEN USER IS LOGGED IN
   int selectedIndex = 0;
   
   List<Widget> tabViews = [
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
 
   // If user is not logged in, display launch screen
   Widget displayLaunchScreen (BuildContext context) {
-    return const Scaffold(); // TODO: Once you build launch, you can call the constructor from launch
+    return const LaunchScreen(); 
   }
 
   // If user is logged in display screens with bottom navigation bar
