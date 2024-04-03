@@ -17,6 +17,7 @@ class LaunchScreen extends StatelessWidget {
             Image.network('https://www.conqueringchd.org/wp-content/uploads/2020/07/awareness-ribbon-300x300.png',width:100.0, fit:BoxFit.cover),
             SizedBox(height:25),
             Text('Your personalized CHD asistant'),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
