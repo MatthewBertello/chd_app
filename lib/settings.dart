@@ -10,7 +10,8 @@ class Settings extends StatelessWidget {
             gradient: LinearGradient(colors:  <Color>[const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9), const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)])
           )
         ),
-        title: const Text('Settings')
+        title: const Text('Settings', style: TextStyle(
+      color: Colors.white, fontSize: 25))
     );
   }
 
