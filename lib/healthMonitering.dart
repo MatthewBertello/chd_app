@@ -1,8 +1,5 @@
 import 'package:chd_app/test_model.dart';
 import 'package:flutter/material.dart';
-import 'shareScreen.dart';
-import 'package:provider/provider.dart';
-import 'settings.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HealthWidget extends StatelessWidget {
@@ -111,8 +108,6 @@ class HealthWidget extends StatelessWidget {
                 onPressed: () {
                   // Add your action for the button here
                 },
-                child: Text('View All',
-                    style: TextStyle(color: Colors.indigo[900])),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red[50], // background color
                   foregroundColor: Colors.indigo[900], // text color
@@ -122,6 +117,8 @@ class HealthWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ), // border shape
                 ),
+                child: Text('View All',
+                    style: TextStyle(color: Colors.indigo[900])),
               ),
             ),
           ])),
@@ -191,7 +188,7 @@ class HealthWidget extends StatelessWidget {
                               "${(progress * 100).toInt()}%",
                               style: TextStyle(color: Colors.indigo[900]),
                             ),
-                            SizedBox(
+                            const SizedBox(
                                 width:
                                     5), // Add some space between the text and the progress bar
                             Expanded(

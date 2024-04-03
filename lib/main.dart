@@ -1,8 +1,6 @@
 import 'package:chd_app/login.dart';
-import 'package:chd_app/settings.dart';
 import 'package:chd_app/signUp.dart';
 import 'package:flutter/material.dart';
-import 'database_test.dart';
 import 'test_model.dart';
 import 'package:provider/provider.dart';
 import 'overview.dart';

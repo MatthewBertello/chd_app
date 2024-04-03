@@ -1,4 +1,3 @@
-import 'package:chd_app/signUp.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
