@@ -1,8 +1,8 @@
-import 'package:chd_app/test_model.dart';
+import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
-import 'shareScreen.dart';
+import 'user_search_screen.dart';
 import 'package:provider/provider.dart';
-import 'settings.dart';
+import 'settings_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Overview extends StatelessWidget {

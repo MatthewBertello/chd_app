@@ -1,13 +1,13 @@
-import 'package:chd_app/login.dart';
-import 'package:chd_app/signUp.dart';
+import 'package:chd_app/screens/login_screen.dart';
+import 'package:chd_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'test_model.dart';
+import 'models/main_model.dart';
 import 'package:provider/provider.dart';
-import 'overview.dart';
-import 'healthMonitering.dart';
-import 'dailyInfo.dart';
-import 'otherInfo.dart';
-import 'oneTimeInfo.dart';
+import 'screens/overview_screen.dart';
+import 'screens/health_screen.dart';
+import 'screens/info_entry_screen.dart';
+import 'screens/other_info_screen.dart';
+import 'screens/initial_data_entry_screen.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(

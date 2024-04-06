@@ -1,6 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'test_model.dart';
+import '../models/main_model.dart';
 import 'package:intl/intl.dart';
 
 

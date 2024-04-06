@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
-import 'test_model.dart';
+import '../models/main_model.dart';
 
 class DatabaseTest extends StatefulWidget {
   const DatabaseTest({Key? key, required this.model}) : super(key: key);

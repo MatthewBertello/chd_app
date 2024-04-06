@@ -1,4 +1,4 @@
-import 'package:chd_app/test_model.dart';
+import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
