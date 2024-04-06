@@ -1,6 +1,7 @@
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:chd_app/widgets/circular_meter.dart';
 
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
@@ -256,52 +257,28 @@ class HealthWidget extends StatelessWidget {
           color: Colors.red[50],
           borderRadius: const BorderRadius.all(Radius.circular(30))),
       child: SizedBox(
-          width: 150,
-          height: 150,
-          child: Stack(fit: StackFit.expand, children: [
-            SfCircularChart(
-              series: <CircularSeries>[
-                DoughnutSeries<String, Object>(
-                  // Displays the doughnut according to the user's health
-                  dataSource: const [
-                    'Fair',
-                    'Empty' // This represents the remaining 20%
-                  ], // Hardcoded for now, will need to get from database later
-                  xValueMapper: (datum, _) => datum,
-                  yValueMapper: (datum, _) => datum == 'Empty'
-                      ? 0.2
-                      : 0.8, // Here we set the 'Fair' to 80% and 'Empty' to 20%
-                  pointColorMapper: (datum, _) {
-                    switch (datum) {
-                      case 'Excellent':
-                        return Colors.green;
-                      case 'Good':
-                        return Colors.blue;
-                      case 'Fair':
-                        return Colors.yellow;
-                      case 'Poor':
-                        return Colors.orange;
-                      case 'Unhealthy':
-                        return Colors.red;
-                      case 'Empty':
-                        return Colors
-                            .transparent; // This makes the remaining 20% invisible
-                    }
-                    return null;
-                  },
-                  strokeColor: Colors.white,
-                ),
-              ],
-            ),
-            const Icon(
+        width: 150,
+        height: 150,
+        child: Stack(fit: StackFit.expand, children: [
+          Text("Health",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.indigo[900], fontWeight: FontWeight.bold)),
+          CircularMeter(
+            value: .9,
+            colorMap: {
+              0: Colors.red,
+              0.5: Colors.yellow,
+              0.75: Colors.lightGreen,
+              1: Colors.green
+            },
+            centerWidget: const Icon(
               Icons.favorite,
               color: Colors.red,
             ),
-            Text("Health",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.indigo[900], fontWeight: FontWeight.bold))
-          ])),
+          ),
+        ]),
+      ),
     );
   }
 
