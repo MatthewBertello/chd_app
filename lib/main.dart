@@ -7,7 +7,7 @@ import 'screens/overview_screen.dart';
 import 'screens/health_screen.dart';
 import 'screens/info_entry_screen.dart';
 import 'screens/other_info_screen.dart';
-import 'screens/initial_data_entry_screen.dart';
+
 
 void main() {
   runApp(ChangeNotifierProvider(
