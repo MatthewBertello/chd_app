@@ -6,9 +6,10 @@ import 'package:chd_app/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
 
 // Burger menu that can navigate to other pages
+// ignore: use_key_in_widget_constructors
 class BurgerMenu extends StatelessWidget {
   // A list of other pages for the app
-  List<dynamic> otherPages = [["Settings",const Settings()], ["Find a member",ShareScreen(model: TestModel())], ["Resources",const OtherInfo()]];
+  final List<dynamic> otherPages = [["Settings",const Settings()], ["Find a member",ShareScreen(model: TestModel())], ["Resources",const OtherInfo()]];
 
   // Builds a list of all the other pages that are clickable
   Widget buildBody(BuildContext context) {
