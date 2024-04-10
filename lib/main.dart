@@ -1,3 +1,4 @@
+import 'package:chd_app/screens/burger_menu.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       },
     ),
     Consumer<TestModel>(builder: (context, model, child) {
-      return OtherInfo(); // TODO: Call OtherInfo's constructor
+      return BurgerMenu();
     })
   ];
 
@@ -101,7 +102,8 @@ class _MyAppState extends State<MyApp> {
               BottomNavigationBarItem(
                   label: 'Daily Entry', icon: Icon(Icons.notes)),
               BottomNavigationBarItem(
-                  label: 'Resources', icon: Icon(Icons.question_mark)),
+                  label: 'Menu',
+                  icon: Icon(Icons.menu)),
             ]),
         body: tabViews[selectedIndex]);
   }
