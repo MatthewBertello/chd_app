@@ -1,11 +1,13 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/screens/login_screen.dart';
+import 'package:chd_app/theme/theme_manager.dart';
 import 'package:chd_app/utils/show_default_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:chd_app/screens/other_info_screen.dart';
 import 'package:chd_app/screens/settings_screen.dart';
 import 'package:chd_app/screens/user_search_screen.dart';
+import 'package:provider/provider.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -39,7 +41,15 @@ class BurgerMenu extends StatelessWidget {
                 },
                 "No": () => Navigator.pop(context)
               })
-    }
+    },
+    {
+      'Switch Theme': (context) {
+        bool isDark =
+            Provider.of<ThemeManager>(context, listen: false).themeMode ==
+                ThemeMode.dark;
+        Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
+      }
+    },
   ];
 
   // Builds a list of all the other pages that are clickable
@@ -49,10 +59,11 @@ class BurgerMenu extends StatelessWidget {
       itemCount: otherPages.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-            title: Text(otherPages[index].keys.first),
-            onTap: () {
-              otherPages[index].values.first(context);
-            });
+          title: Text(otherPages[index].keys.first),
+          onTap: () {
+            otherPages[index].values.first(context);
+          },
+        );
       },
     );
   }
