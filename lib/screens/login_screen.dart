@@ -1,9 +1,9 @@
+import 'package:chd_app/components/tab_view.dart';
+import 'package:chd_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key, required this.updatePage});
-
-  final void Function(int) updatePage;
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class Login extends StatelessWidget {
                   style: const ButtonStyle(fixedSize: MaterialStatePropertyAll<Size>(Size(300, 20))),
                   child: Text('Sign up', style: TextStyle(color: Colors.indigo[900]),),
                   onPressed: () {
-                    updatePage(2);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
                   },
                 ),
 
@@ -67,7 +67,7 @@ class Login extends StatelessWidget {
                   style: const ButtonStyle(fixedSize: MaterialStatePropertyAll<Size>(Size(300, 20))),
                   child: Text('Sign in', style: TextStyle(color: Colors.indigo[900])),
                   onPressed: () {
-                    updatePage(1);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabView()));
                   },
                 ),
 
