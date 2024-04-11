@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DefaultAppBar extends AppBar {
-  DefaultAppBar({Key? key, required String title})
+  DefaultAppBar({Key? key, String? title})
       : super(
           key: key,
           title: Text(
-            title,
+            title ?? '',
             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           flexibleSpace: Container(

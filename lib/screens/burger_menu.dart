@@ -1,3 +1,4 @@
+import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/utils/show_default_dialog.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +44,7 @@ class BurgerMenu extends StatelessWidget {
 
   // Builds a list of all the other pages that are clickable
   Widget buildBody(BuildContext context) {
-    return Expanded(
-        child: ListView.separated(
+    return ListView.separated(
       separatorBuilder: (context, index) => const Divider(),
       itemCount: otherPages.length,
       itemBuilder: (BuildContext context, int index) {
@@ -54,11 +54,14 @@ class BurgerMenu extends StatelessWidget {
               otherPages[index].values.first(context);
             });
       },
-    ));
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: buildBody(context));
+    return Scaffold(
+      appBar: DefaultAppBar(),
+      body: buildBody(context),
+    );
   }
 }
