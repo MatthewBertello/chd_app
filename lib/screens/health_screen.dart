@@ -2,8 +2,6 @@ import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:chd_app/components/circular_meter.dart';
 
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
