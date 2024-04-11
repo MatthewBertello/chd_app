@@ -59,7 +59,7 @@ class Login extends StatelessWidget {
                   style: const ButtonStyle(fixedSize: MaterialStatePropertyAll<Size>(Size(300, 20))),
                   child: Text('Sign up', style: TextStyle(color: Colors.indigo[900]),),
                   onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
                   },
                 ),
 

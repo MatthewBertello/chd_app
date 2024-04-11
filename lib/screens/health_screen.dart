@@ -26,7 +26,7 @@ class HealthWidget extends StatelessWidget {
                     children: [
                       buildPregnancyCountDown(
                           context), // Build and display the pregnancy countdown
-                      HealthMeter(value: 90), // Display the health meter
+                      const HealthMeter(value: 90), // Display the health meter
                     ]),
                 // Display the category summary
                 Padding(

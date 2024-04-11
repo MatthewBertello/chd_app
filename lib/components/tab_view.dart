@@ -26,7 +26,7 @@ class TabView extends StatelessWidget {
     ),
     Consumer<TestModel>(
       builder: (context, model, child) {
-        return DailyInfoWidget();
+        return const DailyInfoWidget();
       },
     ),
     Consumer<TestModel>(builder: (context, model, child) {

@@ -6,7 +6,7 @@ class DefaultAppBar extends AppBar {
           key: key,
           title: Text(
             title,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           flexibleSpace: Container(
             decoration: BoxDecoration(

@@ -3,7 +3,7 @@ import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class SubstantialEntry extends StatelessWidget {
-  SubstantialEntry({super.key, required this.updatePage});
+  const SubstantialEntry({super.key, required this.updatePage});
 
   final void Function(int) updatePage;
 
@@ -19,7 +19,7 @@ class SubstantialEntry extends StatelessWidget {
 class HealthInfoForm extends StatefulWidget {
   final void Function(int) updatePage;
 
-  HealthInfoForm({required this.updatePage});
+  const HealthInfoForm({super.key, required this.updatePage});
 
   @override
   _HealthInfoFormState createState() => _HealthInfoFormState();
@@ -55,41 +55,41 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(30.0),
           children: [
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Date of birth',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.datetime,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Weight',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Height',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Other health information',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.text,
             ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               'Health concerns (check all that apply):',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -113,13 +113,13 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
               style: ButtonStyle(
                  backgroundColor: MaterialStateProperty.all<Color>(Colors.indigo),
                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
+                    const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero, // Makes the button rectangular
                       side: BorderSide( width: 2.0), // blue boarder for the button
                     ),
                   ),
                 ),
-              child: Text('Submit', style: TextStyle(
+              child: const Text('Submit', style: TextStyle(
       color: Colors.white, fontSize: 25)),
             ),
           ],

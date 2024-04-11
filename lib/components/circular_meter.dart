@@ -6,7 +6,7 @@ class CircularMeter extends StatelessWidget {
   final Map<int, Color> colorMap;
   final Widget? centerWidget;
 
-  CircularMeter({
+  const CircularMeter({super.key, 
     required this.value,
     this.colorMap = const {
       0: Colors.red,

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'settings_screen.dart';
 
 class Overview extends StatelessWidget {
-  const Overview({required this.model});
+  const Overview({super.key, required this.model});
   final TestModel model;
 
   // Makes the search button and navigates to shareScreen when pressed
@@ -118,7 +118,7 @@ class Overview extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 separatorBuilder: (context, index) =>
-                    Divider(color: Colors.white),
+                    const Divider(color: Colors.white),
                 itemCount: recommendations.length,
                 itemBuilder: (context, index) {
                   return ListTile(
@@ -146,7 +146,7 @@ class Overview extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 buildPregnancyCountDown(
                     context), // Build and display the pregnancy countdown
-                HealthMeter(value: 90) // Display the health meter
+                const HealthMeter(value: 90) // Display the health meter
               ]),
               Padding(
                   padding: const EdgeInsets.all(15.0),

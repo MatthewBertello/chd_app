@@ -5,7 +5,6 @@ import 'package:chd_app/models/main_model.dart';
 import 'package:chd_app/screens/other_info_screen.dart';
 import 'package:chd_app/screens/settings_screen.dart';
 import 'package:chd_app/screens/user_search_screen.dart';
-import 'package:provider/provider.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -35,7 +34,7 @@ class BurgerMenu extends StatelessWidget {
                 "Yes": () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Login()));
+                      MaterialPageRoute(builder: (context) => const Login()));
                 },
                 "No": () => Navigator.pop(context)
               })
