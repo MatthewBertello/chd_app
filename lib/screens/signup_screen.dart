@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/components/tab_view.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
@@ -6,24 +7,12 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Consumer<TestModel>(
       builder: (BuildContext context, TestModel value, Widget? child) {
         return Scaffold(
-          appBar: AppBar(
-              title: const Text('Sign Up',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              centerTitle: true,
-              flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                      // Gives the app bar a gradient red color
-                      gradient: LinearGradient(colors: <Color>[
-                const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
-                const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
-              ]))),
-              foregroundColor: Colors.white),
+          appBar: DefaultAppBar(title: "Signup"),
           body: Padding(
             padding: const EdgeInsets.only(
                 left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),

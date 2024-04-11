@@ -1,4 +1,5 @@
 ///GRACE DO
+import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class SubstantialEntry extends StatelessWidget {
@@ -50,17 +51,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Health Information', style: TextStyle(
-      color: Colors.white, fontSize: 25)),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              // Gives the app bar a gradient red color
-              gradient: LinearGradient(colors: <Color>[
-        const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
-        const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
-      ]))),
-      ),
+      appBar: DefaultAppBar(title: "Health Info Entry"),
       body: Form(
         key: _formKey,
         child: ListView(
