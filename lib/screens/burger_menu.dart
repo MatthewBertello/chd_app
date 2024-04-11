@@ -47,6 +47,7 @@ class BurgerMenu extends StatelessWidget {
         bool isDark =
             Provider.of<ThemeManager>(context, listen: false).themeMode ==
                 ThemeMode.dark;
+        print(isDark);
         Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
       }
     },
