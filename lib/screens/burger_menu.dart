@@ -32,8 +32,11 @@ class BurgerMenu extends StatelessWidget {
               title: "Logout",
               message: "Are you sure you want to logout?",
               actions: {
-                "Yes": () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Login())),
+                "Yes": () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Login()));
+                },
                 "No": () => Navigator.pop(context)
               })
     }
