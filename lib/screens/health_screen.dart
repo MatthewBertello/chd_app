@@ -1,7 +1,7 @@
+import 'package:chd_app/components/default_app_bar.dart';
+import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:chd_app/components/circular_meter.dart';
 
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
@@ -11,7 +11,9 @@ class HealthWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context),
+        appBar: DefaultAppBar(
+          title: "Health Overview",
+        ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
@@ -24,8 +26,7 @@ class HealthWidget extends StatelessWidget {
                     children: [
                       buildPregnancyCountDown(
                           context), // Build and display the pregnancy countdown
-                      buildHealthMeter(
-                          context) // Build and display the health meter
+                      const HealthMeter(value: 90), // Display the health meter
                     ]),
                 // Display the category summary
                 Padding(
@@ -245,55 +246,6 @@ class HealthWidget extends StatelessWidget {
                   ])),
             ],
           )),
-    );
-  }
-
-  // Builds a health meter
-  Widget buildHealthMeter(BuildContext context) {
-    return Container(
-      // Widget displaying the health meter
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-          color: Colors.red[50],
-          borderRadius: const BorderRadius.all(Radius.circular(30))),
-      child: SizedBox(
-        width: 150,
-        height: 150,
-        child: Stack(fit: StackFit.expand, children: [
-          Text("Health",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.indigo[900], fontWeight: FontWeight.bold)),
-          CircularMeter(
-            value: .9,
-            colorMap: {
-              0: Colors.red,
-              0.5: Colors.yellow,
-              0.75: Colors.lightGreen,
-              1: Colors.green
-            },
-            centerWidget: const Icon(
-              Icons.favorite,
-              color: Colors.red,
-            ),
-          ),
-        ]),
-      ),
-    );
-  }
-
-  // Builds the app bar
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: const Text("Health Overview",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      flexibleSpace: Container(
-          decoration: BoxDecoration(
-              // Gives the app bar a gradient red color
-              gradient: LinearGradient(colors: <Color>[
-        const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
-        const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
-      ]))),
     );
   }
 }

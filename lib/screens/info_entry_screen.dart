@@ -1,3 +1,4 @@
+import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class DailyInfoWidget extends StatefulWidget {
@@ -23,7 +24,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: DefaultAppBar(title: 'Info Entry'),
       body: Column(
         children: [
           Expanded(
@@ -61,21 +62,6 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
         },
         child: const Icon(Icons.add),
       ),
-    );
-  }
-
-  // Builds the app bar
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: const Text("Info Entry",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      flexibleSpace: Container(
-          decoration: BoxDecoration(
-              // Gives the app bar a gradient red color
-              gradient: LinearGradient(colors: <Color>[
-        const Color.fromARGB(255, 249, 0, 0).withOpacity(0.9),
-        const Color.fromARGB(223, 189, 0, 0).withOpacity(0.9)
-      ]))),
     );
   }
 
