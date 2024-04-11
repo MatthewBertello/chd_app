@@ -1,3 +1,5 @@
+import 'package:chd_app/screens/login_screen.dart';
+import 'package:chd_app/utils/show_default_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:chd_app/screens/other_info_screen.dart';
@@ -9,35 +11,52 @@ import 'package:provider/provider.dart';
 // ignore: use_key_in_widget_constructors
 class BurgerMenu extends StatelessWidget {
   // A list of other pages for the app
-  final List<dynamic> otherPages = [["Settings",const Settings()], ["Find a member",ShareScreen(model: TestModel())], ["Resources",const OtherInfo()]];
+  final List<Map<String, Function>> otherPages = [
+    // Each page has a name and a widget
+    {
+      'Settings': (context) => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Settings()))
+    },
+    {
+      'User Search': (context) => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ShareScreen(model: TestModel())))
+    },
+    {
+      'Other Info': (context) => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const OtherInfo()))
+    },
+    {
+      'Logout': (context) => showDefaultDialog(context,
+              title: "Logout",
+              message: "Are you sure you want to logout?",
+              actions: {
+                "Yes": () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Login())),
+                "No": () => Navigator.pop(context)
+              })
+    }
+  ];
 
   // Builds a list of all the other pages that are clickable
   Widget buildBody(BuildContext context) {
     return Expanded(
-      child: ListView.separated(separatorBuilder:(context, index) => const Divider(),
+        child: ListView.separated(
+      separatorBuilder: (context, index) => const Divider(),
       itemCount: otherPages.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(otherPages[index][0]), // Name of the page
-          onTap: () {
-            Navigator.push( // Navigate to the page once it's clicked
-              context,
-              MaterialPageRoute(builder: (context) => Consumer<TestModel> (
-                builder: (context, model, child) {
-                  return otherPages[index][1];
-                }
-              ))
-            );
-          }
-        );
-      },)
-    );
+            title: Text(otherPages[index].keys.first),
+            onTap: () {
+              otherPages[index].values.first(context);
+            });
+      },
+    ));
   }
-  
-  @override 
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: buildBody(context)
-    );
+    return Scaffold(body: buildBody(context));
   }
 }
