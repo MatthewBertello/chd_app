@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Future<void> showDefaultDialog(BuildContext context, String title,
-    String message, Map<String, Function> actions) async {
+Future<void> showDefaultDialog(BuildContext context, {required String title,
+    required String message, required Map<String, Function> actions}) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
