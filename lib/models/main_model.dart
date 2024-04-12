@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
 import 'member.dart';
 
-class TestModel extends ChangeNotifier {
+class MainModel extends ChangeNotifier {
   String test = "hello";
   Connection? conn;
   List membersSearched = [];
@@ -46,7 +46,7 @@ class TestModel extends ChangeNotifier {
     membersSearched = [];
   }
 
-  TestModel() {
+  MainModel() {
     Future<dynamic> newConn = Connection.open(
       Endpoint(
         port: 26257,

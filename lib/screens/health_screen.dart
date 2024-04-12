@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
-  final TestModel model;
+  final MainModel model;
 
   @override
   @override

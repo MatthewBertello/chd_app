@@ -8,7 +8,7 @@ import 'settings_screen.dart';
 
 class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
-  final TestModel model;
+  final MainModel model;
 
   // Makes the search button and navigates to shareScreen when pressed
   IconButton buildSearchButton(BuildContext context) {
@@ -20,7 +20,7 @@ class Overview extends StatelessWidget {
               MaterialPageRoute(
                   // Navigates to shareScreen
                   builder: (context) =>
-                      Consumer<TestModel>(builder: (context, model, child) {
+                      Consumer<MainModel>(builder: (context, model, child) {
                         return ShareScreen(model: model);
                       })));
         },
@@ -39,7 +39,7 @@ class Overview extends StatelessWidget {
               MaterialPageRoute(
                   // Navigates to settings
                   builder: (context) =>
-                      Consumer<TestModel>(builder: (context, model, child) {
+                      Consumer<MainModel>(builder: (context, model, child) {
                         return const Settings();
                       })));
         },

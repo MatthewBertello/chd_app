@@ -11,8 +11,8 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TestModel>(
-      builder: (BuildContext context, TestModel value, Widget? child) {
+    return Consumer<MainModel>(
+      builder: (BuildContext context, MainModel value, Widget? child) {
         return Scaffold(
           appBar: DefaultAppBar(title: "Signup"),
           body: Padding(

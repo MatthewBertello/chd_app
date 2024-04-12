@@ -5,7 +5,7 @@ import '../models/main_model.dart';
 class DatabaseTest extends StatefulWidget {
   const DatabaseTest({Key? key, required this.model}) : super(key: key);
 
-  final TestModel model;
+  final MainModel model;
 
   @override
   State<DatabaseTest> createState() => _DatabaseTestState();

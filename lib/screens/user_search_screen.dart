@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 class ShareScreen extends StatefulWidget {
   const ShareScreen({super.key, required this.model});
-  final TestModel model;
+  final MainModel model;
 
   @override
   State<ShareScreen> createState() => _ShareScreenState();

@@ -14,22 +14,22 @@ class TabView extends StatelessWidget {
     const Tab(icon: Icon(Icons.menu)),
   ];
   final List<Widget> children = [
-    Consumer<TestModel>(
+    Consumer<MainModel>(
       builder: (context, model, child) {
         return Overview(model: model);
       },
     ),
-    Consumer<TestModel>(
+    Consumer<MainModel>(
       builder: (context, model, child) {
         return HealthWidget(model: model);
       },
     ),
-    Consumer<TestModel>(
+    Consumer<MainModel>(
       builder: (context, model, child) {
         return const DailyInfoWidget();
       },
     ),
-    Consumer<TestModel>(builder: (context, model, child) {
+    Consumer<MainModel>(builder: (context, model, child) {
       return BurgerMenu();
     }),
   ];

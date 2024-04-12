@@ -17,7 +17,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => TestModel()),
+        ChangeNotifierProvider(create: (context) => MainModel()),
         ChangeNotifierProvider(create: (context) => ThemeManager()),
       ],
       child: const MyApp(),
