@@ -2,7 +2,7 @@ import 'package:chd_app/components/circular_meter.dart';
 import 'package:flutter/material.dart';
 
 class HealthMeter extends StatelessWidget {
-  final double value;
+  final int value;
 
   const HealthMeter({
     super.key,

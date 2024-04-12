@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CircularMeter extends StatelessWidget {
-  final double value;
+  final int value;
   final Map<int, Color> colorMap;
   final Widget? centerWidget;
 
@@ -43,7 +43,7 @@ class CircularMeter extends StatelessWidget {
     ]));
   }
 
-  Color getColor(double value) {
+  Color getColor(int value) {
     // sort the keys in the colorMap
     List<int> keys = colorMap.keys.toList()..sort();
 
