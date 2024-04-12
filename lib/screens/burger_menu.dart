@@ -8,6 +8,7 @@ import 'package:chd_app/screens/other_info_screen.dart';
 import 'package:chd_app/screens/settings_screen.dart';
 import 'package:chd_app/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:chd_app/main.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -34,7 +35,8 @@ class BurgerMenu extends StatelessWidget {
               title: "Logout",
               message: "Are you sure you want to logout?",
               actions: {
-                "Yes": () {
+                "Yes": () async {
+                  await supabase.auth.signOut();
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const Login()));
