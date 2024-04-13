@@ -17,6 +17,7 @@ class HealthWidget extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: DefaultAppBar(
+        context: context,
         title: "Health",
       ),
       body: SingleChildScrollView(

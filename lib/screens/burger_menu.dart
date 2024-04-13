@@ -81,7 +81,7 @@ class BurgerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(),
+      appBar: DefaultAppBar(context: context),
       body: buildBody(context),
     );
   }
