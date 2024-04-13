@@ -14,7 +14,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
   ];
 
   List<TextEditingController> controllers = [];
-  
+
   List<String> categories = [
     'Select a category',
     'Water intake (cups)',
@@ -108,17 +108,10 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
               controller: controller,
               decoration: InputDecoration(
                 hintText: 'Enter value',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colors.indigo[900]!, width: 1),
-                ),
-              ),
-              style: TextStyle(
-                color: Colors.indigo[900],
               ),
             ),
-            
-            const Divider(color: Colors.grey), // Add a divider between each item
+
+            const Divider(), // Add a divider between each item
           ],
         );
       }).toList(),

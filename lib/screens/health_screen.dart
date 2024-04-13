@@ -1,5 +1,6 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/components/health_meter.dart';
+import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 
@@ -11,35 +12,23 @@ class HealthWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DefaultAppBar(
-          title: "Health Overview",
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: SingleChildScrollView(
-            // Add this
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+      appBar: DefaultAppBar(
+        title: "Health",
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildPregnancyCountDown(
-                          context), // Build and display the pregnancy countdown
-                      const HealthMeter(value: 90), // Display the health meter
-                    ]),
-                // Display the category summary
-                Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: buildCategorySummary(context)),
-                // Display the previous entries
-                Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: buildPreviousEntries(context)),
-              ],
-            ),
-          ),
-        ));
+                PregnancyCountdown(currentDays: 131, totalDays: 270),
+                HealthMeter(value: 90),
+              ]),
+          buildCategorySummary(context),
+          buildPreviousEntries(context),
+        ],
+      ),
+    );
   }
 
   Widget buildPreviousEntries(BuildContext context) {
@@ -59,80 +48,39 @@ class HealthWidget extends StatelessWidget {
         'categories': 'Mental: 60%, Physical: 40%, Social: 20%'
       }
     ];
-    return Container(
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-          color: Colors.red[50],
-          borderRadius: const BorderRadius.all(Radius.circular(30))),
-      child: SizedBox(
-          width: 340,
-          child: Column(children: [
-            Text("Previous Entries",
-                style: TextStyle(
-                    color: Colors.indigo[900], fontWeight: FontWeight.bold)),
-            Column(
-              children: entries.map((entry) {
-                return Container(
-                  margin: const EdgeInsets.only(
-                      bottom: 10.0), // Add space between buttons
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Add your action for the button here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red[50], // background color
-                      foregroundColor: Colors.indigo[900], // text color
-                      side: BorderSide(
-                          color: Colors.indigo[900]!, width: 1), // border color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ), // border shape
-                      padding:
-                          EdgeInsets.zero, // Remove padding from the button
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        entry['date'],
-                        style: TextStyle(color: Colors.indigo[900]),
-                      ),
-                      subtitle: Text(
-                        entry['categories'],
-                        style: TextStyle(color: Colors.indigo[900]),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-            SizedBox(
-              width: 340,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add your action for the button here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[50], // background color
-                  foregroundColor: Colors.indigo[900], // text color
-                  side: BorderSide(
-                      color: Colors.indigo[900]!, width: 1), // border color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ), // border shape
+    return Column(
+      children: [
+        const Text("Previous Entries"),
+        Column(
+          children: entries.map(
+            (entry) {
+              return ListTile(
+                title: Text(
+                  entry['date'],
                 ),
-                child: Text('View All',
-                    style: TextStyle(color: Colors.indigo[900])),
-              ),
-            ),
-          ])),
+                subtitle: Text(
+                  entry['categories'],
+                ),
+              );
+            },
+          ).toList(),
+        ),
+        ListTile(
+          title: const Text("Show More"),
+          onTap: () {
+            // Show more entries
+          },
+        )
+      ],
     );
   }
 
-  Color getProgressColor(double progress) {
-    if (progress >= 0.8) {
+  Color getProgressColor(int progress) {
+    if (progress >= 80) {
       return Colors.green;
-    } else if (progress >= 0.6) {
+    } else if (progress >= 60) {
       return Colors.yellow;
-    } else if (progress >= 0.4) {
+    } else if (progress >= 40) {
       return Colors.orange;
     } else {
       return Colors.red;
@@ -146,106 +94,38 @@ class HealthWidget extends StatelessWidget {
       {'category': 'Physical', 'progress': 60},
       {'category': 'Social', 'progress': 40}
     ];
-    return Container(
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-          color: Colors.red[50],
-          borderRadius: const BorderRadius.all(Radius.circular(30))),
-      child: SizedBox(
-          width: 340,
-          child: Column(children: [
-            Column(
-              children: categories.map((category) {
-                double progress = category['progress'] /
-                    100; // Convert the percentage to a double
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.indigo[900]!),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Add your action for the button here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red[50], // background color
-                      foregroundColor: Colors.indigo[900], // text color
-                      side: BorderSide(
-                          color: Colors.indigo[900]!, width: 1), // border color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ), // border shape
-                      padding:
-                          EdgeInsets.zero, // Remove padding from the button
-                    ),
-                    child: ListTile(
-                      title: Text(category['category'],
-                          style: TextStyle(color: Colors.indigo[900])),
-                      trailing: SizedBox(
-                        width: 100,
-                        child: Row(
-                          children: [
-                            Text(
-                              "${(progress * 100).toInt()}%",
-                              style: TextStyle(color: Colors.indigo[900]),
-                            ),
-                            const SizedBox(
-                                width:
-                                    5), // Add some space between the text and the progress bar
-                            Expanded(
-                              child: LinearProgressIndicator(
-                                value: progress,
-                                backgroundColor: Colors.grey[200],
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    getProgressColor(progress)),
-                              ),
-                            ),
-                          ],
+    return Column(
+      children: [
+        const Text("Category Summary"),
+        Column(
+          children: categories.map(
+            (category) {
+              return ListTile(
+                title: Text(
+                  category['category'],
+                ),
+                trailing: SizedBox(
+                  width: 100,
+                  child: Row(
+                    children: [
+                      Text("${category['progress'].toInt()}%"),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: LinearProgressIndicator(
+                          value: category['progress'] / 100,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            getProgressColor(category['progress']),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                );
-              }).toList(),
-            ),
-          ])),
-    );
-  }
-
-  // Builds the widget for the pregnancy countdown
-  Widget buildPregnancyCountDown(BuildContext context) {
-    return Container(
-      // Widget displaying the count down for the pregnancy
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-          color: Colors.red[50],
-          borderRadius: const BorderRadius.all(Radius.circular(30))),
-      child: SizedBox(
-          width: 150,
-          height: 150,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // Contains the progress indicator and the text inside it
-              CircularProgressIndicator(
-                value: model.countDay() / model.countTotalPregnantDays(),
-                valueColor: AlwaysStoppedAnimation(Colors.purple[200]),
-                backgroundColor: Colors.purple[100],
-              ),
-              Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                    Text("${model.dueDateCountDown()} Days",
-                        style: TextStyle(
-                            color: Colors.indigo[900],
-                            fontWeight: FontWeight.bold)),
-                    Icon(Icons.pregnant_woman,
-                        color: Colors.pink[100], size: 50)
-                  ])),
-            ],
-          )),
+                ),
+              );
+            },
+          ).toList(),
+        ),
+      ],
     );
   }
 }

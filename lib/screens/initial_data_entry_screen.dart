@@ -110,17 +110,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
               onPressed: () {
                 widget.updatePage(1);
               },
-              style: ButtonStyle(
-                 backgroundColor: MaterialStateProperty.all<Color>(Colors.indigo),
-                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero, // Makes the button rectangular
-                      side: BorderSide( width: 2.0), // blue boarder for the button
-                    ),
-                  ),
-                ),
-              child: const Text('Submit', style: TextStyle(
-      color: Colors.white, fontSize: 25)),
+              child: const Text('Submit'),
             ),
           ],
         ),
