@@ -24,7 +24,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(title: 'Info Entry'),
+      appBar: DefaultAppBar(context: context, title: 'Info Entry'),
       body: Column(
         children: [
           Expanded(

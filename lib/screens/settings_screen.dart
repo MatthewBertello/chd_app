@@ -10,7 +10,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DefaultAppBar(title: 'Settings'),
+        appBar: DefaultAppBar(context: context, title: 'Settings'),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
