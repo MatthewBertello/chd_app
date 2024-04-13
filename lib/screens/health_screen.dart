@@ -1,33 +1,112 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/components/pregnancy_countdown.dart';
+import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
   final MainModel model;
+  final double innerMargin = 15;
+  final double outerPadding = 20;
 
   @override
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: DefaultAppBar(
         title: "Health",
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                PregnancyCountdown(currentDays: 131, totalDays: 270),
-                HealthMeter(value: 90),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(outerPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                SizedBox(
+                  width: screenWidth / 2 - outerPadding,
+                  height: screenWidth / 2 - outerPadding,
+                  child: PregnancyCountdown(
+                    currentDays: 131,
+                    totalDays: 270,
+                    margin: EdgeInsets.all(innerMargin),
+                  ),
+                ),
+                SizedBox(
+                  width: screenWidth / 2 - outerPadding,
+                  height: screenWidth / 2 - outerPadding,
+                  child: HealthMeter(
+                    value: 90,
+                    margin: EdgeInsets.all(innerMargin),
+                  ),
+                )
               ]),
-          buildCategorySummary(context),
-          buildPreviousEntries(context),
-        ],
+              Tile(
+                margin: EdgeInsets.all(innerMargin),
+                padding: const EdgeInsets.all(0),
+                child: buildCategorySummary(context),
+              ),
+              Tile(
+                margin: EdgeInsets.all(innerMargin),
+                padding: const EdgeInsets.all(0),
+                child: buildPreviousEntries(context),
+              )
+            ],
+          ),
+        ),
       ),
+    );
+  }
+
+  Widget buildCategorySummary(BuildContext context) {
+    // A list of categories, hardcoded for now, will need to get it from database later
+    List categories = [
+      {'category': 'Mental', 'progress': 80},
+      {'category': 'Physical', 'progress': 60},
+      {'category': 'Social', 'progress': 40}
+    ];
+    return Column(
+      children: [
+        const Text("Category Summary"),
+        const Divider(height: 1),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: categories.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+                title: Text(
+                  categories[index]['category'],
+                ),
+                trailing: SizedBox(
+                  width: 100,
+                  child: Row(
+                    children: [
+                      Text("${categories[index]['progress'].toInt()}%"),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: LinearProgressIndicator(
+                          value: categories[index]['progress'] / 100,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            getProgressColor(categories[index]['progress']),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider(
+              height: 1,
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -51,26 +130,38 @@ class HealthWidget extends StatelessWidget {
     return Column(
       children: [
         const Text("Previous Entries"),
-        Column(
-          children: entries.map(
-            (entry) {
+        const Divider(height: 1),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: entries.length + 1,
+          itemBuilder: (context, index) {
+            if (index < entries.length) {
               return ListTile(
-                title: Text(
-                  entry['date'],
-                ),
-                subtitle: Text(
-                  entry['categories'],
-                ),
+                  dense: true,
+                  title: Text(
+                    entries[index]['date'],
+                  ),
+                  subtitle: Text(
+                    entries[index]['categories'],
+                  ),
+                  onTap: () {});
+            } else {
+              return ListTile(
+                // align the text to the center
+                title: const Text("Show More", textAlign: TextAlign.center),
+                onTap: () {
+                  // Show more entries
+                },
               );
-            },
-          ).toList(),
-        ),
-        ListTile(
-          title: const Text("Show More"),
-          onTap: () {
-            // Show more entries
+            }
           },
-        )
+          separatorBuilder: (context, index) {
+            return const Divider(
+              height: 1,
+            );
+          },
+        ),
       ],
     );
   }
@@ -85,47 +176,5 @@ class HealthWidget extends StatelessWidget {
     } else {
       return Colors.red;
     }
-  }
-
-  Widget buildCategorySummary(BuildContext context) {
-    // A list of categories, hardcoded for now, will need to get it from database later
-    List categories = [
-      {'category': 'Mental', 'progress': 80},
-      {'category': 'Physical', 'progress': 60},
-      {'category': 'Social', 'progress': 40}
-    ];
-    return Column(
-      children: [
-        const Text("Category Summary"),
-        Column(
-          children: categories.map(
-            (category) {
-              return ListTile(
-                title: Text(
-                  category['category'],
-                ),
-                trailing: SizedBox(
-                  width: 100,
-                  child: Row(
-                    children: [
-                      Text("${category['progress'].toInt()}%"),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: LinearProgressIndicator(
-                          value: category['progress'] / 100,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            getProgressColor(category['progress']),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ).toList(),
-        ),
-      ],
-    );
   }
 }
