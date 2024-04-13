@@ -17,7 +17,7 @@ class HealthMeter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tile(
-      
+      margin: margin,
       child: Stack(
         fit: StackFit.expand,
         children: [
