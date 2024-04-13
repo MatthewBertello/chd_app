@@ -8,6 +8,32 @@ class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
   final MainModel model;
 
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: DefaultAppBar(title: "Overview"),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            SizedBox(
+              width: screenWidth / 2,
+              height: screenWidth / 2,
+              child: const PregnancyCountdown(currentDays: 131, totalDays: 270),
+            ),
+            SizedBox(
+              width: screenWidth / 2,
+              height: screenWidth / 2,
+              child: const HealthMeter(value: 90),
+            )
+          ]),
+          displayRecommendations(context)
+        ],
+      ),
+    );
+  }
+
   Widget displayRecommendations(BuildContext context) {
     // List of recommendations, hardcoded for now, will need to get it from database later
     List recommendations = [
@@ -42,25 +68,6 @@ class Overview extends StatelessWidget {
               },
             ),
           )
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: DefaultAppBar(title: "Overview"),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                PregnancyCountdown(currentDays: 131, totalDays: 270),
-                HealthMeter(value: 90)
-              ]),
-          displayRecommendations(context)
         ],
       ),
     );

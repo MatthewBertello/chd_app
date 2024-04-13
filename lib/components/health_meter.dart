@@ -6,35 +6,30 @@ import 'package:flutter/widgets.dart';
 
 class HealthMeter extends StatelessWidget {
   final double value;
-  final double width;
-  final double height;
+  final EdgeInsetsGeometry? margin;
 
   const HealthMeter({
     super.key,
     required this.value,
-    this.width = 150,
-    this.height = 150,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Tile(
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            const Text("Health", textAlign: TextAlign.center),
-            CircularMeter(
-              value: value,
-              centerWidget: const Icon(
-                Icons.favorite,
-                color: Colors.red,
-              ),
+      
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          const Text("Health", textAlign: TextAlign.center),
+          CircularMeter(
+            value: value,
+            centerWidget: const Icon(
+              Icons.favorite,
+              color: Colors.red,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
