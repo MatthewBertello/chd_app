@@ -1,29 +1,41 @@
 import 'package:chd_app/components/circular_meter.dart';
+import 'package:chd_app/components/tile.dart';
+import 'package:chd_app/utils/helper_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class HealthMeter extends StatelessWidget {
   final double value;
+  final double width;
+  final double height;
 
   const HealthMeter({
     super.key,
     required this.value,
+    this.width = 150,
+    this.height = 150,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      height: 150,
-      child: Stack(fit: StackFit.expand, children: [
-        const Text("Health", textAlign: TextAlign.center),
-        CircularMeter(
-          value: value,
-          centerWidget: const Icon(
-            Icons.favorite,
-            color: Colors.red,
-          ),
+    return Tile(
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            const Text("Health", textAlign: TextAlign.center),
+            CircularMeter(
+              value: value,
+              centerWidget: const Icon(
+                Icons.favorite,
+                color: Colors.red,
+              ),
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 }
