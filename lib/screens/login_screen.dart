@@ -42,36 +42,39 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                  // Congenital heart disease ribbon
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Image.network(
-                      'https://www.conqueringchd.org/wp-content/uploads/2020/07/awareness-ribbon-300x300.png',
-                      width: 100.0,
-                      fit: BoxFit.cover)),
-              SupaEmailAuth(
-                onSignInComplete: (response) {},
-                onSignUpComplete: (response) {},
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TabView(),
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                    // Congenital heart disease ribbon
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Image.network(
+                        'https://www.conqueringchd.org/wp-content/uploads/2020/07/awareness-ribbon-300x300.png',
+                        width: 100.0,
+                        fit: BoxFit.cover)),
+                SupaEmailAuth(
+                  onSignInComplete: (response) {},
+                  onSignUpComplete: (response) {},
                 ),
-                child: const Text('Skip Login'),
-              )
-            ],
+                ElevatedButton(
+                  onPressed: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TabView(),
+                    ),
+                  ),
+                  child: const Text('Skip Login'),
+                )
+              ],
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }
