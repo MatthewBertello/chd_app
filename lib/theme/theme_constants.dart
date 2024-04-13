@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 // Light color scheme
 ColorScheme lightColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 197, 0, 0),
+  seedColor: const Color.fromARGB(255, 251, 144, 255),
 );
 
 // Dark color scheme
 ColorScheme darkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: const Color.fromARGB(255, 84, 19, 90),
-  );
+  seedColor: const Color.fromARGB(255, 251, 144, 255),
+);
 
 // Light theme
 ThemeData lightTheme = ThemeData(
@@ -23,14 +23,7 @@ ThemeData lightTheme = ThemeData(
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   colorScheme: darkColorScheme,
-  appBarTheme: AppBarTheme(
-    backgroundColor: darkColorScheme.primary,
-    titleTextStyle: TextStyle(
-        color: darkColorScheme.onPrimary,
-        fontSize: 20.0,
-        fontWeight: FontWeight.bold),
-  ),
-
+  appBarTheme: appBarTheme(colorScheme: darkColorScheme),
   buttonTheme: buttonTheme(colorScheme: darkColorScheme),
 );
 
