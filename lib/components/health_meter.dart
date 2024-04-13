@@ -23,7 +23,7 @@ class HealthMeter extends StatelessWidget {
         children: [
           const Text("Health", textAlign: TextAlign.center),
           CircularMeter(
-            value: value,
+            value: value.toInt(),
             centerWidget: const Icon(
               Icons.favorite,
               color: Colors.red,
