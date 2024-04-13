@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CircularMeter extends StatelessWidget {
-  final double value;
+  final int value;
   final Map<int, Color> colorMap;
   final Widget? centerWidget;
 
-  const CircularMeter({super.key, 
+  const CircularMeter({
+    super.key,
     required this.value,
     this.colorMap = const {
       0: Colors.red,
@@ -19,8 +20,7 @@ class CircularMeter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Stack(fit: StackFit.expand, children: [
+    return Stack(fit: StackFit.expand, children: [
       SfCircularChart(
         series: <CircularSeries>[
           DoughnutSeries<String, Object>(
@@ -40,10 +40,10 @@ class CircularMeter extends StatelessWidget {
         ],
       ),
       centerWidget == null ? Container() : Center(child: centerWidget),
-    ]));
+    ]);
   }
 
-  Color getColor(double value) {
+  Color getColor(int value) {
     // sort the keys in the colorMap
     List<int> keys = colorMap.keys.toList()..sort();
 

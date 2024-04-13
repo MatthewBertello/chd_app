@@ -9,6 +9,7 @@ import 'package:chd_app/screens/settings_screen.dart';
 import 'package:chd_app/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
+import 'package:chd_app/theme/color_demo.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -53,6 +54,12 @@ class BurgerMenu extends StatelessWidget {
         Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
       }
     },
+    {
+      'Demo Theme': (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ColorDemo()));
+      }
+    }
   ];
 
   // Builds a list of all the other pages that are clickable

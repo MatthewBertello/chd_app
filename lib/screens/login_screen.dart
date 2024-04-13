@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:chd_app/components/tab_view.dart';
-import 'package:chd_app/screens/signup_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
@@ -10,37 +8,6 @@ import 'package:chd_app/main.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
-
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  // Create a subscription to listen for a password reset email
-  late final StreamSubscription<void> _passwordResetEmailSentSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-
-
-    // Listen for a password reset email
-
-    _passwordResetEmailSentSubscription =
-        supabase.auth.onAuthStateChange.listen((data) {
-      final session = data.session;
-      if (session != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TabView(),
-          ),
-        );
-      }
-
-      // Check for password reset email
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,32 +18,27 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SupaEmailAuth(
-                redirectTo:
-                    kIsWeb ? null : 'io.supabase.chd_app://login-callback/',
-                onSignInComplete: (response) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TabView(),
-                    ),
-                  );
+              Padding(
+                  // Congenital heart disease ribbon
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Image.network(
+                      'https://www.conqueringchd.org/wp-content/uploads/2020/07/awareness-ribbon-300x300.png',
+                      width: 100.0,
+                      fit: BoxFit.cover)),
+              const TextField(),
+              const TextField(),
+
+              ElevatedButton(
+                // Button that logs user in and navigates to the home screen
+                child: Text('Sign in'),
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => TabView()));
                 },
-                onSignUpComplete: (response) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignUpScreen(),
-                    ),
-                  );
-                },
-                
               ),
-              SupaResetPassword(
-                accessToken: supabase.auth.currentSession?.accessToken,
-                onSuccess: (UserResponse response) {},
-                onError: (error) {},
-              )
+
+              // Button for user to change their password incase they forgot their password
+              const TextButton(onPressed: null, child: Text('Forgot Password')),
             ],
           ),
         ),
