@@ -89,7 +89,19 @@ class _LoginState extends State<Login> {
                 SupaEmailAuth(
                   redirectTo: 'io.supabase.chd://login-callback/',
                   onSignInComplete: (response) {},
-                  onSignUpComplete: (response) {},
+                  onSignUpComplete: (response) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Sign up successful!'),
+                      ),
+                    );
+                  },
                 ),
                 ElevatedButton(
                   onPressed: () => Navigator.pushReplacement(
