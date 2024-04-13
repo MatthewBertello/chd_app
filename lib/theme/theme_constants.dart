@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 
 // Light color scheme
 ColorScheme lightColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.light,
   seedColor: const Color.fromARGB(255, 251, 144, 255),
+  onPrimaryContainer: Colors.black,
+  secondary: const Color.fromARGB(255, 65, 16, 105),
+  onSecondaryContainer: Colors.black,
+  tertiary: const Color.fromARGB(255, 6, 95, 155),
+  onTertiary: Colors.white,
+  tertiaryContainer: const Color.fromARGB(255, 63, 171, 243),
+  onTertiaryContainer: Colors.black,
 );
 
 // Dark color scheme
@@ -43,6 +51,5 @@ ButtonThemeData buttonTheme({required ColorScheme colorScheme}) {
   return ButtonThemeData(
     buttonColor: colorScheme.secondary,
     textTheme: ButtonTextTheme.primary,
-    hoverColor: colorScheme.tertiary,
   );
 }
