@@ -79,13 +79,9 @@ class Settings extends StatelessWidget {
               children: [
                 ElevatedButton(
                 onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo,
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
-                ),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 15.0), // Add padding
-                  child: Text('Submit', style: TextStyle(color: Colors.white)),
+                  child: Text('Submit'),
                 ),
               ),]
             ),

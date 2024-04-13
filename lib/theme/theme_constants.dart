@@ -25,6 +25,7 @@ ThemeData lightTheme = ThemeData(
   colorScheme: lightColorScheme,
   appBarTheme: appBarTheme(colorScheme: lightColorScheme),
   buttonTheme: buttonTheme(colorScheme: lightColorScheme),
+  inputDecorationTheme: inputDecorationTheme(colorScheme: lightColorScheme),
 );
 
 // Dark theme
@@ -33,6 +34,7 @@ ThemeData darkTheme = ThemeData(
   colorScheme: darkColorScheme,
   appBarTheme: appBarTheme(colorScheme: darkColorScheme),
   buttonTheme: buttonTheme(colorScheme: darkColorScheme),
+  inputDecorationTheme: inputDecorationTheme(colorScheme: darkColorScheme),
 );
 
 // AppBar theme
@@ -51,5 +53,17 @@ ButtonThemeData buttonTheme({required ColorScheme colorScheme}) {
   return ButtonThemeData(
     buttonColor: colorScheme.secondary,
     textTheme: ButtonTextTheme.primary,
+  );
+}
+
+InputDecorationTheme inputDecorationTheme({required ColorScheme colorScheme}) {
+  return InputDecorationTheme(
+    filled: true,
+    fillColor: colorScheme.surface,
+    border: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: colorScheme.tertiary,
+      ),
+    ),
   );
 }
