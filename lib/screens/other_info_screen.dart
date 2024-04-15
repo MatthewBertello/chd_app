@@ -9,7 +9,7 @@ class OtherInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DefaultAppBar(context: context, title: 'More Info'),
+        appBar: DefaultAppBar(context: context, title: Text('More Info')),
         body: Padding(
             padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 8.0),
             child: Column(

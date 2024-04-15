@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../models/main_model.dart';
 import 'package:intl/intl.dart';
+import 'package:chd_app/components/default_app_bar.dart';
 
 class ShareScreen extends StatefulWidget {
   const ShareScreen({super.key, required this.model});
@@ -67,7 +68,26 @@ class _ShareScreenState extends State<ShareScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context),
+        appBar: DefaultAppBar(context: context, title: Container(
+          padding: const EdgeInsets.all(3.0),
+          height: 45,
+          width: 350, 
+          child: TextField(
+            controller: textController,
+            textAlign: TextAlign.start,
+            maxLines: 1,
+            style: TextStyle(fontSize: 15, color: Colors.indigo[900]),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              alignLabelWithHint: true,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              hintText: 'Find a Member',
+              filled: true,
+              fillColor: Colors.white,
+              suffixIcon: IconButton(onPressed: () => widget.model.searchMember(textController.text), icon: Icon(Icons.search, color: Colors.blueGrey[400]),
+            ),
+          )
+        ),)),
         body: Column(children: [displayMembers(context)]));
   }
 }

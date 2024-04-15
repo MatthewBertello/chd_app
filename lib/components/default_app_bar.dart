@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DefaultAppBar extends AppBar {
-  DefaultAppBar({Key? key, String? title, required BuildContext context})
+  DefaultAppBar({Key? key, Widget? title, required BuildContext context})
       : super(
           key: key,
-          title: Text(
-            title ?? '',
-          ),
+          title: title,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(

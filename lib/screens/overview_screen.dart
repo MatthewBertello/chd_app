@@ -15,7 +15,7 @@ class Overview extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: "Overview"),
+      appBar: DefaultAppBar(context: context, title: Text("Overview")),
       body: Padding(
         padding: EdgeInsets.all(outerPadding),
         child: Column(

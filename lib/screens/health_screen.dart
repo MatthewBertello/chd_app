@@ -18,7 +18,7 @@ class HealthWidget extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(
         context: context,
-        title: "Health",
+        title: Text("Health"),
       ),
       body: SingleChildScrollView(
         child: Padding(
