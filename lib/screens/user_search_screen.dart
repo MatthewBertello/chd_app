@@ -17,7 +17,6 @@ class _ShareScreenState extends State<ShareScreen> {
 
   // Displays the members with list tiles
   Widget displayMembers(BuildContext context) {
-    print(Provider.of<MainModel>(context).membersSearched);
     if (Provider.of<MainModel>(context).membersSearched.isEmpty) {
       return const Expanded(
           child: Center(
@@ -68,7 +67,7 @@ class _ShareScreenState extends State<ShareScreen> {
               hintText: 'Find a Member',
               filled: true,
               fillColor: Colors.white,
-              suffixIcon: IconButton(onPressed: () => setState(() => Provider.of<MainModel>(context).searchMember(textController.text)), icon: Icon(Icons.search, color: Colors.blueGrey[400]),
+              suffixIcon: IconButton(onPressed: () => Provider.of<MainModel>(context, listen: false).searchMember(textController.text), icon: Icon(Icons.search, color: Colors.blueGrey[400]),
             ),
           )
         ),)),
