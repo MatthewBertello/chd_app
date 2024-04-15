@@ -12,7 +12,7 @@ Widget build(BuildContext context){
  return Scaffold(
   appBar: DefaultAppBar(
         context: context,
-        title: "Question Forum",
+        title: Text("Question Forum"),
       ),
        body: Center(
         child: Column(
