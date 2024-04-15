@@ -36,7 +36,6 @@ class MainModel extends ChangeNotifier {
   // A method that searches a member depending on the keyword, 
   // TODO: will need to get it from database later
   searchMember(String keyword) {
-    print("searching member...");
     membersSearched = [Member(name: "Jan Doe", birthDate: DateTime(1990, 12, 3)), 
             Member(name: "John Doe", birthDate: DateTime(1970, 10, 4))];
     notifyListeners();
