@@ -25,7 +25,7 @@ class BurgerMenu extends StatelessWidget {
      {
       'Question Forum': (context) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const CommunityPage())); //routes to community page
+            context, MaterialPageRoute(builder: (context) => const CommunityPage())); //On clicked, Re-routes to Online discussion forum
       }
     },
     {
