@@ -16,23 +16,6 @@ class ShareScreen extends StatefulWidget {
 class _ShareScreenState extends State<ShareScreen> {
   TextEditingController textController = TextEditingController();
 
-  // Builds an app bar with a textfield to search for members in the app
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: TextField(
-        controller: textController,
-        textAlign: TextAlign.start,
-        maxLines: 1,
-        decoration: const InputDecoration(
-          hintText: "Find a member",
-          contentPadding:
-              EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          alignLabelWithHint: true,
-        ).applyDefaults(Theme.of(context).inputDecorationTheme),
-      ),
-    );
-  }
-
   // Displays the members with list tiles
   Widget displayMembers(BuildContext context) {
     print(widget.model.membersSearched);
