@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/main_model.dart';
 import 'package:intl/intl.dart';
 import 'package:chd_app/components/default_app_bar.dart';
@@ -34,6 +35,7 @@ class _ShareScreenState extends State<ShareScreen> {
 
   // Displays the members with list tiles
   Widget displayMembers(BuildContext context) {
+    print(widget.model.membersSearched);
     if (widget.model.membersSearched.isEmpty) {
       return const Expanded(
           child: Center(
