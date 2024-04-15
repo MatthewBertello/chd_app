@@ -45,7 +45,7 @@ create type education_level as enum (
 -- Create a table for public profiles
 -- Create a table for public profiles
 create table profiles (
-  id uuid references auth.users not null primary key,
+  id uuid references auth.users not null primary key on delete cascade on update cascade, 
   updated_at timestamp with time zone
 );
 -- Set up Row Level Security (RLS)
@@ -78,13 +78,27 @@ create trigger on_auth_user_created
 
 -- Create the user_info table
 create table if not exists user_info (
-    user_id uuid references auth.users not null primary key,
+    user_id uuid references public.profiles not null primary key on delete cascade on update cascade,
     date_of_birth date,
     race race,
     gender gender,
     marital_status marital_status,
     education_level education_level
 );
+
+-- This creates a trigger that automatically creates a user_info entry when a new user profile is created.
+create function public.handle_new_user_info()
+returns trigger as $$
+begin
+  insert into public.user_info (user_id)
+  values (new.id);
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_public_user_created
+  after insert on public.profiles
+  for each row execute procedure public.handle_new_user_info();
 
 
 -- Create the variable_definitions table
@@ -101,8 +115,8 @@ create table if not exists variable_definitions (
 -- Create the variable_entries table
 create table if not exists variable_entries (
     id integer generated always as identity primary key,
-    user_id uuid references auth.users not null,
-    variable_id integer references variable_definitions not null,
+    user_id uuid references public.profiles not null on delete cascade on update cascade,
+    variable_id integer references variable_definitions not null on delete cascade on update cascade,
     value numeric,
     date timestamptz not null
 );
