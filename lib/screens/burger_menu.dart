@@ -32,7 +32,7 @@ class BurgerMenu extends StatelessWidget {
       'User Search': (context) => Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ShareScreen(model: MainModel())))
+              builder: (context) => ShareScreen()))
     },
     {
       'Other Info': (context) => Navigator.push(
