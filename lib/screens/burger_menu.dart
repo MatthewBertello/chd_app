@@ -10,6 +10,7 @@ import 'package:chd_app/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
 import 'package:chd_app/theme/color_demo.dart';
+import 'package:chd_app/screens/community_page.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -20,6 +21,12 @@ class BurgerMenu extends StatelessWidget {
     {
       'Settings': (context) => Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Settings()))
+    },
+     {
+      'Community': (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const CommunityPage())); //routes to community page
+      }
     },
     {
       'User Search': (context) => Navigator.push(
