@@ -82,7 +82,7 @@ class Overview extends StatelessWidget {
       {
         'recommendation': 'Call PMD or OB for swelling in legs',
         'icon': const Icon(Icons.call, color: Colors.red),
-        'goal': '',
+        'goal': null,
         'educational info': 'For additional information, kindly refer to your provider.'
       }
     ];

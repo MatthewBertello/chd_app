@@ -11,9 +11,15 @@ class RecommendationPage extends StatelessWidget {
   
   const RecommendationPage({super.key, this.recommendation, this.goal, this.educationalInfo});
 
-  Text makeRecommendationText(BuildContext context) {
-    return Text(
-      '$recommendation\n\n$goal\n\n$educationalInfo'
+  Column makeRecommendationText(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text('$recommendation', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+        (goal != null) ? Text('\nGoal: $goal\n') : const Text(''),
+        (educationalInfo != null) ? Text('$educationalInfo'): const Text('')
+      ],
     );
   }
   @override 
