@@ -36,11 +36,7 @@ class Overview extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Consumer<MainModel>(
-      builder: (context, model, child) {
-        return HealthWidget(model: model);
-      },)),),
+                onTap: () => DefaultTabController.of(context).animateTo(1),
                 child: SizedBox(
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
