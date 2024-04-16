@@ -3,7 +3,7 @@ import 'package:chd_app/models/main_model.dart';
 import 'package:provider/provider.dart';
 import 'package:chd_app/screens/overview_screen.dart';
 import 'package:chd_app/screens/health_screen.dart';
-import 'package:chd_app/screens/info_entry_screen.dart';
+import 'package:chd_app/screens/info_entry_screen/info_entry_screen.dart';
 import 'package:chd_app/screens/burger_menu.dart';
 
 class TabView extends StatelessWidget {
