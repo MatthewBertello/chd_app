@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
 import 'member.dart';
+import 'package:chd_app/main.dart';
 
 class MainModel extends ChangeNotifier {
   String test = "hello";
-  Connection? conn;
   List membersSearched = [];
   Member member = Member(name: "Jane Doe", dueDate: DateTime(2024, 9, 1)); // Just a hardcoded member for now
+
+  List<Map<String, dynamic>>? variableDefinitions;
+
+  void getVariableDefinitions() async {
+    final data = await supabase.from('variable_definitions').select();
+    variableDefinitions = data;
+    print(variableDefinitions); 
+  }
 
   // Method to get the countdown for the due date in days
   int dueDateCountDown() {
@@ -34,10 +41,19 @@ class MainModel extends ChangeNotifier {
   }
 
   // A method that searches a member depending on the keyword, 
-  // TODO: will need to get it from database later
-  searchMember(String keyword) {
-    membersSearched = [Member(name: "Jan Doe", birthDate: DateTime(1990, 12, 3)), 
-            Member(name: "John Doe", birthDate: DateTime(1970, 10, 4))];
+  Future<void> searchMember(String userID) async {
+    final response = await supabase 
+      .from('profiles')
+      .select(); // Tried using .like after select, but it doesn't work... 
+
+    // Add the member into the membersSearched list if the userID is similar to each member in the response
+    for (var currentMember in response) {
+      if (currentMember['id'].contains(userID)) {
+        print(currentMember['id']);
+        membersSearched.add(currentMember['id']);
+      }
+    }
+
     notifyListeners();
   }
 
