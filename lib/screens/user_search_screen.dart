@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/main_model.dart';
-import 'package:intl/intl.dart';
 import 'package:chd_app/components/default_app_bar.dart';
 
 class ShareScreen extends StatefulWidget {
@@ -14,6 +13,12 @@ class ShareScreen extends StatefulWidget {
 
 class _ShareScreenState extends State<ShareScreen> {
   TextEditingController textController = TextEditingController();
+
+  @override
+  void initState() {
+    Provider.of<MainModel>(context, listen: false).clearMembersSearched();
+    super.initState();
+  }
 
   // Displays the members with list tiles
   Widget displayMembers(BuildContext context) {

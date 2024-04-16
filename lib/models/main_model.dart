@@ -42,6 +42,7 @@ class MainModel extends ChangeNotifier {
 
   // A method that searches a member depending on the keyword, 
   Future<void> searchMember(String userID) async {
+    clearMembersSearched(); // Clear the search list every time we're searching a new user
     final response = await supabase 
       .from('profiles')
       .select(); // Tried using .like after select, but it doesn't work... 
