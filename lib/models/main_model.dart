@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
 import 'member.dart';
+import 'package:chd_app/main.dart';
 
 class MainModel extends ChangeNotifier {
   String test = "hello";
-  Connection? conn;
   List membersSearched = [];
   Member member = Member(name: "Jane Doe", dueDate: DateTime(2024, 9, 1)); // Just a hardcoded member for now
+
+  List<Map<String, dynamic>>? variableDefinitions;
+
+  void getVariableDefinitions() async {
+    final data = await supabase.from('variable_definitions').select();
+    variableDefinitions = data;
+    print(variableDefinitions); 
+  }
 
   // Method to get the countdown for the due date in days
   int dueDateCountDown() {
