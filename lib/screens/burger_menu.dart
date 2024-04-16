@@ -32,7 +32,7 @@ class BurgerMenu extends StatelessWidget {
       'User Search': (context) => Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ShareScreen()))
+              builder: (context) => const ShareScreen()))
     },
     {
       'Other Info': (context) => Navigator.push(
@@ -57,7 +57,6 @@ class BurgerMenu extends StatelessWidget {
         bool isDark =
             Provider.of<ThemeManager>(context, listen: false).themeMode ==
                 ThemeMode.dark;
-        print(isDark);
         Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
       }
     },
