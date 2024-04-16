@@ -29,15 +29,9 @@ class _ShareScreenState extends State<ShareScreen> {
                   Divider(color: Colors.indigo[900]),
               itemCount: Provider.of<MainModel>(context).membersSearched.length,
               itemBuilder: (BuildContext context, int index) {
-                // Format the member's birth date
-                final DateFormat formatter = DateFormat('yyyy-MM-dd');
-                final String formatedBirthDate = formatter
-                    .format(Provider.of<MainModel>(context).membersSearched[index].birthDate);
-
                 return ListTile(
                     // Display the name and date of birth and a share button
-                    title: Text(Provider.of<MainModel>(context).membersSearched[index].name),
-                    subtitle: Text(formatedBirthDate),
+                    title: Text(Provider.of<MainModel>(context).membersSearched[index]),
                     trailing: IconButton(
                         onPressed: null,
                         icon: Icon(

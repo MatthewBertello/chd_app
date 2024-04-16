@@ -41,10 +41,19 @@ class MainModel extends ChangeNotifier {
   }
 
   // A method that searches a member depending on the keyword, 
-  // TODO: will need to get it from database later
-  searchMember(String keyword) {
-    membersSearched = [Member(name: "Jan Doe", birthDate: DateTime(1990, 12, 3)), 
-            Member(name: "John Doe", birthDate: DateTime(1970, 10, 4))];
+  Future<void> searchMember(String userID) async {
+    final response = await supabase 
+      .from('profiles')
+      .select(); // Tried using .like after select, but it doesn't work... 
+
+    // Add the member into the membersSearched list if the userID is similar to each member in the response
+    for (var currentMember in response) {
+      if (currentMember['id'].contains(userID)) {
+        print(currentMember['id']);
+        membersSearched.add(currentMember['id']);
+      }
+    }
+
     notifyListeners();
   }
 
