@@ -1,5 +1,10 @@
+import 'dart:ffi';
+
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/utils/helper_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DailyInfoWidget extends StatefulWidget {
   const DailyInfoWidget({super.key});
@@ -9,112 +14,149 @@ class DailyInfoWidget extends StatefulWidget {
 }
 
 class _DailyInfoWidgetState extends State<DailyInfoWidget> {
-  List<Map<String, String>> items = [
-    {'category': 'Select a category'}
-  ];
+  bool checkboxValue = false;
+  List<bool> checkboxValues = List.filled(10, false);
 
-  List<TextEditingController> controllers = [];
-
-  List<String> categories = [
-    'Select a category',
-    'Water intake (cups)',
-    'Sleep (hours)',
-    'Fruit intake (servings)',
-  ];
   @override
   Widget build(BuildContext context) {
+    print("Build");
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: Text('Info Entry')),
+      appBar: DefaultAppBar(
+        context: context,
+        title: const Text('Info Entry'),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.save),
+              color: Theme.of(context).colorScheme.onPrimary),
+        ],
+      ),
       body: Column(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    buildInputs(context),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Get the values from the text controllers
-                List<String> values =
-                    controllers.map((controller) => controller.text).toList();
-                print(values);
+          const Text("Test"),
+          ListTile(
+            title: Text("Test"),
+            trailing: Checkbox(
+              value: checkboxValue,
+              onChanged: (bool? value) {
+                setState(() {
+                  checkboxValue = value!;
+                });
               },
-              child: const Text('Submit'),
             ),
-          ),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            items.add({'category': categories[0]});
-          });
+          showModalBottomSheet(
+            context: context,
+            // builder: _bottomSheetBuilder,
+            builder: (BuildContext context) {
+              return SizedBox(
+      height: 600,
+      child: Center(
+        child: Scaffold(
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SearchBar(
+                  hintText: "Search",
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text("Test $index"),
+                      trailing: Checkbox(
+                        value: checkboxValues[index],
+                        onChanged: (bool? value) {
+                          print("Checkbox value: $value");
+                          // Provider.of<_DailyInfoWidgetState>(context, listen: false).setState(() {
+                          //   print("provider");
+                          //   checkboxValues[index] = value!;
+                          // });
+                          setState(() {
+                            print("setState");
+                            checkboxValues[index] = value!;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.check),
+          ),
+        ),
+      ),
+    );
+            },
+          );
         },
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  Widget buildInputs(BuildContext context) {
-    return Column(
-      children: items.map((item) {
-        int index = items.indexOf(item);
-        TextEditingController controller = TextEditingController();
-        controllers.add(controller);
-        return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DropdownButton<String>(
-                  value: item['category'],
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      item['category'] = newValue!;
-                    });
-                  },
-                  items:
-                      categories.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+  Widget _bottomSheetBuilder(BuildContext context) {
+    return SizedBox(
+      height: 600,
+      child: Center(
+        child: Scaffold(
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SearchBar(
+                  hintText: "Search",
                 ),
-                items.length > 1
-                    ? IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
+              ),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text("Test $index"),
+                      trailing: Checkbox(
+                        value: checkboxValues[index],
+                        onChanged: (bool? value) {
+                          print("Checkbox value: $value");
+                          Provider.of<_DailyInfoWidgetState>(context, listen: false).setState(() {
+                            print("provider");
+                            checkboxValues[index] = value!;
+                          });
                           setState(() {
-                            items.removeAt(index);
-                            controllers.removeAt(index);
+                            print("setState");
+                            checkboxValues[index] = value!;
                           });
                         },
-                      )
-                    : Container(),
-              ],
-            ),
-            TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                hintText: 'Enter value',
-              ),
-            ),
-
-            const Divider(), // Add a divider between each item
-          ],
-        );
-      }).toList(),
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.check),
+          ),
+        ),
+      ),
     );
   }
 }

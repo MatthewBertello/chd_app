@@ -24,13 +24,8 @@ class TabView extends StatelessWidget {
         return HealthWidget(model: model);
       },
     ),
-    Consumer<MainModel>(
-      builder: (context, model, child) {
-        return const DailyInfoWidget();
-      },
-    ),
-    
-      BurgerMenu(),
+    DailyInfoWidget(),
+    BurgerMenu(),
   ];
 
   TabView({super.key});

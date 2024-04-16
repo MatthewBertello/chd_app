@@ -12,8 +12,10 @@ class MainModel extends ChangeNotifier {
   void getVariableDefinitions() async {
     final data = await supabase.from('variable_definitions').select();
     variableDefinitions = data;
-    print(variableDefinitions); 
+    print(variableDefinitions);
   }
+
+
 
   // Method to get the countdown for the due date in days
   int dueDateCountDown() {
