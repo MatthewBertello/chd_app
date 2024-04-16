@@ -13,6 +13,7 @@ class InfoEntryModel extends ChangeNotifier {
         element['checkbox'] = false;
         element['favorite'] = false;
         element['form'] = TextFormField(
+          controller: TextEditingController(),
           keyboardType: TextInputType.number,
         );
       }
@@ -21,14 +22,12 @@ class InfoEntryModel extends ChangeNotifier {
   }
 
   void submit() {
-    print('Submit');
     for (var element in variableDefinitions!) {
       element['checkbox'] = element['favorite'];
-      element['form'] = TextFormField(
-        keyboardType: TextInputType.number,
-      );
+      element['form'].controller!.clear();
     }
     selectedDate = DateTime.now();
+    notifyListeners();
   }
 
   void setCheckbox(int index, bool value) {

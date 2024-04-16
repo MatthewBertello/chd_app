@@ -20,7 +20,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => MainModel()),
         ChangeNotifierProvider(create: (context) => ThemeManager()),
-        ChangeNotifierProvider(create: (context) => QuestionForumModel())
+        ChangeNotifierProvider(create: (context) => QuestionForumModel()),
         ChangeNotifierProvider(create: (context) => InfoEntryModel()),
       ],
       child: const MyApp(),
