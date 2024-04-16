@@ -1,4 +1,5 @@
 import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/models/question_forum_model.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_constants.dart';
 import 'package:chd_app/theme/theme_manager.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => MainModel()),
         ChangeNotifierProvider(create: (context) => ThemeManager()),
+        ChangeNotifierProvider(create: (context) => QuestionForumModel())
       ],
       child: const MyApp(),
     ),
