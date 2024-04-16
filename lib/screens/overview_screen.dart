@@ -4,7 +4,10 @@ import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
+import 'package:provider/provider.dart';
+import 'health_screen.dart';
 
 class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
@@ -32,12 +35,20 @@ class Overview extends StatelessWidget {
                   margin: EdgeInsets.all(innerMargin),
                 ),
               ),
-              SizedBox(
-                width: screenWidth / 2 - outerPadding,
-                height: screenWidth / 2 - outerPadding,
-                child: HealthMeter(
-                  value: 90,
-                  margin: EdgeInsets.all(innerMargin),
+              GestureDetector(
+                onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Consumer<MainModel>(
+      builder: (context, model, child) {
+        return HealthWidget(model: model);
+      },)),),
+                child: SizedBox(
+                  width: screenWidth / 2 - outerPadding,
+                  height: screenWidth / 2 - outerPadding,
+                  child: HealthMeter(
+                    value: 90,
+                    margin: EdgeInsets.all(innerMargin),
+                  ),
+                  
                 ),
               )
             ]),
