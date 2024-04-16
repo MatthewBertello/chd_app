@@ -1,3 +1,4 @@
+import 'package:chd_app/models/info_entry_model.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:provider/provider.dart';
