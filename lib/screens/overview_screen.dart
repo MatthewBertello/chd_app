@@ -4,6 +4,7 @@ import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
+import 'recommendationPage.dart';
 
 class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
@@ -57,15 +58,21 @@ class Overview extends StatelessWidget {
     List recommendations = [
       {
         'recommendation': 'Increase sleep',
-        'icon': const Icon(Icons.night_shelter, color: Colors.red)
+        'icon': const Icon(Icons.night_shelter, color: Colors.red),
+        'goal': 'Try to get 8-10 hours of sleep per night',
+        'educational info': 'Sleep is essential for all sorts of vital bodily functions, restoring energy and allowing the brain to process new information it has taken in while awake.'
       },
       {
         'recommendation': 'Increase water intake',
-        'icon': const Icon(Icons.water_drop, color: Colors.red)
+        'icon': const Icon(Icons.water_drop, color: Colors.red),
+        'goal': 'During pregnancy you should drink 8 to 12 cups (64 to 96 ounces) of water every day.',
+        'educational info': 'Water has many benefits. It aids digestion and helps form the amniotic fluid around the fetus. Water also helps nutrients circulate in the body and helps waste leave the body.'
       },
       {
         'recommendation': 'Call PMD or OB for swelling in legs',
-        'icon': const Icon(Icons.call, color: Colors.red)
+        'icon': const Icon(Icons.call, color: Colors.red),
+        'goal': '',
+        'educational info': 'For additional information, kindly refer to your provider.'
       }
     ];
 
@@ -77,6 +84,11 @@ class Overview extends StatelessWidget {
           // Display each recommendation and corresponding icon
           title: Text(recommendations[index]['recommendation']),
           trailing: recommendations[index]['icon'],
+          onTap: () => Navigator.push(context, 
+                        MaterialPageRoute(builder: (context) =>
+                        RecommendationPage(recommendation: recommendations[index]['recommendation'],
+                        goal: recommendations[index]['goal'],
+                        educationalInfo: recommendations[index]['educational info'],)))
         );
       },
     );
