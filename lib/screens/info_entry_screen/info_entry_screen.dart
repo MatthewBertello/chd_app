@@ -36,9 +36,8 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
   Widget build(BuildContext context) {
     var displayedVariables = Provider.of<InfoEntryModel>(context)
             .variableDefinitions
-            ?.where((element) => element['checkbox'] == true)
-            .toList() ??
-        [];
+            .where((element) => element['checkbox'] == true)
+            .toList();
     return Scaffold(
       appBar: DefaultAppBar(
         context: context,
