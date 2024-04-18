@@ -18,14 +18,8 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
   @override
   void initState() {
     if (Provider.of<InfoEntryModel>(context, listen: false).loaded == false) {
-      var variables = Provider.of<MainModel>(context, listen: false)
+      Provider.of<InfoEntryModel>(context, listen: false)
           .getVariableDefinitions();
-      variables.then(
-        (data) {
-          Provider.of<InfoEntryModel>(context, listen: false)
-              .setVariableDefinitions(data);
-        },
-      );
     }
     Provider.of<InfoEntryModel>(context, listen: false).selectedDate =
         DateTime.now();
@@ -35,9 +29,9 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
   @override
   Widget build(BuildContext context) {
     var displayedVariables = Provider.of<InfoEntryModel>(context)
-            .variableDefinitions
-            .where((element) => element['checkbox'] == true)
-            .toList();
+        .variableDefinitions
+        .where((element) => element['checkbox'] == true)
+        .toList();
     return Scaffold(
       appBar: DefaultAppBar(
         context: context,
@@ -52,10 +46,10 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
                   },
                 );
                 ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Entry Added!'),
-                      ),
-                    );
+                  const SnackBar(
+                    content: Text('Entry Added!'),
+                  ),
+                );
               },
               icon: const Icon(Icons.save),
               color: Theme.of(context).colorScheme.onPrimary),
@@ -82,7 +76,6 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
                     onChanged: (DateTime? value) {
                       Provider.of<InfoEntryModel>(context, listen: false)
                           .selectedDate = value!;
-                      print(value);
                     },
                   ),
                 ),
@@ -114,10 +107,10 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           var future = showModalBottomSheet(
+            isScrollControlled: true,
             context: context,
-            // builder: _bottomSheetBuilder,
             builder: (BuildContext context) {
-              return VariableSelectBottomSheet();
+              return const Wrap(children: [VariableSelectBottomSheet()]);
             },
           );
           future.then((value) => setState(() {}));
