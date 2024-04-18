@@ -18,8 +18,21 @@ class Settings extends StatelessWidget {
               children: [
                 SupaResetPassword(
                   accessToken: supabase.auth.currentSession?.accessToken,
-                  onSuccess: (UserResponse response) {},
-                  onError: (error) {},
+                  onSuccess: (UserResponse response) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Password changed successfully!'),
+                      ),
+                    );
+                  },
+                  onError: (error) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Password change failed!'),
+                      ),
+                    );
+                    print(error);
+                  },
                 )
               ],
             ),
