@@ -18,9 +18,9 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
 
   @override
   void initState() {
-    if (Provider.of<InfoEntryModel>(context, listen: false).loaded == false) {
-      Provider.of<InfoEntryModel>(context, listen: false)
-          .getVariableDefinitions();
+    if (Provider.of<InfoEntryModel>(context, listen: false).loaded == false &&
+        Provider.of<InfoEntryModel>(context, listen: false).loading == false) {
+      Provider.of<InfoEntryModel>(context, listen: false).init();
     }
     Provider.of<InfoEntryModel>(context, listen: false).selectedDate =
         DateTime.now();

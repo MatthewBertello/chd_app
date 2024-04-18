@@ -1,4 +1,5 @@
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_manager.dart';
 import 'package:chd_app/utils/show_default_dialog.dart';
@@ -21,17 +22,18 @@ class BurgerMenu extends StatelessWidget {
       'Settings': (context) => Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Settings()))
     },
-     {
+    {
       'Question Forum': (context) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const CommunityPage())); //On clicked, Re-routes to Online discussion forum
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    const CommunityPage())); //On clicked, Re-routes to Online discussion forum
       }
     },
     {
       'User Search': (context) => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const ShareScreen()))
+          context, MaterialPageRoute(builder: (context) => const ShareScreen()))
     },
     {
       'Other Info': (context) => Navigator.push(
@@ -44,6 +46,7 @@ class BurgerMenu extends StatelessWidget {
               actions: {
                 "Yes": () async {
                   await supabase.auth.signOut();
+                  await Provider.of<InfoEntryModel>(context, listen: false).reset();
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const Login()));
@@ -61,8 +64,8 @@ class BurgerMenu extends StatelessWidget {
     },
     {
       'Demo Theme': (context) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const ColorDemo()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ColorDemo()));
       }
     }
   ];

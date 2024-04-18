@@ -3,19 +3,38 @@ import 'package:flutter/material.dart';
 
 class InfoEntryModel extends ChangeNotifier {
   bool loaded = false;
+  bool loading = false;
   List<Map<String, dynamic>> variableDefinitions = [];
   Map<String, List<Map<String, dynamic>>> categorizedVariableDefinitions = {};
+  List<int> favorites = [];
   DateTime selectedDate = DateTime.now();
 
-  void getVariableDefinitions() async {
-    // Load the variable definitions from the database
-    variableDefinitions = await supabase.from('variable_definitions').select();
-    variableDefinitions.sort((a, b) => a['name'].compareTo(b['name']));
+  Future<dynamic> reset() async {
+    while (loading) {
+      continue;
+    }
+    variableDefinitions = [];
+    categorizedVariableDefinitions = {};
+    favorites = [];
+    selectedDate = DateTime.now();
+    loaded = false;
+  }
+
+  Future<dynamic> init() async {
+    while (loading) {
+      continue;
+    }
+    loading = true;
+    variableDefinitions = [];
+    categorizedVariableDefinitions = {};
+    favorites = [];
+    await getVariableDefinitions();
+    await getFavorites();
 
     // Add checkbox, favorite, and form fields to each variable
     for (var element in variableDefinitions) {
-      element['checkbox'] = false;
-      element['favorite'] = false;
+      element['favorite'] = favorites.contains(element['id']);
+      element['checkbox'] = element['favorite'];
       element['form'] = TextFormField(
         controller: TextEditingController(),
         keyboardType: TextInputType.number,
@@ -31,14 +50,37 @@ class InfoEntryModel extends ChangeNotifier {
     }
 
     loaded = true;
+    loading = false;
     notifyListeners();
+  }
+
+  Future<dynamic> getVariableDefinitions() async {
+    try {
+      variableDefinitions =
+          await supabase.from('variable_definitions').select();
+    } catch (e) {
+      print(e);
+    }
+    variableDefinitions.sort((a, b) => a['name'].compareTo(b['name']));
+  }
+
+  Future<dynamic> getFavorites() async {
+    try {
+      favorites = (await supabase
+              .from('user_variable_favorites')
+              .select('variable_id')
+              .eq('user_id', supabase.auth.currentUser!.id))
+          .map<int>((e) => e['variable_id'] as int)
+          .toList();
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<dynamic> submit() async {
     for (var element in variableDefinitions) {
       if (element['checkbox'] && element['form'].controller!.text.isNotEmpty) {
         try {
-          print('Entering data ${element['name']}');
           await supabase.from('variable_entries').insert([
             {
               'user_id': supabase.auth.currentUser!.id,
@@ -48,7 +90,6 @@ class InfoEntryModel extends ChangeNotifier {
             }
           ]);
         } catch (e) {
-          print('Error entering data ${element['name']}');
           print(e);
         }
       }
@@ -57,5 +98,30 @@ class InfoEntryModel extends ChangeNotifier {
     }
     selectedDate = DateTime.now();
     notifyListeners();
+  }
+
+  Future<dynamic> updateFavorite(int id, bool favorited) async {
+    try {
+      if (favorited) {
+        await supabase.from('user_variable_favorites').upsert(
+          {
+            'user_id': supabase.auth.currentUser!.id,
+            'variable_id': id,
+          },
+        );
+        if (!favorites.contains(id)) {
+          favorites.add(id);
+        }
+      } else {
+        await supabase
+            .from('user_variable_favorites')
+            .delete()
+            .eq('user_id', supabase.auth.currentUser!.id)
+            .eq('variable_id', id);
+        favorites.remove(id);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
