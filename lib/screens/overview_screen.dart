@@ -36,11 +36,7 @@ class Overview extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Consumer<MainModel>(
-      builder: (context, model, child) {
-        return HealthWidget(model: model);
-      },)),),
+                onTap: () => DefaultTabController.of(context).animateTo(1),
                 child: SizedBox(
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
@@ -82,7 +78,7 @@ class Overview extends StatelessWidget {
       {
         'recommendation': 'Call PMD or OB for swelling in legs',
         'icon': const Icon(Icons.call, color: Colors.red),
-        'goal': '',
+        'goal': null,
         'educational info': 'For additional information, kindly refer to your provider.'
       }
     ];
