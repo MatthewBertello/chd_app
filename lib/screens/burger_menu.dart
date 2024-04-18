@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
 import 'package:chd_app/theme/color_demo.dart';
 import 'package:chd_app/screens/community_page.dart';
+import 'package:chd_app/models/question_forum_model.dart';
+import 'community_page.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -25,7 +27,10 @@ class BurgerMenu extends StatelessWidget {
      {
       'Question Forum': (context) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const CommunityPage())); //On clicked, Re-routes to Online discussion forum
+            context, MaterialPageRoute(builder: (context) => 
+            Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
+            CommunityPage(questionForumModel: questionsChangeNotifier)
+            ))); //On clicked, Re-routes to Online discussion forum
       }
     },
     {

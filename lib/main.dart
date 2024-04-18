@@ -1,4 +1,6 @@
+import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/models/question_forum_model.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_constants.dart';
 import 'package:chd_app/theme/theme_manager.dart';
@@ -6,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
@@ -19,6 +20,8 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => MainModel()),
         ChangeNotifierProvider(create: (context) => ThemeManager()),
+        ChangeNotifierProvider(create: (context) => QuestionForumModel()),
+        ChangeNotifierProvider(create: (context) => InfoEntryModel()),
       ],
       child: const MyApp(),
     ),

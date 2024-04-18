@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/main_model.dart';
-import 'package:intl/intl.dart';
 import 'package:chd_app/components/default_app_bar.dart';
 
 class ShareScreen extends StatefulWidget {
@@ -14,6 +13,12 @@ class ShareScreen extends StatefulWidget {
 
 class _ShareScreenState extends State<ShareScreen> {
   TextEditingController textController = TextEditingController();
+
+  @override
+  void initState() {
+    Provider.of<MainModel>(context, listen: false).clearMembersSearched();
+    super.initState();
+  }
 
   // Displays the members with list tiles
   Widget displayMembers(BuildContext context) {
@@ -29,15 +34,9 @@ class _ShareScreenState extends State<ShareScreen> {
                   Divider(color: Colors.indigo[900]),
               itemCount: Provider.of<MainModel>(context).membersSearched.length,
               itemBuilder: (BuildContext context, int index) {
-                // Format the member's birth date
-                final DateFormat formatter = DateFormat('yyyy-MM-dd');
-                final String formatedBirthDate = formatter
-                    .format(Provider.of<MainModel>(context).membersSearched[index].birthDate);
-
                 return ListTile(
                     // Display the name and date of birth and a share button
-                    title: Text(Provider.of<MainModel>(context).membersSearched[index].name),
-                    subtitle: Text(formatedBirthDate),
+                    title: Text(Provider.of<MainModel>(context).membersSearched[index]),
                     trailing: IconButton(
                         onPressed: null,
                         icon: Icon(
