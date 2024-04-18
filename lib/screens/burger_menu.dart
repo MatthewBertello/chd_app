@@ -3,7 +3,6 @@ import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_manager.dart';
 import 'package:chd_app/utils/show_default_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:chd_app/models/main_model.dart';
 import 'package:chd_app/screens/other_info_screen.dart';
 import 'package:chd_app/screens/settings_screen.dart';
 import 'package:chd_app/screens/user_search_screen.dart';
@@ -11,8 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
 import 'package:chd_app/theme/color_demo.dart';
 import 'package:chd_app/screens/community_page.dart';
-import 'package:chd_app/models/question_forum_model.dart';
-import 'community_page.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -65,7 +62,7 @@ class BurgerMenu extends StatelessWidget {
     {
       'Demo Theme': (context) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ColorDemo()));
+            context, MaterialPageRoute(builder: (context) => const ColorDemo()));
       }
     }
   ];

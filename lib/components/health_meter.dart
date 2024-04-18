@@ -1,8 +1,6 @@
 import 'package:chd_app/components/circular_meter.dart';
 import 'package:chd_app/components/tile.dart';
-import 'package:chd_app/utils/helper_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HealthMeter extends StatelessWidget {
   final double value;

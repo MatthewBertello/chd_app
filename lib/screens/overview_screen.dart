@@ -4,10 +4,7 @@ import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
-import 'package:provider/provider.dart';
-import 'health_screen.dart';
 
 class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
@@ -19,7 +16,7 @@ class Overview extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: Text("Overview")),
+      appBar: DefaultAppBar(context: context, title: const Text("Overview")),
       body: Padding(
         padding: EdgeInsets.all(outerPadding),
         child: Column(

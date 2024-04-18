@@ -1,6 +1,5 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/info_entry_model.dart';
-import 'package:chd_app/models/main_model.dart';
 import 'package:chd_app/screens/info_entry_screen/variable_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
           Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: DateTimeFormField(
                   initialValue:
                       Provider.of<InfoEntryModel>(context).selectedDate,

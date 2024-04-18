@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ColorDemo extends StatelessWidget {
+  const ColorDemo({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
