@@ -63,7 +63,7 @@ class BurgerMenu extends StatelessWidget {
       }
     },
     {
-      'Demo Theme': (context) {
+      'Demo Theme (Dev only)': (context) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const ColorDemo()));
       }

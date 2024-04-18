@@ -110,7 +110,7 @@ class _LoginState extends State<Login> {
                       builder: (context) => TabView(),
                     ),
                   ),
-                  child: const Text('Skip Login'),
+                  child: const Text('Skip Login (Dev only, partial functionality)'),
                 ),
               ],
             ),
