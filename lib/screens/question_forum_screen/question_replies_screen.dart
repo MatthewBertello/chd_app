@@ -36,8 +36,11 @@ class QuestionRepliesState extends State<QuestionReplies> {
                 itemCount: widget.questionForumModel.questionsList[widget.questionIndex].replies.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[index]),
+                    title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getReply()),
                     subtitle: const Text("The Author"), // prints the author just hardcoded for now
+                    onLongPress: () {
+                      widget.questionForumModel.deleteReply(widget.questionIndex, index); // delete the reply
+                    }
                   );
                 },
               )

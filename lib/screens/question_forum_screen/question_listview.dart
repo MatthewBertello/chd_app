@@ -9,15 +9,22 @@ import 'question_replies_screen.dart';
 class QuestionListView extends StatefulWidget{
   const QuestionListView({super.key, required this.questionForumModel});
   
-  final QuestionForumModel questionForumModel;
+  final QuestionForumModel questionForumModel; // model for the questions
 
   @override
   State<QuestionListView> createState() => _QuestionListViewState();
 }
 
 class _QuestionListViewState extends State<QuestionListView> {
+
+bool initialized = false;
+
 @override
 Widget build(BuildContext context){
+  if (!initialized){ // loads the question list when the app is first loaded
+    _initQuestionsList();
+    initialized = true;
+  }
   return Scaffold(
     appBar: DefaultAppBar(
       context: context,
@@ -34,10 +41,14 @@ Widget build(BuildContext context){
                   style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
                 subtitle: const Text("The Author"),
                 onTap: () {
+                  widget.questionForumModel.loadReplyList(index);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                   Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
                   QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: index)
                   )));
+                },
+                onLongPress: () {
+                  widget.questionForumModel.deleteQuestion(index); // delete the question on long press            
                 }
               );
             },
@@ -50,8 +61,15 @@ Widget build(BuildContext context){
     )
   );
 }
+
+// adds a question
 void _addQuestion() {    
   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddQuestion(questionForumModel: widget.questionForumModel)));
+}
+
+// deletes a question
+void _initQuestionsList() {
+  widget.questionForumModel.loadQuestionList();
 }
 
 }
