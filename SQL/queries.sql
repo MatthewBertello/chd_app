@@ -115,10 +115,16 @@ create table if not exists variable_definitions (
 -- Create the variable_entries table
 create table if not exists variable_entries (
     id integer generated always as identity primary key,
-    user_id uuid references public.profiles not null on delete cascade on update cascade,
-    variable_id integer references variable_definitions not null on delete cascade on update cascade,
+    user_id uuid references public.profiles(id) not null on delete cascade on update cascade,
+    variable_id integer references variable_definitions(id) not null on delete cascade on update cascade,
     value numeric,
     date timestamptz not null
+);
+
+create table if not exists user_variable_favorites (
+    user_id uuid references public.profiles(id) on delete cascade on update cascade,
+    variable_id integer references variable_definitions(id) on delete cascade on update cascade,
+    primary key (user_id, variable_id)
 );
 
 -- Insert some sample data
