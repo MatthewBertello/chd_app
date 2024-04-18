@@ -16,6 +16,7 @@ dependencies:
   loading_animation_widget: ^1.2.1
   postgres: ^3.1.2
   provider: ^6.1.2
+  searchable_listview: ^2.11.2
   shared_preferences: ^2.2.3
   supabase_auth_ui: ^0.4.3
   supabase_flutter: ^2.5.0
