@@ -97,14 +97,15 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
                     dotLastColor: Colors.transparent),
                 bubblesSize: 0,
                 isLiked: item['favorite'],
-                onTap: (bool isLiked) {
+                onTap: (bool isFavorited) {
                   setState(() {
-                    item['favorite'] = !isLiked;
-                    if (!isLiked) {
+                    item['favorite'] = !isFavorited;
+                    Provider.of<InfoEntryModel>(context, listen: false).updateFavorite(item['id'], !isFavorited);
+                    if (!isFavorited) {
                       item['checkbox'] = true;
                     }
                   });
-                  return Future.value(!isLiked);
+                  return Future.value(!isFavorited);
                 },
               ),
             ),
