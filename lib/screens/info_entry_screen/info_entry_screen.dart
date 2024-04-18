@@ -15,6 +15,8 @@ class DailyInfoWidget extends StatefulWidget {
 }
 
 class _DailyInfoWidgetState extends State<DailyInfoWidget> {
+  bool loading = false;
+
   @override
   void initState() {
     if (Provider.of<InfoEntryModel>(context, listen: false).loaded == false) {
@@ -36,74 +38,68 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
       appBar: DefaultAppBar(
         context: context,
         title: const Text('Info Entry'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                setState(
-                  () {
-                    Provider.of<InfoEntryModel>(context, listen: false)
-                        .submit();
-                  },
-                );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Entry Added!'),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.save),
-              color: Theme.of(context).colorScheme.onPrimary),
-        ],
+        actions: [_saveButton()],
       ),
-      body: !Provider.of<InfoEntryModel>(context).loaded
-          ? Expanded(
-              child: Center(
-                child: LoadingAnimationWidget.fourRotatingDots(
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 50,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: DateTimeFormField(
+                  initialValue:
+                      Provider.of<InfoEntryModel>(context).selectedDate,
+                  canClear: false,
+                  lastDate: DateTime.now(),
+                  onChanged: (DateTime? value) {
+                    Provider.of<InfoEntryModel>(context, listen: false)
+                        .selectedDate = value!;
+                  },
                 ),
               ),
-            )
-          : Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DateTimeFormField(
-                    initialValue:
-                        Provider.of<InfoEntryModel>(context).selectedDate,
-                    canClear: false,
-                    lastDate: DateTime.now(),
-                    onChanged: (DateTime? value) {
-                      Provider.of<InfoEntryModel>(context, listen: false)
-                          .selectedDate = value!;
-                    },
-                  ),
-                ),
-                ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: displayedVariables.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(displayedVariables[index]['name'] ?? ""),
-                      subtitle: Text(displayedVariables[index]['unit'] ?? ""),
-                      trailing: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 100,
-                          child: displayedVariables[index]['form'] ??
-                              const Text("Error"),
-                        ),
+              ListView.separated(
+                shrinkWrap: true,
+                itemCount: displayedVariables.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(displayedVariables[index]['name'] ?? ""),
+                    subtitle: Text(displayedVariables[index]['unit'] ?? ""),
+                    trailing: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 100,
+                        child: displayedVariables[index]['form'] ??
+                            const Text("Error"),
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider(
-                      height: 1,
-                    );
-                  },
-                ),
-              ],
-            ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    height: 1,
+                  );
+                },
+              ),
+            ],
+          ),
+          loading || !Provider.of<InfoEntryModel>(context, listen: false).loaded
+              ? Stack(
+                  children: [
+                    ModalBarrier(
+                      color: Colors.black.withOpacity(0.3),
+                      dismissible: false,
+                    ),
+                    Center(
+                      child: LoadingAnimationWidget.fourRotatingDots(
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 50,
+                      ),
+                    )
+                  ],
+                )
+              : const SizedBox(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           var future = showModalBottomSheet(
@@ -118,5 +114,51 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Widget _saveButton() {
+    return IconButton(
+        onPressed: () {
+          setState(() {
+            loading = true;
+          });
+          final future =
+              Provider.of<InfoEntryModel>(context, listen: false).submit();
+          future.then((value) {
+            setState(() {
+              loading = false;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Entry Added!'),
+              ),
+            );
+          });
+        },
+        icon: const Icon(Icons.save),
+        color: Theme.of(context).colorScheme.onPrimary);
+  }
+
+  Widget _loadingWidget() {
+    if (loading || !Provider.of<InfoEntryModel>(context).loaded) {
+      return const SizedBox();
+    } else {
+      return Stack(
+        children: [
+          ModalBarrier(
+            color: Colors.black.withOpacity(0.3),
+            dismissible: false,
+          ),
+          Expanded(
+            child: Center(
+              child: LoadingAnimationWidget.fourRotatingDots(
+                color: Theme.of(context).colorScheme.primary,
+                size: 50,
+              ),
+            ),
+          )
+        ],
+      );
+    }
   }
 }

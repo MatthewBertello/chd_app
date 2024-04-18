@@ -34,8 +34,24 @@ class InfoEntryModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void submit() {
+  Future<dynamic> submit() async {
     for (var element in variableDefinitions) {
+      if (element['checkbox'] && element['form'].controller!.text.isNotEmpty) {
+        try {
+          print('Entering data ${element['name']}');
+          await supabase.from('variable_entries').insert([
+            {
+              'user_id': supabase.auth.currentUser!.id,
+              'variable_id': element['id'],
+              'value': double.tryParse(element['form'].controller!.text),
+              'date': selectedDate.toIso8601String(),
+            }
+          ]);
+        } catch (e) {
+          print('Error entering data ${element['name']}');
+          print(e);
+        }
+      }
       element['checkbox'] = element['favorite'];
       element['form'].controller!.clear();
     }

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CircularMeter extends StatelessWidget {
-  final int value;
+  late final int value;
   final Map<int, Color> colorMap;
   final Widget? centerWidget;
 
-  const CircularMeter({
+  CircularMeter({
     super.key,
-    required this.value,
+    required value,
     this.colorMap = const {
       0: Colors.red,
       50: Colors.yellow,
@@ -16,7 +16,9 @@ class CircularMeter extends StatelessWidget {
       100: Colors.green
     },
     this.centerWidget,
-  });
+  }) {
+    this.value = value.clamp(0, 100);
+  }
 
   @override
   Widget build(BuildContext context) {
