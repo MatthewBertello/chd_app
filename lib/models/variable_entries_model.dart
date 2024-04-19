@@ -62,6 +62,13 @@ class VariableEntriesModel extends ChangeNotifier {
       return entryDate.year == date.year && entryDate.month == date.month && entryDate.day == date.day;
     }).toList();
 
+    for (var entry in filteredEntries) {
+      var variable = variableDefinitions.firstWhere((element) => element['id'] == entry['variable_id']);
+      entry['name'] = variable['name'];
+      entry['unit'] = variable['unit'];
+      entry['description'] = variable['description'];
+    }
+
     return filteredEntries;
   }
 }
