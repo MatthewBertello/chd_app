@@ -35,11 +35,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Preload the InfoEntryModel so that it is ready when the user navigates to the InfoEntryScreen
-    if (Provider.of<InfoEntryModel>(context).loaded == false &&
-        Provider.of<InfoEntryModel>(context).loading == false) {
-      Provider.of<InfoEntryModel>(context, listen: false).init();
-    }
     return MaterialApp(
       title: 'CHD App',
       theme: lightTheme,

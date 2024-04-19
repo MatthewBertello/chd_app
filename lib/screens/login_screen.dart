@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:chd_app/components/tab_view.dart';
+import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 import 'package:chd_app/main.dart';
 
@@ -90,6 +92,11 @@ class _LoginState extends State<Login> {
                   redirectTo: 'io.supabase.chd://login-callback/',
                   onSignInComplete: (response) {},
                   onSignUpComplete: (response) {
+                    if (Provider.of<InfoEntryModel>(context).loaded == false &&
+                        Provider.of<InfoEntryModel>(context).loading == false) {
+                      Provider.of<InfoEntryModel>(context, listen: false)
+                          .init();
+                    }
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -110,7 +117,8 @@ class _LoginState extends State<Login> {
                       builder: (context) => TabView(),
                     ),
                   ),
-                  child: const Text('Skip Login (Dev only, partial functionality)'),
+                  child: const Text(
+                      'Skip Login (Dev only, partial functionality)'),
                 ),
               ],
             ),
