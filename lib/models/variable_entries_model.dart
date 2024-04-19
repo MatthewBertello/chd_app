@@ -6,6 +6,7 @@ class VariableEntriesModel extends ChangeNotifier {
   bool loading = false;
   List<Map<String, dynamic>> variableDefinitions = [];
   List<Map<String, dynamic>> variableEntries = [];
+  Map<DateTime, List<Map<String, dynamic>>> processedVariableEntries = {};
 
   Future<dynamic> reset() async {
     while (loading) {
@@ -24,6 +25,19 @@ class VariableEntriesModel extends ChangeNotifier {
 
     await getVariableDefinitions();
     await getVariableEntries();
+
+    for (var entry in variableEntries) {
+      var variable = variableDefinitions.firstWhere((element) => element['id'] == entry['variable_id']);
+      entry['name'] = variable['name'];
+      entry['unit'] = variable['unit'];
+      entry['description'] = variable['description'];
+    }
+
+    for (var element in variableEntries) {
+      if (!processedVariableEntries.containsKey(element['date'].day)) {
+        processedVariableEntries[element['date'].day] = await getVariableEntriesFromDate(date: element['date']);
+      }
+    }
 
     loaded = true;
     loading = false;
@@ -61,13 +75,6 @@ class VariableEntriesModel extends ChangeNotifier {
       DateTime entryDate = DateTime.parse(element['date']);
       return entryDate.year == date.year && entryDate.month == date.month && entryDate.day == date.day;
     }).toList();
-
-    for (var entry in filteredEntries) {
-      var variable = variableDefinitions.firstWhere((element) => element['id'] == entry['variable_id']);
-      entry['name'] = variable['name'];
-      entry['unit'] = variable['unit'];
-      entry['description'] = variable['description'];
-    }
 
     return filteredEntries;
   }
