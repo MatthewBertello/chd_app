@@ -43,7 +43,7 @@ class VariableEntriesModel extends ChangeNotifier {
       }
     }
     
-    dates.sort((a, b) => a.compareTo(b));
+    dates.sort((a, b) => -a.compareTo(b));
 
     loaded = true;
     loading = false;
