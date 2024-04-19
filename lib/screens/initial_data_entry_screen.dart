@@ -47,7 +47,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: const Text("Health Info Entry")),
+      appBar: DefaultAppBar(context: context, title: const Text("Health and Lifestyle")),
       body: Form(
         key: _formKey,
         child: ListView(

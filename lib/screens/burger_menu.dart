@@ -24,7 +24,7 @@ class BurgerMenu extends StatelessWidget {
           context, MaterialPageRoute(builder: (context) => const Settings()))
     },
     {
-      'Enter Health Information': (context) => Navigator.push(
+      'Health and Lifestyle': (context) => Navigator.push(
           context, MaterialPageRoute(builder: (context) => const HealthInfoForm()))
     },
     {
