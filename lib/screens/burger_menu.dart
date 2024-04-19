@@ -1,5 +1,6 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/info_entry_model.dart';
+import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_manager.dart';
 import 'package:chd_app/utils/show_default_dialog.dart';
@@ -52,6 +53,7 @@ class BurgerMenu extends StatelessWidget {
                 "Yes": () async {
                   await supabase.auth.signOut();
                   await Provider.of<InfoEntryModel>(context, listen: false).reset();
+                  await Provider.of<VariableEntriesModel>(context, listen: false).reset();
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const Login()));

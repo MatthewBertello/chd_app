@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chd_app/components/tab_view.dart';
 import 'package:chd_app/models/info_entry_model.dart';
+import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,14 @@ class _LoginState extends State<Login> {
     _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
       final session = data.session;
       if (data.event == AuthChangeEvent.passwordRecovery && session != null) {
+        if (Provider.of<InfoEntryModel>(context).loaded == false &&
+            Provider.of<InfoEntryModel>(context).loading == false) {
+          Provider.of<InfoEntryModel>(context, listen: false).init();
+        }
+        if (Provider.of<VariableEntriesModel>(context).loaded == false &&
+            Provider.of<VariableEntriesModel>(context).loading == false) {
+          Provider.of<VariableEntriesModel>(context, listen: false).init();
+        }
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -92,11 +101,6 @@ class _LoginState extends State<Login> {
                   redirectTo: 'io.supabase.chd://login-callback/',
                   onSignInComplete: (response) {},
                   onSignUpComplete: (response) {
-                    if (Provider.of<InfoEntryModel>(context).loaded == false &&
-                        Provider.of<InfoEntryModel>(context).loading == false) {
-                      Provider.of<InfoEntryModel>(context, listen: false)
-                          .init();
-                    }
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
