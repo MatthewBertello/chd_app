@@ -11,6 +11,9 @@ class VariableEntriesModel extends ChangeNotifier {
     while (loading) {
       continue;
     }
+    variableDefinitions = [];
+    variableEntries = [];
+    loaded = false;
   }
 
   Future<dynamic> init() async {
@@ -18,6 +21,9 @@ class VariableEntriesModel extends ChangeNotifier {
       continue;
     }
     loading = true;
+
+    await getVariableDefinitions();
+    await getVariableEntries();
 
     loaded = true;
     loading = false;
