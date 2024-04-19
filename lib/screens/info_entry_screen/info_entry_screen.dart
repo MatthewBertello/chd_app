@@ -1,5 +1,6 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/info_entry_model.dart';
+import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/info_entry_screen/variable_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -124,6 +125,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
           final future =
               Provider.of<InfoEntryModel>(context, listen: false).submit();
           future.then((value) {
+            Provider.of<VariableEntriesModel>(context, listen:false).init();
             setState(() {
               loading = false;
             });
