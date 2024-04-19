@@ -41,12 +41,12 @@ class _LoginState extends State<Login> {
       }
 
       if (session != null) {
-        if (Provider.of<InfoEntryModel>(context).loaded == false &&
-            Provider.of<InfoEntryModel>(context).loading == false) {
+        if (Provider.of<InfoEntryModel>(context, listen: false).loaded == false &&
+            Provider.of<InfoEntryModel>(context, listen: false).loading == false) {
           Provider.of<InfoEntryModel>(context, listen: false).init();
         }
-        if (Provider.of<VariableEntriesModel>(context).loaded == false &&
-            Provider.of<VariableEntriesModel>(context).loading == false) {
+        if (Provider.of<VariableEntriesModel>(context, listen: false).loaded == false &&
+            Provider.of<VariableEntriesModel>(context, listen: false).loading == false) {
           Provider.of<VariableEntriesModel>(context, listen: false).init();
         }
         Navigator.pushReplacement(
