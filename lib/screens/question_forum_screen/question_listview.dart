@@ -30,6 +30,7 @@ Widget build(BuildContext context){
       context: context,
       title: const Text("Question Forum"),
     ),
+    floatingActionButton: FloatingActionButton(onPressed: _addQuestion, child: const Icon(Icons.add)),
     body: Column( crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Expanded(
@@ -54,9 +55,6 @@ Widget build(BuildContext context){
             },
           )
         ),
-        Padding(padding: const EdgeInsets.all(8.0), 
-          child: FloatingActionButton(onPressed: _addQuestion, child: const Icon(Icons.add))
-        ) // add question button
       ],
     )
   );
