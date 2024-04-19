@@ -3,7 +3,11 @@ import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/models/variable_entries_model.dart';
+import 'package:chd_app/screens/entry_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
@@ -12,8 +16,12 @@ class HealthWidget extends StatelessWidget {
   final double outerPadding = 20;
 
   @override
-  @override
   Widget build(BuildContext context) {
+    if (Provider.of<VariableEntriesModel>(context, listen: false).loaded == false &&
+        Provider.of<VariableEntriesModel>(context, listen: false).loading == false) {
+      Provider.of<VariableEntriesModel>(context, listen: false).init();
+    }
+
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: DefaultAppBar(
@@ -114,20 +122,9 @@ class HealthWidget extends StatelessWidget {
   Widget buildPreviousEntries(BuildContext context) {
     // This should be a list view that displays the top 5 previous entries and a show more button. Each entry should have a date, a health meter, and a category summary.
     // Use hardcoded data for now, will need to get from database later
-    List entries = [
-      {
-        'date': '3-5-2024',
-        'categories': 'Mental: 80%, Physical: 60%, Social: 40%'
-      },
-      {
-        'date': '3-3-2024',
-        'categories': 'Mental: 70%, Physical: 50%, Social: 30%'
-      },
-      {
-        'date': '3-1-2024',
-        'categories': 'Mental: 60%, Physical: 40%, Social: 20%'
-      }
-    ];
+    List entries = Provider.of<VariableEntriesModel>(context).dates;
+
+    print(entries);
     return Column(
       children: [
         const Text("Previous Entries"),
@@ -135,25 +132,23 @@ class HealthWidget extends StatelessWidget {
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: entries.length + 1,
+          itemCount: (entries.length > 3) ? 4 : entries.length + 1,
           itemBuilder: (context, index) {
-            if (index < entries.length) {
+            if (index < entries.length && index < 4) {
               return ListTile(
                   dense: true,
                   title: Text(
-                    entries[index]['date'],
+                    DateFormat.yMd().format(entries[index]),
                   ),
-                  subtitle: Text(
-                    entries[index]['categories'],
-                  ),
-                  onTap: () {});
+                  // subtitle: Text(
+                  //   entries[index]['categories'],
+                  // ),
+                  onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => EntryScreen(startDate: entries[index],),),);});
             } else {
               return ListTile(
                 // align the text to the center
                 title: const Text("Show More", textAlign: TextAlign.center),
-                onTap: () {
-                  // Show more entries
-                },
+                onTap: () {},
               );
             }
           },
