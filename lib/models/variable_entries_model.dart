@@ -6,6 +6,7 @@ class VariableEntriesModel extends ChangeNotifier {
   bool loading = false;
   List<Map<String, dynamic>> variableDefinitions = [];
   List<Map<String, dynamic>> variableEntries = [];
+  List<DateTime> dates = [];
 
   Future<dynamic> reset() async {
     while (loading) {
@@ -13,6 +14,7 @@ class VariableEntriesModel extends ChangeNotifier {
     }
     variableDefinitions = [];
     variableEntries = [];
+    dates = [];
     loaded = false;
   }
 
@@ -33,6 +35,15 @@ class VariableEntriesModel extends ChangeNotifier {
       entry['description'] = variable['description'];
       entry['date'] = DateTime.parse(entry['date']);
     }
+
+    for (var entry in variableEntries) {
+      DateTime entryDate = DateTime(entry['date'].year, entry['date'].month, entry['date'].day);
+      if (!dates.contains(entryDate)) {
+        dates.add(entryDate);
+      }
+    }
+    
+    dates.sort((a, b) => a.compareTo(b));
 
     loaded = true;
     loading = false;
