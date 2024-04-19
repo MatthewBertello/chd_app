@@ -25,14 +25,6 @@ class _LoginState extends State<Login> {
     _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
       final session = data.session;
       if (data.event == AuthChangeEvent.passwordRecovery && session != null) {
-        if (Provider.of<InfoEntryModel>(context).loaded == false &&
-            Provider.of<InfoEntryModel>(context).loading == false) {
-          Provider.of<InfoEntryModel>(context, listen: false).init();
-        }
-        if (Provider.of<VariableEntriesModel>(context).loaded == false &&
-            Provider.of<VariableEntriesModel>(context).loading == false) {
-          Provider.of<VariableEntriesModel>(context, listen: false).init();
-        }
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -49,6 +41,14 @@ class _LoginState extends State<Login> {
       }
 
       if (session != null) {
+        if (Provider.of<InfoEntryModel>(context).loaded == false &&
+            Provider.of<InfoEntryModel>(context).loading == false) {
+          Provider.of<InfoEntryModel>(context, listen: false).init();
+        }
+        if (Provider.of<VariableEntriesModel>(context).loaded == false &&
+            Provider.of<VariableEntriesModel>(context).loading == false) {
+          Provider.of<VariableEntriesModel>(context, listen: false).init();
+        }
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
