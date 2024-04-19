@@ -3,23 +3,19 @@ import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class SubstantialEntry extends StatelessWidget {
-  const SubstantialEntry({super.key, required this.updatePage});
-
-  final void Function(int) updatePage;
+  const SubstantialEntry({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Health Information Form',
-      home: HealthInfoForm(updatePage: updatePage),
+      home: HealthInfoForm(),
     );
   }
 }
 
 class HealthInfoForm extends StatefulWidget {
-  final void Function(int) updatePage;
-
-  const HealthInfoForm({super.key, required this.updatePage});
+  const HealthInfoForm({super.key});
 
   @override
   _HealthInfoFormState createState() => _HealthInfoFormState();
@@ -108,7 +104,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             }).toList(),
             ElevatedButton(
               onPressed: () {
-                widget.updatePage(1);
+                //widget.updatePage(1);
               },
               child: const Text('Submit'),
             ),

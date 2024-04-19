@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
 import 'package:chd_app/theme/color_demo.dart';
 import 'package:chd_app/screens/community_page.dart';
+import 'package:chd_app/screens/initial_data_entry_screen.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -21,6 +22,10 @@ class BurgerMenu extends StatelessWidget {
     {
       'Settings': (context) => Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Settings()))
+    },
+    {
+      'Enter Health Information': (context) => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HealthInfoForm()))
     },
     {
       'Question Forum': (context) {
