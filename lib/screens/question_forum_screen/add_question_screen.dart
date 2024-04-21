@@ -1,6 +1,7 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model.dart';
+import 'package:flutter/services.dart';
 
 // add a question to the forum
 class AddQuestion extends StatefulWidget {
@@ -31,6 +32,9 @@ class _AddQuestionState extends State<AddQuestion> {
           children: [
             TextField( // where the user enters a new question
               controller: questionController,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              inputFormatters: [LengthLimitingTextInputFormatter(250)],
               decoration: const InputDecoration(
                 isDense: true,
                 contentPadding: EdgeInsets.all(10),

@@ -1,6 +1,8 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model.dart';
+import 'package:chd_app/main.dart';
+import 'package:flutter/services.dart';
 
 class QuestionReplies extends StatefulWidget {
   const QuestionReplies({super.key, required this.questionForumModel, required this.questionIndex});
@@ -13,7 +15,7 @@ class QuestionReplies extends StatefulWidget {
 }
 
 class QuestionRepliesState extends State<QuestionReplies> {
-  TextEditingController replyController = TextEditingController();
+  TextEditingController replyController = TextEditingController(); // controller for the reply text box
 
   @override
   Widget build(BuildContext context) {
@@ -45,43 +47,75 @@ class QuestionRepliesState extends State<QuestionReplies> {
                 },
               )
             ),
-            Row( // where the user can make a reply
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: TextField(
-                    controller: replyController,
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: "(Reply)"
-                    )
-                  ) 
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: ElevatedButton.icon(
-                    onPressed: _addReply,
-                    icon: const Icon(Icons.add),
-                    label: const Text("Reply"),
-                    style: ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5)))
-                    )
-                  )
-                )
-              ]
-            )
+            newReplyRow() // where the user can post a new reply
           ],
         ),
       )
     );
   }
 
-void _addReply() { // adds a reply to the question
-  if (replyController.text != ""){
-    widget.questionForumModel.addReply(widget.questionIndex, replyController.text);
-    replyController.text = "";
+  // where the user can type a reply
+  Row newReplyRow() {
+    return Row( // where the user can make a reply
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: TextField(
+            controller: replyController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            inputFormatters: [LengthLimitingTextInputFormatter(250)],
+            decoration: const InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.all(10),
+              hintText: "(Reply)"
+            ),
+          )
+        ), 
+        const SizedBox(width: 8.0),
+        ElevatedButton.icon(
+          onPressed: () {(supabase.auth.currentUser?.id != null) ? _addReply() : _showNoAccountWarning();},
+          icon: const Icon(Icons.add),
+          label: const Text("Reply"),
+          style: ElevatedButton.styleFrom(shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))))
+        )
+      ]
+    );      
   }
-}
+
+
+  // adds a reply to the question
+  void _addReply() { // adds a reply to the question
+    if (replyController.text != ""){
+      widget.questionForumModel.addReply(widget.questionIndex, replyController.text);
+      replyController.text = "";
+    }
+  }
+
+  // alerts the user that an account is necesarry to post a reply
+  Future<void> _showNoAccountWarning() async {
+    if (replyController.text != "") {  
+      replyController.text = "";
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text("You must have an account to post a reply."),
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                 Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
 }

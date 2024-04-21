@@ -39,7 +39,7 @@ class QuestionForumModel extends ChangeNotifier {
   // deletes a question from the list if the user id matches
   void deleteQuestion(int questionIndex) async { 
     try {  
-      var response = await supabase.from('forum_questions').select('question').eq('question_id', questionsList[questionIndex].getQuestionID());
+      var response = await supabase.from('forum_questions').select('question').eq('question_id', questionsList[questionIndex].getQuestionID()).eq('user_id', supabase.auth.currentUser!.id);
       if (response.isNotEmpty) {
         await supabase.from('forum_questions').delete().eq('question_id', questionsList[questionIndex].getQuestionID());
         loadQuestionList();
@@ -72,11 +72,9 @@ class QuestionForumModel extends ChangeNotifier {
   void loadReplyList(int questionIndex) async { 
     questionsList[questionIndex].clearReplies();
     try{
-      var response = await supabase.from('forum_replies').select('*');
+      var response = await supabase.from('forum_replies').select('*').eq('question_id', questionsList[questionIndex].getQuestionID());
       for (int i = 0; i < response.length; i++) {
-        if (response[i]['question_id'] == questionsList[questionIndex].getQuestionID()){  
-          questionsList[questionIndex].addReply(Reply(response[i]['reply'], response [i]['reply_id']));
-        }
+        questionsList[questionIndex].addReply(Reply(response[i]['reply'], response [i]['reply_id']));
       }
       notifyListeners();
     }
@@ -88,7 +86,7 @@ class QuestionForumModel extends ChangeNotifier {
   // deletes a reply from the database
   void deleteReply(int questionIndex, int replyIndex) async {
     try{  
-      var response = await supabase.from('forum_replies').select('reply_id').eq('reply_id', questionsList[questionIndex].replies[replyIndex].getReplyID());
+      var response = await supabase.from('forum_replies').select('reply_id').eq('reply_id', questionsList[questionIndex].replies[replyIndex].getReplyID()).eq("user_id", supabase.auth.currentUser!.id);
       if (response.isNotEmpty) {
         await supabase.from('forum_replies').delete().eq('reply_id', questionsList[questionIndex].replies[replyIndex].getReplyID());
         loadReplyList(questionIndex);
