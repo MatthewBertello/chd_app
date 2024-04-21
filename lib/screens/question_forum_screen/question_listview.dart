@@ -41,21 +41,7 @@ Widget build(BuildContext context){
           child: ListView.builder( // builder shows all the questions that have been asked
             itemCount: widget.questionForumModel.questionsList.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(widget.questionForumModel.questionsList[index].getQuestion(), 
-                  style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
-                subtitle: const Text("The Author"),
-                onTap: () {
-                  widget.questionForumModel.loadReplyList(index);
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                  Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
-                  QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: index)
-                  )));
-                },
-                onLongPress: () {
-                  widget.questionForumModel.deleteQuestion(index); // delete the question on long press            
-                }
-              );
+              return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[index].getUserWhoPosted()) ? currentUserQuestion(index) : notCurrUserQuestion(index);
             },
           )
         ),
@@ -64,6 +50,37 @@ Widget build(BuildContext context){
   );
 }
 
+
+// the user who posted the question is currently logged in
+ListTile currentUserQuestion(int questionIndex) {
+  return ListTile(
+    title: Text(widget.questionForumModel.questionsList[questionIndex].getQuestion(), 
+    style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
+    subtitle: const Text("The Author"),
+    trailing: IconButton(onPressed: () {_deleteQuestionVerification(questionIndex);}, icon: const Icon(Icons.delete)),
+    onTap: () {
+      widget.questionForumModel.loadReplyList(questionIndex);
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+      Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
+      QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: questionIndex))));
+    },
+  );
+}
+
+// the user who posted the question is not currently logged in
+ListTile notCurrUserQuestion(int questionIndex) {
+  return ListTile(
+    title: Text(widget.questionForumModel.questionsList[questionIndex].getQuestion(), 
+    style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
+    subtitle: const Text("The Author"),
+    onTap: () {
+      widget.questionForumModel.loadReplyList(questionIndex);
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+      Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
+      QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: questionIndex))));
+    },
+  );
+}
 
 // adds a question
 void _addQuestion() {    
@@ -88,6 +105,36 @@ Future<void> _showNoAccountWarning() async {
         actions: <Widget>[
           TextButton(
             child: const Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// gives the user a chance to verify they want to delete their question
+Future<void> _deleteQuestionVerification(int questionIndex) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Confirm'),
+        content: const Text("Are you sure you want to delete your question?"),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Yes'),
+            onPressed: () {
+              widget.questionForumModel.deleteQuestion(questionIndex);
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('No'),
             onPressed: () {
               Navigator.of(context).pop();
             },

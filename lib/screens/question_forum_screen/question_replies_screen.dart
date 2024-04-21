@@ -1,4 +1,5 @@
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:chd_app/screens/question_forum_screen/edit_reply_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model.dart';
 import 'package:chd_app/main.dart';
@@ -37,13 +38,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
               child: ListView.builder( // builder shows all the replies of the question
                 itemCount: widget.questionForumModel.questionsList[widget.questionIndex].replies.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getReply()),
-                    subtitle: const Text("The Author"), // prints the author just hardcoded for now
-                    onLongPress: () {
-                      widget.questionForumModel.deleteReply(widget.questionIndex, index); // delete the reply
-                    }
-                  );
+                  return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getUserWhoPosted()) ? currentUserReply(widget.questionIndex, index) : notCurrUserReply(widget.questionIndex, index);
                 },
               )
             ),
@@ -51,6 +46,30 @@ class QuestionRepliesState extends State<QuestionReplies> {
           ],
         ),
       )
+    );
+  }
+
+
+  // the user who posted the question is currently logged in
+  ListTile currentUserReply(int questionIndex, int replyIndex) {
+    return ListTile(
+      title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
+      subtitle: const Text("The Author"), // prints the author just hardcoded for now
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditReply(questionForumModel: widget.questionForumModel, reply: widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getReply(), questionIndex: questionIndex, replyIndex: replyIndex,)));}, icon: const Icon(Icons.edit)),
+          IconButton(onPressed: () {_deleteReplyVerification(questionIndex, replyIndex);}, icon: const Icon(Icons.delete))
+        ]
+      ),
+    );
+  }
+
+  // the user who posted the question is not currently logged in
+  ListTile notCurrUserReply(int questionIndex, int replyIndex) {
+    return ListTile(
+      title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
+      subtitle: const Text("The Author"), // prints the author just hardcoded for now
     );
   }
 
@@ -68,9 +87,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
             decoration: const InputDecoration(
               isDense: true,
               contentPadding: EdgeInsets.all(10),
-              hintText: "(Reply)"
-            ),
-          )
+              hintText: "(Reply)"))
         ), 
         const SizedBox(width: 8.0),
         ElevatedButton.icon(
@@ -117,5 +134,35 @@ class QuestionRepliesState extends State<QuestionReplies> {
       );
     }
   }
+
+  // gives the user a chance to verify they want to delete their reply
+Future<void> _deleteReplyVerification(int questionIndex, int replyIndex) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Confirm'),
+        content: const Text("Are you sure you want to delete your reply?"),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Yes'),
+            onPressed: () {
+              widget.questionForumModel.deleteReply(questionIndex, replyIndex);
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('No'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
 }
