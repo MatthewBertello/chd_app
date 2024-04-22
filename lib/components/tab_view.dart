@@ -32,15 +32,21 @@ class TabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: tabs.length,
-      child: Scaffold(
-          body: TabBarView(
-            children: children,
-          ),
-          bottomNavigationBar: TabBar(
-            tabs: tabs,
-          )),
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: SafeArea(
+        top: false,
+        child: DefaultTabController(
+          length: tabs.length,
+          child: Scaffold(
+              body: TabBarView(
+                children: children,
+              ),
+              bottomNavigationBar: TabBar(
+                tabs: tabs,
+              )),
+        ),
+      ),
     );
   }
 }
