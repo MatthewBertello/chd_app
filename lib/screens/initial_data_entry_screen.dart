@@ -24,13 +24,14 @@ class HealthInfoForm extends StatefulWidget {
 class _HealthInfoFormState extends State<HealthInfoForm> {
   final _formKey = GlobalKey<FormState>();
 
-  // Assuming you have a class for health concerns that you will fetch from your backend or service
-  List<String> healthConcerns = [
-    'Health concern 1',
-    'Health concern 2',
-    'Health concern 3',
-    '...',
-    'Health concern n',
+ 
+  List<String> races = [ ///White, black, Hispanic, Asian, American Indian, other 
+    'White',
+    'Black',
+    'Native American',
+    'Asian',
+    'Pacific Islander',
+    'Other'
   ];
 
   Map<String, bool> selectedConcerns = {};
@@ -39,7 +40,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
   void initState() {
     super.initState();
     // Initialize the selection state
-    for (var concern in healthConcerns) {
+    for (var concern in races) {
       selectedConcerns[concern] = false;
     }
   }
@@ -47,7 +48,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: const Text("Health and Lifestyle")),
+      appBar: DefaultAppBar(context: context, title: const Text("Demographic Data")),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -55,7 +56,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
           children: [
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Date of birth',
+                hintText: 'Age', ///prompt user for age
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.datetime,
@@ -63,35 +64,19 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             const SizedBox(height: 16.0),
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Weight',
+                hintText: 'Gender',  ///prompt user for gender
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Height',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Other health information',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16.0),
             const Text(
-              'Health concerns (check all that apply):',
+              'Race(check all that apply):', ///prompt user for race
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            ...healthConcerns.map((concern) {
+            ...races.map((concern) {
               return CheckboxListTile(
                 title: Text(concern),
                 value: selectedConcerns[concern],
