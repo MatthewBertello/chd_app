@@ -55,6 +55,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: const Text("The Author"), // prints the author just hardcoded for now
+      tileColor: Theme.of(context).colorScheme.primaryContainer,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -70,6 +71,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: const Text("The Author"), // prints the author just hardcoded for now
+      tileColor: Theme.of(context).colorScheme.primaryContainer,
     );
   }
 
@@ -124,9 +126,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
             actions: <Widget>[
               TextButton(
                 child: const Text('OK'),
-                onPressed: () {
-                 Navigator.of(context).pop();
-                },
+                onPressed: () { Navigator.of(context).pop(); }
               ),
             ],
           );
@@ -155,9 +155,7 @@ Future<void> _deleteReplyVerification(int questionIndex, int replyIndex) async {
           ),
           TextButton(
             child: const Text('No'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () { Navigator.of(context).pop(); }
           ),
         ],
       );

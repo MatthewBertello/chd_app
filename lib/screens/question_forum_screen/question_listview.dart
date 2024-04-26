@@ -35,17 +35,20 @@ Widget build(BuildContext context){
       onPressed: () {(supabase.auth.currentUser?.id != null) ? _addQuestion() : _showNoAccountWarning();}, 
       child: const Icon(Icons.add)
     ),
-    body: Column( crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Expanded(
-          child: ListView.builder( // builder shows all the questions that have been asked
-            itemCount: widget.questionForumModel.questionsList.length,
-            itemBuilder: (context, index) {
-              return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[index].getUserWhoPosted()) ? currentUserQuestion(index) : notCurrUserQuestion(index);
-            },
-          )
-        ),
-      ],
+    body: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child:Column( crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Expanded(
+            child: ListView.builder( // builder shows all the questions that have been asked
+              itemCount: widget.questionForumModel.questionsList.length,
+              itemBuilder: (context, index) {
+                return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[index].getUserWhoPosted()) ? currentUserQuestion(index) : notCurrUserQuestion(index);
+              },
+            )
+          ),
+        ],
+      ),
     )
   );
 }
@@ -58,6 +61,7 @@ ListTile currentUserQuestion(int questionIndex) {
     style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
     subtitle: const Text("The Author"),
     trailing: IconButton(onPressed: () {_deleteQuestionVerification(questionIndex);}, icon: const Icon(Icons.delete)),
+    tileColor: Theme.of(context).colorScheme.primaryContainer,
     onTap: () {
       widget.questionForumModel.loadReplyList(questionIndex);
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
@@ -73,6 +77,7 @@ ListTile notCurrUserQuestion(int questionIndex) {
     title: Text(widget.questionForumModel.questionsList[questionIndex].getQuestion(), 
     style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
     subtitle: const Text("The Author"),
+    tileColor: Theme.of(context).colorScheme.primaryContainer,
     onTap: () {
       widget.questionForumModel.loadReplyList(questionIndex);
       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
@@ -105,9 +110,7 @@ Future<void> _showNoAccountWarning() async {
         actions: <Widget>[
           TextButton(
             child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () { Navigator.of(context).pop(); }
           ),
         ],
       );
@@ -135,9 +138,7 @@ Future<void> _deleteQuestionVerification(int questionIndex) async {
           ),
           TextButton(
             child: const Text('No'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () { Navigator.of(context).pop(); }
           ),
         ],
       );
