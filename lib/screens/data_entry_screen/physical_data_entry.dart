@@ -23,13 +23,14 @@ class HealthInfoForm extends StatefulWidget {
 class _HealthInfoFormState extends State<HealthInfoForm> {
   final _formKey = GlobalKey<FormState>();
 
-  // Assuming you have a class for health concerns that you will fetch from your backend or service
-  List<String> healthConcerns = [
-    'Health concern 1',
-    'Health concern 2',
-    'Health concern 3',
-    '...',
-    'Health concern n',
+  ///mental health concerns
+  List<String> healthConcerns = [ ///anxiety, depression, post pardon, bipolar, schizophrenia,
+    'Anxiety',
+    'Depression',
+    'Bipolar',
+    'Attention deficit hyperactivity disorder (ADHD)',
+    'Attention deficit disorder(ADD)',
+    'Schizophrenia',
   ];
 
   Map<String, bool> selectedConcerns = {};
@@ -43,10 +44,30 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
     }
   }
 
+///list for recreational drug use
+ List<String> recreationalDrugs = [
+    'Health concern 1',
+    'Health concern 2',
+    'Health concern 3',
+    '...',
+    'Health concern n',
+  ];
+
+  Map<String, bool> selectedDrugs = {};
+
+  @override
+  void state1() {
+    super.initState();
+    // Initialize the selection state
+    for (var recreationalDrugs in recreationalDrugs) {
+      selectedConcerns[recreationalDrugs] = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: const Text("Health and Lifestyle")),
+      appBar: DefaultAppBar(context: context, title: const Text("Physical data entry")),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -54,7 +75,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
           children: [
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Date of birth',
+                hintText: 'last Menstural cycle', ///prompt user for last mestural cycle
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.datetime,
@@ -62,7 +83,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             const SizedBox(height: 16.0),
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Weight',
+                hintText: 'Number of live pregnancies', ///prompt user for # of live pregnancies
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
@@ -70,22 +91,21 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
             const SizedBox(height: 16.0),
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Height',
+                hintText: 'Number of Miscarriages',        ///prompt user for # of miscarriages
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 16.0),
-            TextFormField(
+             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Other health information',
+                hintText: 'Expected due date',  ///prompt for expected due date
                 border: OutlineInputBorder(),
               ),
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.datetime,
             ),
             const SizedBox(height: 16.0),
             const Text(
-              'Health concerns (check all that apply):',
+              'Mental Health History:', ///prompt user for mental health diagnosies
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -101,6 +121,33 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
                 },
               );
             }).toList(),
+            const SizedBox(height: 16.0),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'perscription meds', ///prompt user to enter perscription meds
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            const SizedBox(height: 16.0),
+            const Text(
+              'Recreational drug:', ///prompt user for mental health diagnosies
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ...recreationalDrugs.map((recreationalDrugs) {
+              return CheckboxListTile(
+                title: Text(recreationalDrugs),
+                value: selectedDrugs[recreationalDrugs],
+                onChanged: (bool? value) {
+                  setState(() {
+                    selectedDrugs[recreationalDrugs] = value!;
+                  });
+                },
+              );
+            }).toList(),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 //widget.updatePage(1);
