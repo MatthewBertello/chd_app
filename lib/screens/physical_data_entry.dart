@@ -1,4 +1,3 @@
-///GRACE DO
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,7 @@ class SubstantialEntry extends StatelessWidget {
     );
   }
 }
-///this is the form for the demographic data entry
+
 class HealthInfoForm extends StatefulWidget {
   const HealthInfoForm({super.key});
 
