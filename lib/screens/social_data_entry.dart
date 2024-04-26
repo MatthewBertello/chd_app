@@ -23,26 +23,6 @@ class HealthInfoForm extends StatefulWidget {
 class _HealthInfoFormState extends State<HealthInfoForm> {
   final _formKey = GlobalKey<FormState>();
 
-  // Assuming you have a class for health concerns that you will fetch from your backend or service
-  List<String> healthConcerns = [
-    'Health concern 1',
-    'Health concern 2',
-    'Health concern 3',
-    '...',
-    'Health concern n',
-  ];
-
-  Map<String, bool> selectedConcerns = {};
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the selection state
-    for (var concern in healthConcerns) {
-      selectedConcerns[concern] = false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,23 +64,6 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
               keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16.0),
-            const Text(
-              'Health concerns (check all that apply):',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            ...healthConcerns.map((concern) {
-              return CheckboxListTile(
-                title: Text(concern),
-                value: selectedConcerns[concern],
-                onChanged: (bool? value) {
-                  setState(() {
-                    selectedConcerns[concern] = value!;
-                  });
-                },
-              );
-            }).toList(),
             ElevatedButton(
               onPressed: () {
                 //widget.updatePage(1);
