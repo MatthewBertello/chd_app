@@ -3,9 +3,11 @@ import 'package:chd_app/main.dart';
 
 class QuestionForumModel extends ChangeNotifier {
   final List<Question> questionsList = []; // the list of questions to be displayed
+  bool loaded = false; // shows if the list is loaded or not
 
   // loads the list of questions from the database
   void loadQuestionList() async { 
+    loaded = false;
     questionsList.clear();
     try{
       var response = await supabase
@@ -14,6 +16,7 @@ class QuestionForumModel extends ChangeNotifier {
       for (int i = 0; i < response.length; i++) {
         questionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id']));
       }
+      loaded = true;
       notifyListeners();
     }
     catch (e){
@@ -79,6 +82,7 @@ class QuestionForumModel extends ChangeNotifier {
 
   // loads the replies to a question from the database
   void loadReplyList(int questionIndex) async { 
+    loaded = false;
     questionsList[questionIndex].clearReplies();
     try{
       var response = await supabase
@@ -89,6 +93,7 @@ class QuestionForumModel extends ChangeNotifier {
       for (int i = 0; i < response.length; i++) {
         questionsList[questionIndex].addReply(Reply(response[i]['reply'], response [i]['reply_id'], response[i]['user_id']));
       }
+      loaded = true;
       notifyListeners();
     }
     catch (e){

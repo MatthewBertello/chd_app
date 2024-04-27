@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model.dart';
 import 'package:chd_app/main.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class QuestionReplies extends StatefulWidget {
   const QuestionReplies({super.key, required this.questionForumModel, required this.questionIndex});
@@ -21,34 +22,45 @@ class QuestionRepliesState extends State<QuestionReplies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: DefaultAppBar(
-      context: context,
-      title: const Text("Replies"),
-    ),
-    body:
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(widget.questionForumModel.questionsList[widget.questionIndex].getQuestion(), 
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-            const Divider(height: 1.0, thickness: 1.0, color: Colors.black),
-            Expanded(
-              child: ListView.builder( // builder shows all the replies of the question
-                itemCount: widget.questionForumModel.questionsList[widget.questionIndex].replies.length,
-                itemBuilder: (context, index) {
-                  return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getUserWhoPosted()) ? currentUserReply(widget.questionIndex, index) : notCurrUserReply(widget.questionIndex, index);
-                },
-              )
-            ),
-            newReplyRow() // where the user can post a new reply
-          ],
-        ),
-      )
+      appBar: DefaultAppBar(context: context, title: const Text("Replies")),
+      body: (widget.questionForumModel.loaded) ? replyListView() : loadingAnimationWidget(context)
     );
   }
 
+
+  // the list view of replies
+  Padding replyListView() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(widget.questionForumModel.questionsList[widget.questionIndex].getQuestion(), 
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+          const Divider(height: 1.0, thickness: 1.0, color: Colors.black),
+          Expanded(
+            child: ListView.builder( // builder shows all the replies of the question
+              itemCount: widget.questionForumModel.questionsList[widget.questionIndex].replies.length,
+              itemBuilder: (context, index) {
+                return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getUserWhoPosted()) ? currentUserReply(widget.questionIndex, index) : notCurrUserReply(widget.questionIndex, index);
+              },
+            )
+          ),
+          newReplyRow() // where the user can post a new reply
+        ],
+      ),
+    );
+  }
+
+  // loading animation while the replies load
+  Stack loadingAnimationWidget(BuildContext context) {
+    return Stack(
+      children: [
+        ModalBarrier(color: Colors.black.withOpacity(0.3), dismissible: false),
+        Center(child: LoadingAnimationWidget.fourRotatingDots(color: Theme.of(context).colorScheme.primary, size: 50))
+      ],
+    );
+  }
 
   // the user who posted the question is currently logged in
   ListTile currentUserReply(int questionIndex, int replyIndex) {
