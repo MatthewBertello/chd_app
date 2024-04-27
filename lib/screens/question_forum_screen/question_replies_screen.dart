@@ -37,13 +37,14 @@ class QuestionRepliesState extends State<QuestionReplies> {
         children: [
           Text(widget.questionForumModel.questionsList[widget.questionIndex].getQuestion(), 
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-          const Divider(height: 1.0, thickness: 1.0, color: Colors.black),
+          const Divider(height: 15.0, thickness: 2.0, color: Colors.black),
           Expanded(
-            child: ListView.builder( // builder shows all the replies of the question
+            child: ListView.separated( // builder shows all the replies of the question
               itemCount: widget.questionForumModel.questionsList[widget.questionIndex].replies.length,
               itemBuilder: (context, index) {
                 return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getUserWhoPosted()) ? currentUserReply(widget.questionIndex, index) : notCurrUserReply(widget.questionIndex, index);
               },
+              separatorBuilder: (BuildContext context, int index) { return const Divider(color: Colors.transparent, height: 5.0); }
             )
           ),
           newReplyRow() // where the user can post a new reply
@@ -68,6 +69,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: const Text("The Author"), // prints the author just hardcoded for now
       tileColor: Theme.of(context).colorScheme.primaryContainer,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -84,6 +86,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: const Text("The Author"), // prints the author just hardcoded for now
       tileColor: Theme.of(context).colorScheme.primaryContainer,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
     );
   }
 
@@ -92,17 +95,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
     return Row( // where the user can make a reply
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          child: TextField(
-            controller: replyController,
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
-            inputFormatters: [LengthLimitingTextInputFormatter(250)],
-            decoration: const InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.all(10),
-              hintText: "(Reply)"))
-        ), 
+        Flexible(child: (supabase.auth.currentUser?.id != null) ? hasAccountReplyTextField() : noAccountReplyTextField()), 
         const SizedBox(width: 8.0),
         ElevatedButton.icon(
           onPressed: () {(supabase.auth.currentUser?.id != null) ? _addReply() : _showNoAccountWarning();},
@@ -114,6 +107,34 @@ class QuestionRepliesState extends State<QuestionReplies> {
     );      
   }
 
+  // allows user to type in the textfield if they have an account
+  TextField hasAccountReplyTextField() {
+    return TextField(
+      controller: replyController,
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
+      inputFormatters: [LengthLimitingTextInputFormatter(250)],
+      decoration: const InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.all(10),
+        hintText: "(Reply)"
+      )
+    );
+  }
+  
+  // disallows user from user textfield with no account, and shows the warning
+  GestureDetector noAccountReplyTextField() {
+    return GestureDetector(
+      onTap: _showNoAccountWarning,
+      child: const TextField(
+        enabled: false,
+        decoration: InputDecoration(
+          isDense: true,
+          contentPadding: EdgeInsets.all(10),
+          hintText: "(Reply)")
+      ),
+    );
+  }
 
   // adds a reply to the question
   void _addReply() { // adds a reply to the question
@@ -125,54 +146,54 @@ class QuestionRepliesState extends State<QuestionReplies> {
 
   // alerts the user that an account is necesarry to post a reply
   Future<void> _showNoAccountWarning() async {
-    if (replyController.text != "") {  
-      replyController.text = "";
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text("You must have an account to post a reply."),
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            actions: <Widget>[
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () { Navigator.of(context).pop(); }
-              ),
-            ],
-          );
-        },
-      );
-    }
+    replyController.text = "";
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: const Text("You must have an account to post a reply."),
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () { Navigator.of(context).pop(); }
+            ),
+          ],
+        );
+      },
+    );
   }
 
   // gives the user a chance to verify they want to delete their reply
-Future<void> _deleteReplyVerification(int questionIndex, int replyIndex) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Confirm'),
-        content: const Text("Are you sure you want to delete your reply?"),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Yes'),
-            onPressed: () {
-              widget.questionForumModel.deleteReply(questionIndex, replyIndex);
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child: const Text('No'),
-            onPressed: () { Navigator.of(context).pop(); }
-          ),
-        ],
-      );
-    },
-  );
-}
+  Future<void> _deleteReplyVerification(int questionIndex, int replyIndex) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm'),
+          content: const Text("Are you sure you want to delete your reply?"),
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                widget.questionForumModel.deleteReply(questionIndex, replyIndex);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('No'),
+              onPressed: () { Navigator.of(context).pop(); }
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 }

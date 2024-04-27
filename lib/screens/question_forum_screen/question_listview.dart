@@ -53,7 +53,7 @@ class _QuestionListViewState extends State<QuestionListView> {
                   ?  
                   currentUserQuestion(index) : notCurrUserQuestion(index);
               }, 
-              separatorBuilder: (BuildContext context, int index) { return const Divider(); }
+              separatorBuilder: (BuildContext context, int index) { return const Divider(color: Colors.transparent, height: 5.0); }
             )
           ),
         ],
@@ -79,6 +79,7 @@ class _QuestionListViewState extends State<QuestionListView> {
       subtitle: const Text("The Author"),
       trailing: IconButton(onPressed: () {_deleteQuestionVerification(questionIndex);}, icon: const Icon(Icons.delete)),
       tileColor: Theme.of(context).colorScheme.primaryContainer,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       onTap: () {
         widget.questionForumModel.loadReplyList(questionIndex);
         Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
@@ -95,6 +96,7 @@ class _QuestionListViewState extends State<QuestionListView> {
       style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
       subtitle: const Text("The Author"),
       tileColor: Theme.of(context).colorScheme.primaryContainer,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       onTap: () {
         widget.questionForumModel.loadReplyList(questionIndex);
         Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
@@ -106,7 +108,7 @@ class _QuestionListViewState extends State<QuestionListView> {
 
   // adds a question
   void _addQuestion() {    
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddQuestion(questionForumModel: widget.questionForumModel)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddQuestion(questionForumModel: widget.questionForumModel)));
   }
 
   // deletes a question
@@ -124,6 +126,7 @@ class _QuestionListViewState extends State<QuestionListView> {
           title: const Text('Error'),
           content: const Text("You must have an account to post a question."),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(15.0))),
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),
@@ -145,6 +148,7 @@ class _QuestionListViewState extends State<QuestionListView> {
           title: const Text('Confirm'),
           content: const Text("Are you sure you want to delete your question?"),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(15.0))),
           actions: <Widget>[
             TextButton(
               child: const Text('Yes'),
