@@ -30,16 +30,16 @@ final List<String> maritalStatus = ['single','married','divorced','partnered','w
 final List<String> education = ['K-6','Some HS','Completed HS','some college','technical college','college graduate','graduate level']; 
 String? selectedEducation; ///tracks selected education level
 
-final List<String> income = ['10,000','11,000-20,000','']; ///>$10K, $11-20K, $21-30K, $31-50, $51-75, $75-100K, $100-150, $150+
+final List<String> income = ['< 10,000','11,000-20,000','21,000-30,000','31,000-50,000','51,000-75,000','75,000-100,000','100,000-150,000','150,000+'];
 String? selectedIncome; ///tracks selected income
 
-final List<String> employements = ['methedone','suboxone','none']; ///Unemployed, PT, FT
+final List<String> employements = ['unemployed','part time','full time']; 
 String? selectedEmployement;
 
-final List<String> language = ['methedone','suboxone','none']; ///Write in, English, Spanish, French, Hmong, Somalia othe
+final List<String> language = ['English','Spanish','French','German','Hmong','Mandarin','Tagalog','Other']; 
 String? selectedLanguage;
 
-final List<String> family = ['methedone','suboxone','none']; ///Husband, wife, brother, sister, child-m/f #s, grandmother, grandfather, aunt, uncle, friend, other
+final List<String> family = ['Husband','Wife','Brother','Sister','Children','Grandmother','Grandfather','Aunt','Uncle','Friend','Other']; 
 String? selectedFamily;
 
   @override
