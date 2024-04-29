@@ -143,7 +143,7 @@ final List<String> drugUse = ['methedone','suboxone','none'];
               keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16.0),
-            const Text('Perscription Drug Use'),
+            const Text('Drug Use'),
              ListView(
              children: drugUse.map((option) {
               return RadioListTile<String>(

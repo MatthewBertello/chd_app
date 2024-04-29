@@ -39,7 +39,8 @@ final List<String> language = ['English','Spanish','French','German','Hmong','Ma
 String? selectedLanguage; ///tracks selected language
 
  List<String> family = ['Husband','Wife','Brother','Sister','Children','Grandmother','Grandfather','Aunt','Uncle','Friend','Other']; 
-Map<String, bool> selectedFamily = {}; ///tracks selected family members
+ Map<String, bool> selectedFamily = {}; ///tracks selected family members
+  
   @override
   void initState() {
     super.initState();

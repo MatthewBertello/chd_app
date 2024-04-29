@@ -45,6 +45,9 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
     }
   }
 
+  final List<String> gender= ['Male','Female','Transitioning','Decline to answer']; 
+  String? selectedGender; ///tracks selected gender
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,13 +65,21 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
               keyboardType: TextInputType.datetime,
             ),
             const SizedBox(height: 16.0),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Gender',  ///prompt user for gender
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.text,
-            ),
+            const Text('Gender'),
+              ListView(
+             children: gender.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedGender,
+              onChanged: (String? value) {
+              setState(() {
+                selectedGender = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
             const SizedBox(height: 16.0),
             const Text(
               'Race(check all that apply):', ///prompt user for race
