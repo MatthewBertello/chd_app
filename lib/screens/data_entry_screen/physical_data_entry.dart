@@ -45,12 +45,13 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
   }
 
 ///list for recreational drug use
- List<String> recreationalDrugs = [
-    'Health concern 1',
-    'Health concern 2',
-    'Health concern 3',
-    '...',
-    'Health concern n',
+ List<String> recreationalDrugs = [ /// meth, cocaine, marijuana, crack, heroin, speed, prescript-opioids,
+    'Meth',
+    'Cocaine',
+    'Crack',
+    'Marijuana',
+    'Speed',
+    'Prescription opioids'
   ];
 
   Map<String, bool> selectedDrugs = {};
@@ -63,6 +64,11 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
       selectedConcerns[recreationalDrugs] = false;
     }
   }
+
+///drug use selection (methedone or suboxone, none)
+final List<String> drugUse = ['methedone','suboxone','none'];
+
+  String? selectedDrug; ///tracks selected drug
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +109,13 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
               ),
               keyboardType: TextInputType.datetime,
             ),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Immunization hx- COVID, flu, MMR',  ///prompt for immunization
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.datetime,
+            ),
             const SizedBox(height: 16.0),
             const Text(
               'Mental Health History:', ///prompt user for mental health diagnosies
@@ -130,8 +143,23 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
               keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16.0),
+             ListView(
+             children: drugUse.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedDrug,
+              onChanged: (String? value) {
+              setState(() {
+                selectedDrug = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
+          const SizedBox(height: 16.0),
             const Text(
-              'Recreational drug:', ///prompt user for mental health diagnosies
+              'Recreational drug:', ///prompt user for recreational drug use
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
