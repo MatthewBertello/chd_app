@@ -114,7 +114,7 @@ final List<String> drugUse = ['methedone','suboxone','none'];
                 hintText: 'Immunization hx- COVID, flu, MMR',  ///prompt for immunization
                 border: OutlineInputBorder(),
               ),
-              keyboardType: TextInputType.datetime,
+              keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16.0),
             const Text(

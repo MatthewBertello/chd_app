@@ -62,7 +62,7 @@ class _HealthInfoFormState extends State<HealthInfoForm> {
                 hintText: 'Age', ///prompt user for age
                 border: OutlineInputBorder(),
               ),
-              keyboardType: TextInputType.datetime,
+              keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16.0),
             const Text('Gender'),
