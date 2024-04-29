@@ -33,14 +33,21 @@ final List<String> income = ['< 10,000','11,000-20,000','21,000-30,000','31,000-
 String? selectedIncome; ///tracks selected income
 
 final List<String> employement = ['unemployed','part time','full time']; 
-String? selectedEmployement;
+String? selectedEmployement; ///tracks selected employement
 
 final List<String> language = ['English','Spanish','French','German','Hmong','Mandarin','Tagalog','Other']; 
-String? selectedLanguage;
+String? selectedLanguage; ///tracks selected language
 
-final List<String> family = ['Husband','Wife','Brother','Sister','Children','Grandmother','Grandfather','Aunt','Uncle','Friend','Other']; 
-String? selectedFamily;
-
+ List<String> family = ['Husband','Wife','Brother','Sister','Children','Grandmother','Grandfather','Aunt','Uncle','Friend','Other']; 
+Map<String, bool> selectedFamily = {}; ///tracks selected family members
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the selection state
+    for (var family in family) {
+      selectedFamily[family] = false;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,21 +145,23 @@ String? selectedFamily;
         }).toList(),
         ),
         const SizedBox(height: 16.0),
-          const Text('Family'),
-              ListView(
-             children: family.map((option) {
-              return RadioListTile<String>(
-              title: Text(option),
-              value: option,
-              groupValue: selectedFamily,
-              onChanged: (String? value) {
-              setState(() {
-                selectedFamily = value;
-              });
-            },
-          );
-        }).toList(),
-        ),
+     const Text(
+              'Recreational drug:', ///prompt user for recreational drug use
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ...family.map((family) {
+              return CheckboxListTile(
+                title: Text(family),
+                value: selectedFamily[family],
+                onChanged: (bool? value) {
+                  setState(() {
+                    selectedFamily[family] = value!;
+                  });
+                },
+              );
+            }).toList(),
          const SizedBox(height: 16.0),
             TextFormField(
               decoration: const InputDecoration(
