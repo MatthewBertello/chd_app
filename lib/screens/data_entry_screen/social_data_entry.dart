@@ -23,7 +23,6 @@ class HealthInfoForm extends StatefulWidget {
 class _HealthInfoFormState extends State<HealthInfoForm> {
   final _formKey = GlobalKey<FormState>();
 
-
 final List<String> maritalStatus = ['single','married','divorced','partnered','widowed','other']; 
  String? selectedStatus; ///tracks selected status
  
@@ -33,7 +32,7 @@ String? selectedEducation; ///tracks selected education level
 final List<String> income = ['< 10,000','11,000-20,000','21,000-30,000','31,000-50,000','51,000-75,000','75,000-100,000','100,000-150,000','150,000+'];
 String? selectedIncome; ///tracks selected income
 
-final List<String> employements = ['unemployed','part time','full time']; 
+final List<String> employement = ['unemployed','part time','full time']; 
 String? selectedEmployement;
 
 final List<String> language = ['English','Spanish','French','German','Hmong','Mandarin','Tagalog','Other']; 
@@ -51,33 +50,113 @@ String? selectedFamily;
         child: ListView(
           padding: const EdgeInsets.all(30.0),
           children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Date of birth',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.datetime,
-            ),
+            const Text('marital Status'),
+             ListView(
+             children: maritalStatus.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedStatus,
+              onChanged: (String? value) {
+              setState(() {
+                selectedStatus = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
+         const SizedBox(height: 16.0),
+         const Text('education level'),
+            ListView(
+             children: education.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedEducation,
+              onChanged: (String? value) {
+              setState(() {
+                selectedEducation = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
+            const SizedBox(height: 16.0),
+              const Text('income'),
+              ListView(
+             children: income.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedIncome,
+              onChanged: (String? value) {
+              setState(() {
+                selectedIncome = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
             const SizedBox(height: 16.0),
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Weight',
+                hintText: 'Ocupation',
                 border: OutlineInputBorder(),
               ),
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
             ),
             const SizedBox(height: 16.0),
+              const Text('Employement status'),
+              ListView(
+             children: employement.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedEmployement,
+              onChanged: (String? value) {
+              setState(() {
+                selectedEmployement = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
+        const SizedBox(height: 16.0),
+          const Text('Language'),
+              ListView(
+             children: language.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedLanguage,
+              onChanged: (String? value) {
+              setState(() {
+                selectedLanguage = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
+        const SizedBox(height: 16.0),
+          const Text('Family'),
+              ListView(
+             children: family.map((option) {
+              return RadioListTile<String>(
+              title: Text(option),
+              value: option,
+              groupValue: selectedFamily,
+              onChanged: (String? value) {
+              setState(() {
+                selectedFamily = value;
+              });
+            },
+          );
+        }).toList(),
+        ),
+         const SizedBox(height: 16.0),
             TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Height',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Other health information',
+                hintText: 'Zip Code',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.text,
