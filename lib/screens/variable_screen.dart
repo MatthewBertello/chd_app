@@ -30,8 +30,8 @@ class VariableScreen extends StatelessWidget {
                 Provider.of<VariableEntriesModel>(context).variableEntries);
     entries.sort((entry1, entry2) => entry1['date'].compareTo(entry2['date']));
     List<FlSpot> spots = entries
-        .map((entry) => FlSpot(
-            entry['date'].millisecondsSinceEpoch.toDouble(), entry['value']))
+        .map((entry) =>
+            FlSpot(entries.indexOf(entry).toDouble(), entry['value']))
         .toList();
     return Scaffold(
         appBar: DefaultAppBar(
@@ -45,26 +45,6 @@ class VariableScreen extends StatelessWidget {
               height: 200,
               child: LineChart(
                 LineChartData(
-                  titlesData: FlTitlesData(
-                      show: true,
-                      bottomTitles: AxisTitles(
-                        axisNameWidget: Text('Date'),
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: (value, meta) {
-                            return Transform.rotate(
-                              angle: -45 * 3.14 / 180, // 45 degree angle
-                              child: Text(
-                                DateFormat.yMd().format(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                    value.toInt(),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      )),
                   lineBarsData: [
                     LineChartBarData(
                       spots: spots,
