@@ -1,12 +1,14 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class VariableScreen extends StatelessWidget {
   final int variableId;
+  List<int> values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   @override
   VariableScreen({required this.variableId, super.key});
@@ -27,21 +29,66 @@ class VariableScreen extends StatelessWidget {
             entries:
                 Provider.of<VariableEntriesModel>(context).variableEntries);
     entries.sort((entry1, entry2) => entry1['date'].compareTo(entry2['date']));
+    List<FlSpot> spots = entries
+        .map((entry) => FlSpot(
+            entry['date'].millisecondsSinceEpoch.toDouble(), entry['value']))
+        .toList();
     return Scaffold(
         appBar: DefaultAppBar(
             context: context,
             title: Text(Provider.of<VariableEntriesModel>(context)
                 .variableDefinitions
                 .firstWhere((element) => element['id'] == variableId)['name'])),
-        body: ListView.separated(
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: entries.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-                title: Text(entries[index]['name']),
-                subtitle: Text(DateFormat.jm().format(entries[index]['date'])),
-                trailing: Text(entries[index]['value'].toString()));
-          },
+        body: Column(
+          children: [
+            Container(
+              height: 200,
+              child: LineChart(
+                LineChartData(
+                  titlesData: FlTitlesData(
+                      show: true,
+                      bottomTitles: AxisTitles(
+                        axisNameWidget: Text('Date'),
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: (value, meta) {
+                            return Transform.rotate(
+                              angle: -45 * 3.14 / 180, // 45 degree angle
+                              child: Text(
+                                DateFormat.yMd().format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                    value.toInt(),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      )),
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: spots,
+                      isCurved: true,
+                      dotData: FlDotData(show: false),
+                      belowBarData: BarAreaData(show: false),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            ListView.separated(
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => const Divider(),
+              itemCount: entries.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text(entries[index]['name']),
+                    subtitle:
+                        Text(DateFormat.jm().format(entries[index]['date'])),
+                    trailing: Text(entries[index]['value'].toString()));
+              },
+            ),
+          ],
         ));
   }
 }
