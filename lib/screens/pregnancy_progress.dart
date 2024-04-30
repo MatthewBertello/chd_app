@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:flutter/widgets.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class PregnancyProgress extends StatefulWidget {
@@ -31,11 +32,31 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             onFormatChanged:(format) => setState(() => _calendarFormat = format),
             pageJumpingEnabled: true,
           ),
+
+          Padding(
+            padding: EdgeInsets.only(top: 40.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Checkbox(value: false, onChanged: null,),
+                Container(
+                  height: 45,
+                  width: 300,
+                  child: TextField(decoration: InputDecoration(
+                    hintText: 'Add to your list',
+                    labelStyle: TextStyle(fontSize: 10)
+                    
+                  ),)),
+                const IconButton(icon: Icon(Icons.add), onPressed: null,)
+              ],
+            ),
+          ),
           
           Expanded(
             child: ListView.builder(
               itemCount: _todos.length,
               itemBuilder: (context, index) {
+                
                 return ListTile(
                   leading: Checkbox(value: isChecked,
                   onChanged: (value) => setState(() => isChecked = value?? false)),
