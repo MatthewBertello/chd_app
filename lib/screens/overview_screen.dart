@@ -3,7 +3,9 @@ import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/screens/pregnancy_progress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
 
 class Overview extends StatelessWidget {
@@ -22,29 +24,32 @@ class Overview extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              SizedBox(
-                width: screenWidth / 2 - outerPadding,
-                height: screenWidth / 2 - outerPadding,
-                child: PregnancyCountdown(
-                  currentDays: 131,
-                  totalDays: 270,
-                  margin: EdgeInsets.all(innerMargin),
-                ),
-              ),
-              GestureDetector(
-                onTap: () => DefaultTabController.of(context).animateTo(1),
-                child: SizedBox(
+            GestureDetector(
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PregnancyProgress())),
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                SizedBox(
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
-                  child: HealthMeter(
-                    value: 90,
+                  child: PregnancyCountdown(
+                    currentDays: 131,
+                    totalDays: 270,
                     margin: EdgeInsets.all(innerMargin),
                   ),
-                  
                 ),
-              )
-            ]),
+                GestureDetector(
+                  onTap: () => DefaultTabController.of(context).animateTo(1),
+                  child: SizedBox(
+                    width: screenWidth / 2 - outerPadding,
+                    height: screenWidth / 2 - outerPadding,
+                    child: HealthMeter(
+                      value: 90,
+                      margin: EdgeInsets.all(innerMargin),
+                    ),
+                    
+                  ),
+                )
+              ]),
+            ),
             Expanded(
               child: Tile(
                 margin: EdgeInsets.all(innerMargin),
