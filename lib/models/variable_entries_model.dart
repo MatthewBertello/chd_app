@@ -81,4 +81,13 @@ class VariableEntriesModel extends ChangeNotifier {
 
     return filteredEntries;
   }
+
+  List<Map<String, dynamic>> getVariableEntriesById(
+      {required int id, required List<Map<String, dynamic>> entries}) {
+    var filteredEntries = entries.where((element) {
+      return element['variable_id'] == id;
+    }).toList();
+
+    return filteredEntries;
+  }
 }
