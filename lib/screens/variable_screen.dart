@@ -58,19 +58,20 @@ class VariableScreen extends StatelessWidget {
                 ),
               ),
             ),
-            ListView.separated(
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => const Divider(),
-              itemCount: entries.length,
-              itemBuilder: (context, index) {
-                var reversedIndex = entries.length - index - 1;
-                return ListTile(
-                    title: Text(entries[reversedIndex]['name']),
-                    subtitle: Text(DateFormat.yMd()
-                        .add_jm()
-                        .format(entries[reversedIndex]['date'])),
-                    trailing: Text(entries[reversedIndex]['value'].toString()));
-              },
+            Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: entries.length,
+                itemBuilder: (context, index) {
+                  var reversedIndex = entries.length - index - 1;
+                  return ListTile(
+                      title: Text(entries[reversedIndex]['name']),
+                      subtitle: Text(DateFormat.yMd()
+                          .add_jm()
+                          .format(entries[reversedIndex]['date'])),
+                      trailing: Text(entries[reversedIndex]['value'].toString()));
+                },
+              ),
             ),
           ],
         ));
