@@ -30,8 +30,8 @@ class VariableScreen extends StatelessWidget {
                 Provider.of<VariableEntriesModel>(context).variableEntries);
     entries.sort((entry1, entry2) => entry1['date'].compareTo(entry2['date']));
     List<FlSpot> spots = entries
-        .map((entry) =>
-            FlSpot(entries.indexOf(entry).toDouble(), entry['value']))
+        .map((entry) => FlSpot(
+            entries.indexOf(entry).toDouble(), entry['value'].toDouble()))
         .toList();
     return Scaffold(
         appBar: DefaultAppBar(
@@ -45,12 +45,14 @@ class VariableScreen extends StatelessWidget {
               height: 200,
               child: LineChart(
                 LineChartData(
+                  minY: 0,
                   lineBarsData: [
                     LineChartBarData(
                       spots: spots,
                       isCurved: true,
                       dotData: FlDotData(show: false),
                       belowBarData: BarAreaData(show: false),
+                      curveSmoothness: 0.1,
                     )
                   ],
                 ),
@@ -61,11 +63,13 @@ class VariableScreen extends StatelessWidget {
               separatorBuilder: (context, index) => const Divider(),
               itemCount: entries.length,
               itemBuilder: (context, index) {
+                var reversedIndex = entries.length - index - 1;
                 return ListTile(
-                    title: Text(entries[index]['name']),
-                    subtitle:
-                        Text(DateFormat.jm().format(entries[index]['date'])),
-                    trailing: Text(entries[index]['value'].toString()));
+                    title: Text(entries[reversedIndex]['name']),
+                    subtitle: Text(DateFormat.yMd()
+                        .add_jm()
+                        .format(entries[reversedIndex]['date'])),
+                    trailing: Text(entries[reversedIndex]['value'].toString()));
               },
             ),
           ],
