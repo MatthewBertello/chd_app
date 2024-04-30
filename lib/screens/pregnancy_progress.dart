@@ -1,6 +1,8 @@
+import 'package:chd_app/models/pregnancy_model.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class PregnancyProgress extends StatefulWidget {
@@ -11,8 +13,13 @@ class PregnancyProgress extends StatefulWidget {
 class _PregnancyProgressState extends State<PregnancyProgress> {
   DateTime _focusedDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  List _todos = ["call OB/GYN"];
   bool isChecked = false;
+  TextEditingController textController = TextEditingController();
+
+  void addToToDo(String todo, bool isChecked) {
+    Provider.of<PregnancyModel>(context, listen: false).addToToDo(todo, isChecked);
+    textController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,35 +40,37 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             pageJumpingEnabled: true,
           ),
 
-          Padding(
-            padding: EdgeInsets.only(top: 40.0),
+           Padding(
+            padding: const EdgeInsets.only(top: 40.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Checkbox(value: false, onChanged: null,),
-                Container(
+                SizedBox(
                   height: 45,
                   width: 300,
-                  child: TextField(decoration: InputDecoration(
+                  child: TextField(
+                    controller: textController,
+                    decoration: const InputDecoration(
                     hintText: 'Add to your list',
                     labelStyle: TextStyle(fontSize: 10)
                     
                   ),)),
-                const IconButton(icon: Icon(Icons.add), onPressed: null,)
+                IconButton(icon: const Icon(Icons.add), onPressed: () => addToToDo(textController.text, false),)
               ],
             ),
           ),
           
           Expanded(
             child: ListView.builder(
-              itemCount: _todos.length,
+              itemCount: Provider.of<PregnancyModel>(context).toDos.length,
               itemBuilder: (context, index) {
                 
                 return ListTile(
-                  leading: Checkbox(value: isChecked,
+                  leading: Checkbox(value: Provider.of<PregnancyModel>(context).toDos[index]['isChecked'],
                   onChanged: (value) => setState(() => isChecked = value?? false)),
-                  title: Text('${_todos[index]}'),
-                  trailing: IconButton(icon: Icon(Icons.delete), onPressed: null,)
+                  title: Text('${Provider.of<PregnancyModel>(context).toDos[index]['todo']}'),
+                  trailing: IconButton(icon: const Icon(Icons.delete), onPressed: () => Provider.of<PregnancyModel>(context, listen: false).deleteToDo(index),)
                   );
               }
             ),

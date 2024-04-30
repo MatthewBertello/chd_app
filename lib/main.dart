@@ -1,5 +1,6 @@
 import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/models/pregnancy_model.dart';
 import 'package:chd_app/models/question_forum_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/login_screen.dart';
@@ -24,6 +25,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => QuestionForumModel()),
         ChangeNotifierProvider(create: (context) => InfoEntryModel()),
         ChangeNotifierProvider(create: (context) => VariableEntriesModel()),
+        ChangeNotifierProvider(create: (context) => PregnancyModel())
       ],
       child: const MyApp(),
     ),
