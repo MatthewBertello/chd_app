@@ -25,6 +25,7 @@ class Overview extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PregnancyProgress())),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 SizedBox(
