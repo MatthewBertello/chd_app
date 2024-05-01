@@ -80,7 +80,8 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                             value: Provider.of<PregnancyModel>(context)
                                 .toDos[index]['isChecked'],
                             onChanged: (value) =>
-                                setState(() => isChecked = value ?? false)),
+                                setState(() => Provider.of<PregnancyModel>(context, listen: false)
+                                .toDos[index]['isChecked'] = value ?? false)),
                         title: Text(
                             '${Provider.of<PregnancyModel>(context).toDos[index]['todo']}'),
                         trailing: IconButton(
