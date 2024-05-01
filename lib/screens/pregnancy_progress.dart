@@ -68,7 +68,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                 
                 return ListTile(
                   leading: Checkbox(value: Provider.of<PregnancyModel>(context).toDos[index]['isChecked'],
-                  onChanged: (value) => setState(() => isChecked = value?? false)),
+                  onChanged: (value) => setState(() => Provider.of<PregnancyModel>(context, listen: false).toDos[index]['isChecked'] = value ?? false)),
                   title: Text('${Provider.of<PregnancyModel>(context).toDos[index]['todo']}'),
                   trailing: IconButton(icon: const Icon(Icons.delete), onPressed: () => Provider.of<PregnancyModel>(context, listen: false).deleteToDo(index),)
                   );
