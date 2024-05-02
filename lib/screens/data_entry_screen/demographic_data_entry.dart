@@ -9,19 +9,19 @@ class SubstantialEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Health Information Form',
-      home: HealthInfoForm(),
+      home: DemographicDataEntry(),
     );
   }
 }
 ///this is the form for the demographic data entry
-class HealthInfoForm extends StatefulWidget {
-  const HealthInfoForm({super.key});
+class DemographicDataEntry extends StatefulWidget {
+  const DemographicDataEntry({super.key});
 
   @override
-  _HealthInfoFormState createState() => _HealthInfoFormState();
+  _DemographicDataEntryState createState() => _DemographicDataEntryState();
 }
 
-class _HealthInfoFormState extends State<HealthInfoForm> {
+class _DemographicDataEntryState extends State<DemographicDataEntry> {
   final _formKey = GlobalKey<FormState>();
 
  
