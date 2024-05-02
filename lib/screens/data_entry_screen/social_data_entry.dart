@@ -8,19 +8,19 @@ class SubstantialEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Health Information Form',
-      home: HealthInfoForm(),
+      home: SocialDataEntry(),
     );
   }
 }
 
-class HealthInfoForm extends StatefulWidget {
-  const HealthInfoForm({super.key});
+class SocialDataEntry extends StatefulWidget {
+  const SocialDataEntry({super.key});
 
   @override
-  _HealthInfoFormState createState() => _HealthInfoFormState();
+  _SocialDataEntryState createState() => _SocialDataEntryState();
 }
 
-class _HealthInfoFormState extends State<HealthInfoForm> {
+class _SocialDataEntryState extends State<SocialDataEntry> {
   final _formKey = GlobalKey<FormState>();
 
 final List<String> maritalStatus = ['single','married','divorced','partnered','widowed','other']; 

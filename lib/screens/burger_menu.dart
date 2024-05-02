@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
 import 'package:chd_app/theme/color_demo.dart';
 import 'package:chd_app/screens/community_page.dart';
-import 'package:chd_app/screens/data_entry_screen/initial_data_entry_screen.dart';
+import 'package:chd_app/screens/data_entry_screen/demographic_data_entry.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
