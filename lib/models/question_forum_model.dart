@@ -10,7 +10,7 @@ class QuestionForumModel extends ChangeNotifier {
     loaded = false;
     questionsList.clear();
     try{
-      var response = await supabase
+      var response = await supabaseModel.supabase!
         .from('forum_questions')
         .select('*');
       for (int i = 0; i < response.length; i++) {
@@ -27,11 +27,11 @@ class QuestionForumModel extends ChangeNotifier {
   // adds a question to the list
   void addQuestion(String newQuestion) async { 
     try{
-      await supabase 
+      await supabaseModel.supabase! 
         .from('forum_questions')
         .insert([{ 
           'question': newQuestion,
-          'user_id': supabase.auth.currentUser!.id, 
+          'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
           },
         ]);
         loadQuestionList();
@@ -44,13 +44,13 @@ class QuestionForumModel extends ChangeNotifier {
   // deletes a question from the list if the user id matches
   void deleteQuestion(int questionIndex) async { 
     try {  
-      var response = await supabase
+      var response = await supabaseModel.supabase!
       .from('forum_questions')
       .select('question')
       .eq('question_id', questionsList[questionIndex].getQuestionID())
-      .eq('user_id', supabase.auth.currentUser!.id);
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
       if (response.isNotEmpty) {
-        await supabase
+        await supabaseModel.supabase!
           .from('forum_questions')
           .delete()
           .eq('question_id', questionsList[questionIndex].getQuestionID());
@@ -65,11 +65,11 @@ class QuestionForumModel extends ChangeNotifier {
   // adds a reply to the question at a given index
   void addReply(int questionIndex, String newReply) async { 
     try{
-      await supabase 
+      await supabaseModel.supabase! 
         .from('forum_replies')
         .insert([{ 
           'reply': newReply,
-          'user_id': supabase.auth.currentUser!.id,
+          'user_id': supabaseModel.supabase!.auth.currentUser!.id,
           'question_id' : questionsList[questionIndex].getQuestionID() 
           },
         ]);
@@ -85,7 +85,7 @@ class QuestionForumModel extends ChangeNotifier {
     loaded = false;
     questionsList[questionIndex].clearReplies();
     try{
-      var response = await supabase
+      var response = await supabaseModel.supabase!
         .from('forum_replies')
         .select('*')
         .eq('question_id', questionsList[questionIndex].getQuestionID())
@@ -104,13 +104,13 @@ class QuestionForumModel extends ChangeNotifier {
   // deletes a reply from the database
   void deleteReply(int questionIndex, int replyIndex) async {
     try{  
-      var response = await supabase
+      var response = await supabaseModel.supabase!
         .from('forum_replies')
         .select('reply_id')
         .eq('reply_id', questionsList[questionIndex].replies[replyIndex].getReplyID())
-        .eq("user_id", supabase.auth.currentUser!.id);
+        .eq("user_id", supabaseModel.supabase!.auth.currentUser!.id);
       if (response.isNotEmpty) {
-        await supabase
+        await supabaseModel.supabase!
           .from('forum_replies')
           .delete().eq('reply_id', questionsList[questionIndex].replies[replyIndex].getReplyID());
         loadReplyList(questionIndex);
@@ -123,7 +123,7 @@ class QuestionForumModel extends ChangeNotifier {
 
   void editReply(int questionIndex, int replyIndex, String newReply) async {
     try {
-      await supabase
+      await supabaseModel.supabase!
         .from('forum_replies')
         .update({ 'reply': newReply })
         .eq('reply_id', questionsList[questionIndex].replies[replyIndex].getReplyID());

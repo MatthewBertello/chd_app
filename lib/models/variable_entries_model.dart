@@ -37,12 +37,13 @@ class VariableEntriesModel extends ChangeNotifier {
     }
 
     for (var entry in variableEntries) {
-      DateTime entryDate = DateTime(entry['date'].year, entry['date'].month, entry['date'].day);
+      DateTime entryDate =
+          DateTime(entry['date'].year, entry['date'].month, entry['date'].day);
       if (!dates.contains(entryDate)) {
         dates.add(entryDate);
       }
     }
-    
+
     dates.sort((a, b) => -a.compareTo(b));
 
     loaded = true;
@@ -51,24 +52,12 @@ class VariableEntriesModel extends ChangeNotifier {
   }
 
   Future<dynamic> getVariableDefinitions() async {
-    try {
-      variableDefinitions =
-          await supabase.from('variable_definitions').select();
-    } catch (e) {
-      print(e);
-    }
+    variableDefinitions = await supabaseModel.getVariableDefinitions();
     variableDefinitions.sort((a, b) => a['name'].compareTo(b['name']));
   }
 
   Future<dynamic> getVariableEntries() async {
-    try {
-      variableEntries = await supabase
-          .from('variable_entries')
-          .select()
-          .eq('user_id', supabase.auth.currentUser!.id);
-    } catch (e) {
-      print(e);
-    }
+    variableEntries = await supabaseModel.getVariableEntries();
   }
 
   List<Map<String, dynamic>> getVariableEntriesFromDate(

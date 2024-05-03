@@ -30,7 +30,7 @@ class _QuestionListViewState extends State<QuestionListView> {
     return Scaffold(
       appBar: DefaultAppBar(context: context, title: const Text("Question Forum")),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {(supabase.auth.currentUser?.id != null) ? _addQuestion() : _showNoAccountWarning();}, 
+        onPressed: () {(supabaseModel.supabase!.auth.currentUser?.id != null) ? _addQuestion() : _showNoAccountWarning();}, 
         child: const Icon(Icons.add)
       ),
       body: (widget.questionForumModel.loaded) ? questionListView() : loadingAnimationWidget(context)
@@ -49,7 +49,7 @@ class _QuestionListViewState extends State<QuestionListView> {
               itemCount: widget.questionForumModel.questionsList.length,
               itemBuilder: (context, index) {
                 return 
-                  (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[index].getUserWhoPosted()) 
+                  (supabaseModel.supabase!.auth.currentUser?.id == widget.questionForumModel.questionsList[index].getUserWhoPosted()) 
                   ?  
                   currentUserQuestion(index) : notCurrUserQuestion(index);
               }, 

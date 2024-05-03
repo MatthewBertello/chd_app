@@ -17,7 +17,7 @@ class Settings extends StatelessWidget {
             child: Column(
               children: [
                 SupaResetPassword(
-                  accessToken: supabase.auth.currentSession?.accessToken,
+                  accessToken: supabaseModel.supabase!.auth.currentSession?.accessToken,
                   onSuccess: (UserResponse response) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

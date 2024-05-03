@@ -2,21 +2,18 @@ import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:chd_app/models/pregnancy_model.dart';
 import 'package:chd_app/models/question_forum_model.dart';
+import 'package:chd_app/models/supabase_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_constants.dart';
 import 'package:chd_app/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final SupabaseModel supabaseModel = SupabaseModel();
 
 Future<void> main() async {
-  await dotenv.load(fileName: '.env');
-  await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-  );
+  await supabaseModel.initialize();
   runApp(
     MultiProvider(
       providers: [
@@ -31,8 +28,6 @@ Future<void> main() async {
     ),
   );
 }
-
-final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

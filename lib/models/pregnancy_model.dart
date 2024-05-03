@@ -11,10 +11,10 @@ class PregnancyModel extends ChangeNotifier {
 
   // Set the due date
   Future<void> setDueDate() async {
-    final response = await supabase
+    final response = await supabaseModel.supabase!
       .from('user_info')
       .select('due_date')
-      .eq('user_id', supabase.auth.currentUser!.id);
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
       print(response);
   }
 

@@ -53,7 +53,7 @@ class BurgerMenu extends StatelessWidget {
               message: "Are you sure you want to logout?",
               actions: {
                 "Yes": () async {
-                  await supabase.auth.signOut();
+                  await supabaseModel.signOut();
                   await Provider.of<InfoEntryModel>(context, listen: false).reset();
                   await Provider.of<VariableEntriesModel>(context, listen: false).reset();
                   Navigator.of(context).pop();
