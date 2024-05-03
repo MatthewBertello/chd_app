@@ -42,11 +42,19 @@ class _DataDropdownState extends State<DataDropdown> {
     );
   }
 
-  ListView createListView() {
-    return ListView(
-
+  ListView createListView(List<Map<String, dynamic>> items) {
+    return ListView.separated(
+      separatorBuilder: (context, index) {return const Divider(height: 1,);},
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: items[index]['variable name'],
+          trailing: Padding(
+            padding: const EdgeInsets.all(8),
+            child: SizedBox(child: items[index]['form field'],)
+            )
+        );
+      }
     );
   }
-
-
 }
