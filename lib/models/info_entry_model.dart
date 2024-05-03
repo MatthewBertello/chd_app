@@ -55,26 +55,14 @@ class InfoEntryModel extends ChangeNotifier {
   }
 
   Future<dynamic> getVariableDefinitions() async {
-    try {
-      variableDefinitions =
-          await supabaseModel.supabase!.from('variable_definitions').select();
-    } catch (e) {
-      print(e);
-    }
+    variableDefinitions = await supabaseModel.getVariableDefinitions();
     variableDefinitions.sort((a, b) => a['name'].compareTo(b['name']));
   }
 
   Future<dynamic> getFavorites() async {
-    try {
-      favorites = (await supabaseModel.supabase!
-              .from('user_variable_favorites')
-              .select('variable_id')
-              .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id))
-          .map<int>((e) => e['variable_id'] as int)
-          .toList();
-    } catch (e) {
-      print(e);
-    }
+    favorites = (await supabaseModel.getUserVariableFavorites())
+        .map<int>((e) => e['variable_id'] as int)
+        .toList();
   }
 
   Future<dynamic> submit() async {
@@ -97,6 +85,7 @@ class InfoEntryModel extends ChangeNotifier {
       element['form'].controller!.clear();
     }
     selectedDate = DateTime.now();
+    await supabaseModel.getVariableEntries(reload: true);
     notifyListeners();
   }
 
@@ -123,5 +112,6 @@ class InfoEntryModel extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
+    await supabaseModel.getUserVariableFavorites(reload: true);
   }
 }

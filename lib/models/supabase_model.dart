@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseModel {
+  bool isLoading = false;
   SupabaseClient? supabase;
   List<Map<String, dynamic>> forumQuestions = [];
   List<Map<String, dynamic>> forumReplies = [];
@@ -21,6 +22,9 @@ class SupabaseModel {
   bool variableEntriesLoaded = false;
 
   Future<dynamic> initialize() async {
+    while (isLoading) {
+      await Future.delayed(const Duration(milliseconds: 250));
+    }
     await initSupabase();
     await getForumQuestions();
     await getForumReplies();
@@ -124,7 +128,7 @@ class SupabaseModel {
     if (!userInfoLoaded || reload) {
       try {
         userInfo = (await supabase!
-                .from('users')
+                .from('user_info')
                 .select()
                 .eq('user_id', supabase!.auth.currentUser!.id))
             .first;
@@ -143,7 +147,10 @@ class SupabaseModel {
     if (!userVariableFavoritesLoaded || reload) {
       try {
         userVariableFavorites =
-            await supabase!.from('user_variable_favorites').select();
+            await supabase!.from('user_variable_favorites').select().eq(
+                  'user_id',
+                  supabase!.auth.currentUser!.id,
+                );
       } catch (e) {
         print(e);
       }
