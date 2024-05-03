@@ -1,9 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseModel {
-  bool initialized = false;
-  bool initializing = false;
   SupabaseClient? supabase;
   List<Map<String, dynamic>> forumQuestions = [];
   List<Map<String, dynamic>> forumReplies = [];
@@ -21,6 +21,14 @@ class SupabaseModel {
   bool variableEntriesLoaded = false;
 
   Future<dynamic> initialize() async {
+    await initSupabase();
+    await getForumQuestions();
+    await getForumReplies();
+    await getStringVariableDefinitions();
+    await getUserInfo();
+    await getUserVariableFavorites();
+    await getVariableDefinitions();
+    await getVariableEntries();
   }
 
   Future<dynamic> initSupabase() async {
@@ -49,9 +57,9 @@ class SupabaseModel {
     variableDefinitionsLoaded = false;
     variableEntriesLoaded = false;
   }
-  
+
   bool supabaseIsInitialized() {
-    return initialized && supabase != null;
+    return supabase != null;
   }
 
   Future<dynamic> ensureSupabaseIntialized() async {
@@ -61,10 +69,19 @@ class SupabaseModel {
     }
   }
 
+  Future<dynamic> userLoggedIn() async {
+    await ensureSupabaseIntialized();
+    return supabase!.auth.currentUser != null;
+  }
+
   Future<dynamic> getForumQuestions({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!forumQuestionsLoaded || reload) {
-      forumQuestions = await supabase!.from('forum_questions').select();
+      try {
+        forumQuestions = await supabase!.from('forum_questions').select();
+      } catch (e) {
+        print(e);
+      }
       forumQuestionsLoaded = true;
     }
     return forumQuestions;
@@ -73,7 +90,11 @@ class SupabaseModel {
   Future<dynamic> getForumReplies({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!forumRepliesLoaded || reload) {
-      forumReplies = await supabase!.from('forum_replies').select();
+      try {
+        forumReplies = await supabase!.from('forum_replies').select();
+      } catch (e) {
+        print(e);
+      }
       forumRepliesLoaded = true;
     }
     return forumReplies;
@@ -82,25 +103,47 @@ class SupabaseModel {
   Future<dynamic> getStringVariableDefinitions({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!stringVariableDefinitionsLoaded || reload) {
-      stringVariableDefinitions = await supabase!.from('string_variable_definitions').select();
+      try {
+        stringVariableDefinitions =
+            await supabase!.from('string_variable_definitions').select();
+      } catch (e) {
+        print(e);
+      }
       stringVariableDefinitionsLoaded = true;
     }
     return stringVariableDefinitions;
   }
 
   Future<dynamic> getUserInfo({bool reload = false}) async {
-    await ensureSupabaseIntialized();
+    if (!await userLoggedIn()) {
+      return null;
+    }
     if (!userInfoLoaded || reload) {
-      userInfo = (await supabase!.from('users').select().eq('user_id', supabase!.auth.currentUser!.id)).first;
+      try {
+        userInfo = (await supabase!
+                .from('users')
+                .select()
+                .eq('user_id', supabase!.auth.currentUser!.id))
+            .first;
+      } catch (e) {
+        print(e);
+      }
       userInfoLoaded = true;
     }
     return userInfo;
   }
 
   Future<dynamic> getUserVariableFavorites({bool reload = false}) async {
-    await ensureSupabaseIntialized();
-    if (!userVariableFavoritesLoaded || reload){
-      userVariableFavorites = await supabase!.from('user_variable_favorites').select();
+    if (!await userLoggedIn()) {
+      return null;
+    }
+    if (!userVariableFavoritesLoaded || reload) {
+      try {
+        userVariableFavorites =
+            await supabase!.from('user_variable_favorites').select();
+      } catch (e) {
+        print(e);
+      }
       userVariableFavoritesLoaded = true;
     }
     return userVariableFavorites;
@@ -109,16 +152,30 @@ class SupabaseModel {
   Future<dynamic> getVariableDefinitions({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!variableDefinitionsLoaded || reload) {
-      variableDefinitions = await supabase!.from('variable_definitions').select();
+      try {
+        variableDefinitions =
+            await supabase!.from('variable_definitions').select();
+      } catch (e) {
+        print(e);
+      }
       variableDefinitionsLoaded = true;
     }
     return variableDefinitions;
   }
 
   Future<dynamic> getVariableEntries({bool reload = false}) async {
-    await ensureSupabaseIntialized();
+    if (!await userLoggedIn()) {
+      return null;
+    }
     if (!variableEntriesLoaded || reload) {
-      variableEntries = await supabase!.from('variable_entries').select().eq('user_id', supabase!.auth.currentUser!.id);
+      try {
+        variableEntries = await supabase!
+            .from('variable_entries')
+            .select()
+            .eq('user_id', supabase!.auth.currentUser!.id);
+      } catch (e) {
+        print(e);
+      }
       variableEntriesLoaded = true;
     }
     return variableEntries;
