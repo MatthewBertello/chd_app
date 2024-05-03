@@ -11,12 +11,14 @@ class ThemeManager with ChangeNotifier {
 
   get themeMode => _themeMode;
 
+  // Changes the theme
   void toggleTheme(bool isDark) async {
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     await saveThemeMode(isDark);
     notifyListeners();
   }
 
+  // Loads the theme from local storage
   Future<void> loadThemeMode() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey('isDark')) {
@@ -28,6 +30,7 @@ class ThemeManager with ChangeNotifier {
     notifyListeners();
   }
 
+  // Saves the theme to local storage
   Future<void> saveThemeMode(bool isDark) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDark', isDark);

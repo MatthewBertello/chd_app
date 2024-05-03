@@ -73,6 +73,7 @@ class HealthWidget extends StatelessWidget {
     );
   }
 
+  // Returns a widget that displays the category summaries
   Widget buildCategorySummary(BuildContext context) {
     // A list of categories, hardcoded for now, will need to get it from database later
     List categories = [
@@ -84,6 +85,7 @@ class HealthWidget extends StatelessWidget {
       children: [
         const Text("Category Summary"),
         const Divider(height: 1),
+        // The list of categories with progress bars
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -122,9 +124,8 @@ class HealthWidget extends StatelessWidget {
     );
   }
 
+  // Returns a widget that displays the previous entries
   Widget buildPreviousEntries(BuildContext context) {
-    // This should be a list view that displays the top 5 previous entries and a show more button. Each entry should have a date, a health meter, and a category summary.
-    // Use hardcoded data for now, will need to get from database later
     List entries = Provider.of<VariableEntriesModel>(context).dates;
 
     print(entries);

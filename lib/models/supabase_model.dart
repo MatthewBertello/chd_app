@@ -21,6 +21,7 @@ class SupabaseModel {
   bool variableDefinitionsLoaded = false;
   bool variableEntriesLoaded = false;
 
+  // Initialize the Supabase client and load data
   Future<dynamic> initialize() async {
     while (isLoading) {
       await Future.delayed(const Duration(milliseconds: 250));
@@ -35,6 +36,7 @@ class SupabaseModel {
     await getVariableEntries();
   }
 
+  // Initialize the Supabase client
   Future<dynamic> initSupabase() async {
     if (supabase != null) {
       return;
@@ -47,6 +49,7 @@ class SupabaseModel {
     supabase = Supabase.instance.client;
   }
 
+  // Sign out of Supabase and reset the data
   Future<dynamic> signOut() async {
     await supabase!.auth.signOut();
     forumQuestions = [];
@@ -65,10 +68,12 @@ class SupabaseModel {
     variableEntriesLoaded = false;
   }
 
+  // Check if Supabase is initialized
   bool supabaseIsInitialized() {
     return supabase != null;
   }
 
+  // Checks if supabase is initialized and waits until it is
   Future<dynamic> ensureSupabaseIntialized() async {
     while (!supabaseIsInitialized()) {
       await initialize();
@@ -76,11 +81,13 @@ class SupabaseModel {
     }
   }
 
+  // Check if the user is logged in
   Future<dynamic> userLoggedIn() async {
     await ensureSupabaseIntialized();
     return supabase!.auth.currentUser != null;
   }
 
+  // Gets the forum questions from the database
   Future<dynamic> getForumQuestions({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!forumQuestionsLoaded || reload) {
@@ -94,6 +101,7 @@ class SupabaseModel {
     return forumQuestions;
   }
 
+  // Gets the forum replies from the database
   Future<dynamic> getForumReplies({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!forumRepliesLoaded || reload) {
@@ -107,6 +115,7 @@ class SupabaseModel {
     return forumReplies;
   }
 
+  // Gets the string variable definitions from the database
   Future<dynamic> getStringVariableDefinitions({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!stringVariableDefinitionsLoaded || reload) {
@@ -121,6 +130,7 @@ class SupabaseModel {
     return stringVariableDefinitions;
   }
 
+  // Gets the user info from the database
   Future<dynamic> getUserInfo({bool reload = false}) async {
     if (!await userLoggedIn()) {
       return null;
@@ -140,6 +150,7 @@ class SupabaseModel {
     return userInfo;
   }
 
+  // Gets the user variable favorites from the database
   Future<dynamic> getUserVariableFavorites({bool reload = false}) async {
     if (!await userLoggedIn()) {
       return null;
@@ -159,6 +170,7 @@ class SupabaseModel {
     return userVariableFavorites;
   }
 
+  // Gets the variable definitions from the database
   Future<dynamic> getVariableDefinitions({bool reload = false}) async {
     await ensureSupabaseIntialized();
     if (!variableDefinitionsLoaded || reload) {
@@ -173,6 +185,7 @@ class SupabaseModel {
     return variableDefinitions;
   }
 
+  // Gets the variable entries from the database
   Future<dynamic> getVariableEntries({bool reload = false}) async {
     if (!await userLoggedIn()) {
       return null;

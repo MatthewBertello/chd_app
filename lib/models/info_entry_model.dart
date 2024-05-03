@@ -9,6 +9,8 @@ class InfoEntryModel extends ChangeNotifier {
   List<int> favorites = [];
   DateTime selectedDate = DateTime.now();
 
+  // Reset the model
+  // This should be called when the user logs out
   Future<dynamic> reset() async {
     while (loading) {
       continue;
@@ -20,14 +22,20 @@ class InfoEntryModel extends ChangeNotifier {
     loaded = false;
   }
 
+  // Initialize the model
   Future<dynamic> init() async {
+    // If this model is already loading, wait for it to finish
     while (loading) {
       continue;
     }
     loading = true;
+
+    // Reset the model
     variableDefinitions = [];
     categorizedVariableDefinitions = {};
     favorites = [];
+
+    // Get the variable definitions and favorites
     await getVariableDefinitions();
     await getFavorites();
 
@@ -48,23 +56,26 @@ class InfoEntryModel extends ChangeNotifier {
       }
       categorizedVariableDefinitions[element['category']]!.add(element);
     }
-
+    selectedDate = DateTime.now();
     loaded = true;
     loading = false;
     notifyListeners();
   }
 
+  // Gets the variable definitions from the supabaseModel
   Future<dynamic> getVariableDefinitions() async {
     variableDefinitions = await supabaseModel.getVariableDefinitions();
     variableDefinitions.sort((a, b) => a['name'].compareTo(b['name']));
   }
 
+  // Gets the user's favorite variables from the supabaseModel
   Future<dynamic> getFavorites() async {
     favorites = (await supabaseModel.getUserVariableFavorites())
         .map<int>((e) => e['variable_id'] as int)
         .toList();
   }
 
+  // Submits the variable entries to the database
   Future<dynamic> submit() async {
     for (var element in variableDefinitions) {
       if (element['checkbox'] && element['form'].controller!.text.isNotEmpty) {
@@ -89,6 +100,7 @@ class InfoEntryModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Updates the favorite status of a variable
   Future<dynamic> updateFavorite(int id, bool favorited) async {
     try {
       if (favorited) {
