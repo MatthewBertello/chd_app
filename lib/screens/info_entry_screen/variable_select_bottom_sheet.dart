@@ -26,9 +26,11 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
         child: Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(8.0),
+            // Searchable List widget
             child: SearchableList<Map<String, dynamic>>.expansion(
               hideEmptyExpansionItems: true,
               closeKeyboardWhenScrolling: true,
+              // Builds the category headers
               expansionTitleBuilder: (category) {
                 return Tile(
                   child: Center(
@@ -36,9 +38,11 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
                   ),
                 );
               },
+              // The data to populate the list with
               expansionListData: Provider.of<InfoEntryModel>(context)
                   .categorizedVariableDefinitions,
               expansionListBuilder: listItemBuilder,
+              // The filter method for the search bar
               filterExpansionData: (value) {
                 value = value.toLowerCase();
                 final filteredMap = {
@@ -53,7 +57,7 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
                 };
                 return filteredMap;
               },
-              emptyWidget: const Text("empty"),
+              emptyWidget: const Text("No Variables Found"),
               inputDecoration: const InputDecoration(
                 labelText: "Search Variables",
               ),
@@ -77,6 +81,7 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
     );
   }
 
+  // Creates the ListTile widget for each item
   Widget listItemBuilder(int index, Map<String, dynamic> item) {
     return ListTile(
       title: Text(item['name']),

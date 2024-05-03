@@ -1,8 +1,22 @@
+import 'package:chd_app/main.dart';
 import 'package:flutter/material.dart';
 
 class PregnancyModel extends ChangeNotifier {
   List toDos = [];
   DateTime? dueDate;
+
+  PregnancyModel() {
+    setDueDate();
+  }
+
+  // Set the due date
+  Future<void> setDueDate() async {
+    final response = await supabase
+      .from('user_info')
+      .select('due_date')
+      .eq('user_id', supabase.auth.currentUser!.id);
+      print(response);
+  }
 
   //Method that adds to todo list
   void addToToDo(String todo, bool isChecked) {
