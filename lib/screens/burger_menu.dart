@@ -1,6 +1,7 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
+import 'package:chd_app/screens/data_entry_screen/data_entry_dropdown.dart';
 import 'package:chd_app/screens/data_entry_screen/physical_data_entry.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_manager.dart';
@@ -27,7 +28,7 @@ class BurgerMenu extends StatelessWidget {
     },
     {
       'Health and Lifestyle': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const PhysicalDataEntry()))
+          context, MaterialPageRoute(builder: (context) => const DataDropdown()))
     },
     {
       'Question Forum': (context) {
