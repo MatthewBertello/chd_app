@@ -32,6 +32,9 @@ class SupabaseModel {
   }
 
   Future<dynamic> initSupabase() async {
+    if (supabase != null) {
+      return;
+    }
     await dotenv.load(fileName: '.env');
     await Supabase.initialize(
       url: dotenv.env['SUPABASE_URL']!,
@@ -40,8 +43,8 @@ class SupabaseModel {
     supabase = Supabase.instance.client;
   }
 
-  void sigOut() {
-    supabase!.auth.signOut();
+  Future<dynamic> signOut() async {
+    await supabase!.auth.signOut();
     forumQuestions = [];
     forumReplies = [];
     stringVariableDefinitions = [];

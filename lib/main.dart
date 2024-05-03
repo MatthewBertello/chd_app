@@ -9,7 +9,6 @@ import 'package:chd_app/theme/theme_constants.dart';
 import 'package:chd_app/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 final SupabaseModel supabaseModel = SupabaseModel();
 
@@ -29,8 +28,6 @@ Future<void> main() async {
     ),
   );
 }
-
-final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

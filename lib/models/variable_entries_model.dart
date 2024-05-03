@@ -53,7 +53,7 @@ class VariableEntriesModel extends ChangeNotifier {
   Future<dynamic> getVariableDefinitions() async {
     try {
       variableDefinitions =
-          await supabase.from('variable_definitions').select();
+          await supabaseModel.supabase!.from('variable_definitions').select();
     } catch (e) {
       print(e);
     }
@@ -62,10 +62,10 @@ class VariableEntriesModel extends ChangeNotifier {
 
   Future<dynamic> getVariableEntries() async {
     try {
-      variableEntries = await supabase
+      variableEntries = await supabaseModel.supabase!
           .from('variable_entries')
           .select()
-          .eq('user_id', supabase.auth.currentUser!.id);
+          .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
     } catch (e) {
       print(e);
     }

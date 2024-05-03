@@ -12,7 +12,7 @@ class MainModel extends ChangeNotifier {
   List<Map<String, dynamic>>? variableDefinitions;
 
   Future<List<Map<String, dynamic>>?> getVariableDefinitions() async {
-    final data = await supabase.from('variable_definitions').select();
+    final data = await supabaseModel.supabase!.from('variable_definitions').select();
     notifyListeners();
     return data;
   }
@@ -49,7 +49,7 @@ class MainModel extends ChangeNotifier {
   // A method that searches a member depending on the keyword,
   Future<void> searchMember(String userID) async {
     clearMembersSearched(); // Clear the search list every time we're searching a new user
-    final response = await supabase 
+    final response = await supabaseModel.supabase! 
       .from('profiles')
       .select(); // Tried using .like after select, but it doesn't work... 
 

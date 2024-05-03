@@ -22,7 +22,7 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+    _authStateSubscription = supabaseModel.supabase!.auth.onAuthStateChange.listen((data) {
       final session = data.session;
       if (data.event == AuthChangeEvent.passwordRecovery && session != null) {
         Navigator.pushReplacement(

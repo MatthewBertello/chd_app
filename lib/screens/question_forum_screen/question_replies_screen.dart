@@ -42,7 +42,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
             child: ListView.separated( // builder shows all the replies of the question
               itemCount: widget.questionForumModel.questionsList[widget.questionIndex].replies.length,
               itemBuilder: (context, index) {
-                return (supabase.auth.currentUser?.id == widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getUserWhoPosted()) ? currentUserReply(widget.questionIndex, index) : notCurrUserReply(widget.questionIndex, index);
+                return (supabaseModel.supabase!.auth.currentUser?.id == widget.questionForumModel.questionsList[widget.questionIndex].replies[index].getUserWhoPosted()) ? currentUserReply(widget.questionIndex, index) : notCurrUserReply(widget.questionIndex, index);
               },
               separatorBuilder: (BuildContext context, int index) { return const Divider(color: Colors.transparent, height: 5.0); }
             )
@@ -95,10 +95,10 @@ class QuestionRepliesState extends State<QuestionReplies> {
     return Row( // where the user can make a reply
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(child: (supabase.auth.currentUser?.id != null) ? hasAccountReplyTextField() : noAccountReplyTextField()), 
+        Flexible(child: (supabaseModel.supabase!.auth.currentUser?.id != null) ? hasAccountReplyTextField() : noAccountReplyTextField()), 
         const SizedBox(width: 8.0),
         ElevatedButton.icon(
-          onPressed: () {(supabase.auth.currentUser?.id != null) ? _addReply() : _showNoAccountWarning();},
+          onPressed: () {(supabaseModel.supabase!.auth.currentUser?.id != null) ? _addReply() : _showNoAccountWarning();},
           icon: const Icon(Icons.add),
           label: const Text("Reply"),
           style: ElevatedButton.styleFrom(shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))))
