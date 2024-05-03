@@ -102,7 +102,7 @@ class _DemographicDataEntryState extends State<DemographicDataEntry> {
               onPressed: () {
                 //widget.updatePage(1);
               },
-              child: const Text('Submit'),
+              child: const Text('Submit'), ///submits values and sends them to database
             ),
           ],
         ),

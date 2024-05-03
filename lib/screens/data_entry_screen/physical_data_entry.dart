@@ -123,7 +123,7 @@ final List<String> drugUse = ['methedone','suboxone','none'];
                 fontWeight: FontWeight.bold,
               ),
             ),
-            ...healthConcerns.map((concern) {
+            ...healthConcerns.map((concern) { ///lists mental health concerns
               return CheckboxListTile(
                 title: Text(concern),
                 value: selectedConcerns[concern],
@@ -144,7 +144,7 @@ final List<String> drugUse = ['methedone','suboxone','none'];
             ),
             const SizedBox(height: 16.0),
             const Text('Drug Use'),
-             ListView(
+             ListView(  ///lists the drugs off from the database
              children: drugUse.map((option) {
               return RadioListTile<String>(
               title: Text(option),
