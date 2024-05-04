@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chd_app/main.dart';
+import 'question.dart';
+import 'reply.dart';
 
 class QuestionForumModel extends ChangeNotifier {
   final List<Question> questionsList = []; // the list of questions to be displayed
@@ -193,101 +195,5 @@ class QuestionForumModel extends ChangeNotifier {
 
 } // end of the model
 
-// class to form the backbone of the questions
-class Question {
-  String question = ""; // the question
-  List<Reply> replies = []; // the list of replies
-  String questionID = "NULL"; // uuid for each question
-  String userWhoPosted = ""; // user_id of the person who posted the question
-  int numLikes = 0;
 
-  Question(String newQuestion, String newID, String newUser){ // constructor for question
-    question = newQuestion;
-    questionID = newID;
-    userWhoPosted = newUser;
-    replies = [];
-  }
 
-  void addReply(Reply newReply) { // adds a reply to the replies list
-    replies.add(newReply);
-  }
-
-  void editQuestion(newQuestion){ // edits a question, might need later
-    question = newQuestion;
-  }
-
-  String getQuestion() { // retrieves the question
-    return question;
-  }
-
-  List<Reply> getReplies() { // gets the whole list of replies
-    return replies;
-  }
-
-  String getQuestionID() { // retrieve questionID
-    return questionID;
-  }
-
-  void setQuestionID(String newID) { // set the questionID
-    questionID = newID;
-  }
-
-  String getUserWhoPosted() { // get the user's id
-    return userWhoPosted;
-  }
-
-  void setUserWhoPosted(String newUser){ // set the user's id
-    userWhoPosted = newUser;
-  }
-
-  void clearReplies() { // clears the all the replies from a question in app
-    replies.clear();
-  }
-
-  void setNumLikes(int newNumLikes){ // sets number of likes for each question
-    numLikes = newNumLikes;
-  }
-
-} // end of Question class
-
-// a class for replies to a question
-class Reply{
-  String reply = "";
-  String replyID = "NULL";
-  String userWhoPosted = "";
-
-  Reply(String newReply, String newID, String newUser){ // constructor for reply
-    reply = newReply;
-    replyID = newID;
-    userWhoPosted = newUser;
-  }
-
-  void setReplyID(String newID){ // sets the id for a reply
-    replyID = newID;
-  }
-
-  String getReplyID() { // returns a reply's id
-    return replyID;
-  }
-
-  void setReply(String newReply) { // sets the reply
-    reply = newReply;
-  }
-
-  String getReply(){ // retrieve the reply
-    return reply;
-  }
-
-  void setUserWhoPosted(String newUser){ // sets the id of the user
-    userWhoPosted = newUser;
-  }
-
-  String getUserWhoPosted() { // returns the id of the person who posted it
-    return userWhoPosted;
-  }
-
-  void editReply(String editedReply){ // edit reply might be needed later
-    reply = editedReply;
-  }
-
-} // end of Reply class
