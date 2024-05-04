@@ -1,5 +1,6 @@
 import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/models/personal_info_model.dart';
 import 'package:chd_app/models/pregnancy_model.dart';
 import 'package:chd_app/models/question_forum_model.dart';
 import 'package:chd_app/models/supabase_model.dart';
@@ -22,7 +23,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => QuestionForumModel()),
         ChangeNotifierProvider(create: (context) => InfoEntryModel()),
         ChangeNotifierProvider(create: (context) => VariableEntriesModel()),
-        ChangeNotifierProvider(create: (context) => PregnancyModel())
+        ChangeNotifierProvider(create: (context) => PregnancyModel()),
+        ChangeNotifierProvider(create:(context) => PersonalInfoModel(),)
       ],
       child: const MyApp(),
     ),

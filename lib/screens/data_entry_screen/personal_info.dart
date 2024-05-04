@@ -1,19 +1,34 @@
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:chd_app/models/personal_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'demographic_data_entry.dart';
 import 'physical_data_entry.dart';
 import 'social_data_entry.dart';
 import 'package:searchable_listview/searchable_listview.dart';
+import 'package:provider/provider.dart';
 
-class DataDropdown extends StatefulWidget {
-  const DataDropdown({super.key});  //creates class
+class PersonalInfo extends StatefulWidget {
+  const PersonalInfo({super.key});  //creates class
 
   @override
-  State<DataDropdown> createState() => _DataDropdownState();
+  State<PersonalInfo> createState() => _PersonalInfoState();
 }
 
-class _DataDropdownState extends State<DataDropdown> {
+class _PersonalInfoState extends State<PersonalInfo> {
+  bool loading = false;
+
+  @override
+  void initState() {
+    // Initialize the model if it has not been loaded
+    if (Provider.of<PersonalInfoModel>(context, listen: false).loaded == false &&
+        Provider.of<PersonalInfoModel>(context, listen: false).loading == false) {
+      Provider.of<PersonalInfoModel>(context, listen: false).init();
+    }
+    Provider.of<PersonalInfoModel>(context, listen: false).selectedDate =
+        DateTime.now();
+    super.initState();
+  }
 
   @override 
   Widget build (BuildContext context){ ///build method, returns dropdown menu
@@ -51,7 +66,7 @@ class _DataDropdownState extends State<DataDropdown> {
           title: items[index]['variable name'],
           trailing: Padding(
             padding: const EdgeInsets.all(8),
-            child: SizedBox(child: items[index]['form field'],)
+            child: SizedBox(child: items[index]['input'],)
             )
         );
       }

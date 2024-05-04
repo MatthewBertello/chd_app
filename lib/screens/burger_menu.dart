@@ -1,7 +1,7 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
-import 'package:chd_app/screens/data_entry_screen/data_entry_dropdown.dart';
+import 'package:chd_app/screens/data_entry_screen/personal_info.dart';
 import 'package:chd_app/screens/data_entry_screen/physical_data_entry.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_manager.dart';
@@ -28,7 +28,7 @@ class BurgerMenu extends StatelessWidget {
     },
     {
       'Personal Information': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const DataDropdown()))
+          context, MaterialPageRoute(builder: (context) => const PersonalInfo()))
     },
     {
       'Question Forum': (context) {
