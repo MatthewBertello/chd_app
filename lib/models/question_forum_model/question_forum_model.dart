@@ -18,7 +18,7 @@ class QuestionForumModel extends ChangeNotifier {
         .from('forum_questions')
         .select('*');
       for (int i = 0; i < response.length; i++) {
-        questionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id']));
+        questionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id']/*, response[i]['user_name']*/));
       }
       // pulls the number of likes from the database for each question
       for (int i = 0; i < questionsList.length; i++){
@@ -178,6 +178,7 @@ class QuestionForumModel extends ChangeNotifier {
     }
   } 
 
+  // edits a user's reply
   void editReply(int questionIndex, int replyIndex, String newReply) async {
     try {
       await supabaseModel.supabase!
@@ -194,6 +195,3 @@ class QuestionForumModel extends ChangeNotifier {
   }
 
 } // end of the model
-
-
-

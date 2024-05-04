@@ -6,13 +6,15 @@ class Question {
   List<Reply> replies = []; // the list of replies
   String questionID = "NULL"; // uuid for each question
   String userWhoPosted = ""; // user_id of the person who posted the question
-  int numLikes = 0;
+  int numLikes = 0; // number of likes on a question
+  String author = "NULL"; // who wrote the question
 
   // constructor for question
-  Question(String newQuestion, String newID, String newUser){ 
+  Question(String newQuestion, String newID, String newUser, /*String newAuthor*/){ 
     question = newQuestion;
     questionID = newID;
     userWhoPosted = newUser;
+    //author = newAuthor;
     replies = [];
   }
 
@@ -64,6 +66,16 @@ class Question {
   // sets number of likes for each question
   void setNumLikes(int newNumLikes){ 
     numLikes = newNumLikes;
+  }
+
+  // retrieve who wrote the question
+  String getAuthor() {
+    return author;
+  }
+
+  // sets the author of the question
+  void setAuthor(String newAuthor){
+    author = newAuthor;
   }
 
 } // end of Question class

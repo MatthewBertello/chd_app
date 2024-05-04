@@ -2,7 +2,7 @@ import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/main_model.dart';
 import 'package:chd_app/models/personal_info_model.dart';
 import 'package:chd_app/models/pregnancy_model.dart';
-import 'package:chd_app/models/question_forum_model.dart';
+import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:chd_app/models/supabase_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/login_screen.dart';
