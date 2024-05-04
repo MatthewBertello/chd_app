@@ -1,6 +1,7 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model.dart';
+import 'package:like_button/like_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'add_question_screen.dart';
@@ -20,13 +21,21 @@ class QuestionListView extends StatefulWidget{
 class _QuestionListViewState extends State<QuestionListView> {
 
   bool initialized = false;
+  bool isLiked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initQuestionsList();
+
+  }
 
   @override
   Widget build(BuildContext context){
-    if (!initialized){ // loads the question list when the community page is loaded first time
-      _initQuestionsList();
-      initialized = true;
-    }
+    // if (!initialized){ // loads the question list when the community page is loaded first time
+    //   _initQuestionsList();
+    //   initialized = true;
+    // }
     return Scaffold(
       appBar: DefaultAppBar(context: context, title: const Text("Question Forum")),
       floatingActionButton: FloatingActionButton(
@@ -77,7 +86,13 @@ class _QuestionListViewState extends State<QuestionListView> {
       title: Text(widget.questionForumModel.questionsList[questionIndex].getQuestion(), 
       style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
       subtitle: const Text("The Author"),
-      trailing: IconButton(onPressed: () {_deleteQuestionVerification(questionIndex);}, icon: const Icon(Icons.delete)),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children:[
+          likeButton(questionIndex),
+          IconButton(onPressed: () {_deleteQuestionVerification(questionIndex);}, icon: const Icon(Icons.delete)),
+        ]
+      ),
       tileColor: Theme.of(context).colorScheme.primaryContainer,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       onTap: () {
@@ -91,6 +106,7 @@ class _QuestionListViewState extends State<QuestionListView> {
 
   // the user who posted the question is not currently logged in
   ListTile notCurrUserQuestion(int questionIndex) {
+    isLiked = widget.questionForumModel.likedQuestionsList.contains(widget.questionForumModel.questionsList[questionIndex].questionID);
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[questionIndex].getQuestion(), 
       style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
@@ -103,6 +119,41 @@ class _QuestionListViewState extends State<QuestionListView> {
         Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
         QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: questionIndex))));
       },
+      trailing: likeButton(questionIndex)
+    );
+  }
+
+  SizedBox likeButton(int questionIndex) {
+    return SizedBox(
+      width: 50.0,
+      child: LikeButton(
+        animationDuration: const Duration(milliseconds: 0),
+        circleColor: const CircleColor(
+            start: Colors.transparent, end: Colors.transparent),
+        bubblesColor: const BubblesColor(
+            dotPrimaryColor: Colors.transparent,
+            dotSecondaryColor: Colors.transparent,
+            dotThirdColor: Colors.transparent,
+            dotLastColor: Colors.transparent),
+        bubblesSize: 0,
+        likeCount: widget.questionForumModel.questionsList[questionIndex].numLikes,
+        isLiked: isLiked,
+        onTap: (bool isLiked) {
+          if (supabaseModel.supabase!.auth.currentUser?.id == null) {
+            _showNoAccountWarning();
+            return Future.value(isLiked);
+          }
+          else{
+            this.isLiked = !isLiked;
+            (isLiked) 
+            ? 
+            widget.questionForumModel.unlikeQuestion(questionIndex) 
+            : 
+            widget.questionForumModel.likeQuestion(questionIndex);
+          }
+          return Future.value(!isLiked);
+        }
+      ),
     );
   }
 
@@ -124,7 +175,7 @@ class _QuestionListViewState extends State<QuestionListView> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Error'),
-          content: const Text("You must have an account to post a question."),
+          content: const Text("You must have an account to perform this action."),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.black, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(15.0))),
           actions: <Widget>[

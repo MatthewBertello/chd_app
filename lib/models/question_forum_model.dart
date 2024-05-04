@@ -3,6 +3,7 @@ import 'package:chd_app/main.dart';
 
 class QuestionForumModel extends ChangeNotifier {
   final List<Question> questionsList = []; // the list of questions to be displayed
+  final List<String> likedQuestionsList = [];// list of current users liked questions
   bool loaded = false; // shows if the list is loaded or not
 
   // loads the list of questions from the database
@@ -10,14 +11,68 @@ class QuestionForumModel extends ChangeNotifier {
     loaded = false;
     questionsList.clear();
     try{
-      var response = await supabaseModel.supabase!
+      // get the question list from database
+      var response = await supabaseModel.supabase! 
         .from('forum_questions')
         .select('*');
       for (int i = 0; i < response.length; i++) {
         questionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id']));
       }
+      // pulls the number of likes from the database for each question
+      for (int i = 0; i < questionsList.length; i++){
+        var likesResponse = await supabaseModel.supabase!
+          .from('forum_question_likes')
+          .select()
+          .eq('question_id', questionsList[i].questionID)
+          .count();
+        questionsList[i].numLikes = likesResponse.count;
+      }
+      // if user has account then retrieve questions they have liked
+      if (supabaseModel.supabase!.auth.currentUser?.id != null) { 
+        response = await supabaseModel.supabase!
+          .from('forum_question_likes')
+          .select('question_id')
+          .eq('user_id' , supabaseModel.supabase!.auth.currentUser!.id);
+
+        for (int i = 0; i < response.length; i++){
+          likedQuestionsList.add(response[i]['question_id']);
+        }
+      }
+      
       loaded = true;
       notifyListeners();
+    }
+    catch (e){
+      print(e);
+    }
+  }
+
+  // likes the question and adds to database
+  void likeQuestion(int questionIndex) async {
+    try{
+      await supabaseModel.supabase! 
+        .from('forum_question_likes')
+        .insert([{ 
+          'question_id': questionsList[questionIndex].questionID,
+          'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
+          },
+        ]);
+    }
+    catch (e){
+      print(e);
+    }
+  }
+
+  // gets rid of the like in the database
+  void unlikeQuestion(int questionIndex) async {
+    try{
+      await supabaseModel.supabase! 
+        .from('forum_question_likes')
+        .delete()
+        .eq('question_id', questionsList[questionIndex].questionID)
+        .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
+      
+      likedQuestionsList.removeWhere((element) => element == questionsList[questionIndex].questionID);
     }
     catch (e){
       print(e);
@@ -34,7 +89,7 @@ class QuestionForumModel extends ChangeNotifier {
           'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
           },
         ]);
-        loadQuestionList();
+        //loadQuestionList();
     }
     catch (e){
       print(e);
@@ -144,6 +199,7 @@ class Question {
   List<Reply> replies = []; // the list of replies
   String questionID = "NULL"; // uuid for each question
   String userWhoPosted = ""; // user_id of the person who posted the question
+  int numLikes = 0;
 
   Question(String newQuestion, String newID, String newUser){ // constructor for question
     question = newQuestion;
@@ -186,6 +242,10 @@ class Question {
 
   void clearReplies() { // clears the all the replies from a question in app
     replies.clear();
+  }
+
+  void setNumLikes(int newNumLikes){ // sets number of likes for each question
+    numLikes = newNumLikes;
   }
 
 } // end of Question class
