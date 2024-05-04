@@ -87,13 +87,13 @@ class PersonalInfoModel extends ChangeNotifier {
   // Get user social variables
   Future<dynamic> getUserSocials() async {
     try {
-      // Get all the variables that are demographics
+      // Get all the variables that are social variables
       List<Map<String, dynamic>> socials = await supabaseModel.supabase!
       .from('personal_info_variables')
       .select('name')
       .eq('category', 'Social');
 
-      // Check the userData and pull out the demographics
+      // Check the userData and pull out the social variables
       for(var social in socials) {
          var variableName = social['name'];
          userSocials[variableName] = userData[variableName];
@@ -108,13 +108,13 @@ class PersonalInfoModel extends ChangeNotifier {
   // Get user physical variables
   Future<dynamic> getUserPhysicals() async {
     try {
-      // Get all the variables that are demographics
+      // Get all the variables that are physical variables
       List<Map<String, dynamic>> physicals = await supabaseModel.supabase!
       .from('personal_info_variables')
       .select('name')
       .eq('category', 'Physical');
 
-      // Check the userData and pull out the demographics
+      // Check the userData and pull out the physical variables
       for(var physical in physicals) {
          var variableName = physical['name'];
          userPhysicals[variableName] = userData[variableName];
@@ -125,52 +125,4 @@ class PersonalInfoModel extends ChangeNotifier {
       print(e);
     }
   }
-
-  // Future<dynamic> submit() async {
-  //   for (var element in variableDefinitions) {
-  //     if (element['checkbox'] && element['form'].controller!.text.isNotEmpty) {
-  //       try {
-  //         await supabaseModel.supabase!.from('variable_entries').insert([
-  //           {
-  //             'user_id': supabaseModel.supabase!.auth.currentUser!.id,
-  //             'variable_id': element['id'],
-  //             'value': double.tryParse(element['form'].controller!.text),
-  //             'date': selectedDate.toIso8601String(),
-  //           }
-  //         ]);
-  //       } catch (e) {
-  //         print(e);
-  //       }
-  //     }
-  //     element['checkbox'] = element['favorite'];
-  //     element['form'].controller!.clear();
-  //   }
-  //   selectedDate = DateTime.now();
-  //   notifyListeners();
-  // }
-
-  // Future<dynamic> updateFavorite(int id, bool favorited) async {
-  //   try {
-  //     if (favorited) {
-  //       await supabaseModel.supabase!.from('user_variable_favorites').upsert(
-  //         {
-  //           'user_id': supabaseModel.supabase!.auth.currentUser!.id,
-  //           'variable_id': id,
-  //         },
-  //       );
-  //       if (!favorites.contains(id)) {
-  //         favorites.add(id);
-  //       }
-  //     } else {
-  //       await supabaseModel.supabase!
-  //           .from('user_variable_favorites')
-  //           .delete()
-  //           .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)
-  //           .eq('variable_id', id);
-  //       favorites.remove(id);
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 }
