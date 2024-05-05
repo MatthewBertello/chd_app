@@ -39,19 +39,25 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   Column buildBody(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         ExpansionTile(
-          title: Text('Demographics'),
-          children: []
+          title: const Text('Demographics', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
+          children: [
+            createListView(Provider.of<PersonalInfoModel>(context).demographicsFormFields)
+          ]
         ),
         ExpansionTile(
-          title: Text('Social'),
-          children: []
+          title: const Text('Social', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
+          children: [
+            createListView(Provider.of<PersonalInfoModel>(context).socialsFormFields)
+          ]
         ),
         ExpansionTile(
-          title: Text('Physical'),
-          children: []
+          title: const Text('Physical', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
+          children: [
+            createListView(Provider.of<PersonalInfoModel>(context).physicalsFormFields)
+          ]
         )
       ]
     );
@@ -59,16 +65,37 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   ListView createListView(List<Map<String, dynamic>> items) {
     return ListView.separated(
+      shrinkWrap: true,
       separatorBuilder: (context, index) {return const Divider(height: 1,);},
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: items[index]['variable name'],
+        if (items[index]['isTextFormField']) {
+          return ListTile(
+          title: Text(items[index]['title']),
           trailing: Padding(
             padding: const EdgeInsets.all(8),
-            child: SizedBox(child: items[index]['input'],)
+            child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 100,
+                        child: items[index]['input'] ??
+                            const Text("Error"),
+                      ),
+                    ),)
+          );
+        } else {
+          return ListTile(
+          title: Text(items[index]['title']),
+          subtitle: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // Align columns to the start
+              mainAxisSize: MainAxisSize.min,
+              children: items[index]['input'],
             )
-        );
+            )
+          );
+        }
       }
     );
   }
