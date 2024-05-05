@@ -1,12 +1,40 @@
+// ignore_for_file: avoid_print, unused_local_variable
+
 import 'package:chd_app/main.dart';
 import 'package:flutter/material.dart';
 
 class PregnancyModel extends ChangeNotifier {
   List toDos = [];
   DateTime? dueDate;
+  bool loaded = false;
+  bool loading = false;
+  DateTime selectedDate = DateTime.now();
 
-  PregnancyModel() {
+  // Initialize the model
+  Future<dynamic> init() async {
+    // If this model is already loading, wait for it to finish
+    while (loading) {
+      continue;
+    }
+    loading = true;
+
     setDueDate();
+    await getToDos();
+
+    selectedDate = DateTime.now();
+    loaded = true;
+    loading = false;
+    notifyListeners();
+  }
+
+  Future<void> getToDos() async {
+    toDos = await supabaseModel.supabase!
+      .from('user_to_do_lists')
+      .select()
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
+
+    print(toDos);
+    notifyListeners();
   }
 
   // Set the due date
@@ -18,16 +46,35 @@ class PregnancyModel extends ChangeNotifier {
       print(response);
   }
 
+
+
   //Method that adds to todo list
-  void addToToDo(String todo, bool isChecked) {
-    Map<String, dynamic> todoItem = {'todo': todo, 'isChecked': isChecked};
-    toDos.add(todoItem);
-    notifyListeners();
+  Future<void> addToDo(String todo, bool isChecked) async {
+    final response = (await supabaseModel.supabase!
+      .from('user_to_do_lists')
+      .insert({'user_id': supabaseModel.supabase!.auth.currentUser!.id, 'to_do': todo, 'is_checked': isChecked})
+      .select('to_do_id')).first;
+    
+    getToDos();
+    print(response);
   }
 
-  void deleteToDo(int index) {
-    toDos.removeAt(index);
-    notifyListeners();
+  Future<void> deleteToDo(int toDoID) async {
+    final response = await supabaseModel.supabase!
+      .from('user_to_do_lists')
+      .delete()
+      .eq('to_do_id', toDoID);
+
+    getToDos();
+  }
+
+  Future<void> updateCheckBox(bool? value, Map todoEntry) async {
+
+    await supabaseModel.supabase!
+      .from('user_to_do_lists')
+      .update({'is_checked': value})
+      .eq('to_do_id', todoEntry['to_do_id']);
+    getToDos();
   }
 
   // Method to get the countdown for the due date in days

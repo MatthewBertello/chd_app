@@ -3,7 +3,7 @@ import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
-import 'package:chd_app/screens/pregnancy_progress.dart';
+import 'package:chd_app/screens/pregnancy_planner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';

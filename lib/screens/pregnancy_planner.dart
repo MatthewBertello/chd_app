@@ -16,10 +16,16 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   bool isChecked = false;
   TextEditingController textController = TextEditingController();
 
-  void addToToDo(String todo, bool isChecked) {
-    Provider.of<PregnancyModel>(context, listen: false)
-        .addToToDo(todo, isChecked);
-    textController.clear();
+  @override
+  void initState() {
+    // Initialize the model if it has not been loaded
+    if (Provider.of<PregnancyModel>(context, listen: false).loaded == false &&
+        Provider.of<PregnancyModel>(context, listen: false).loading == false) {
+      Provider.of<PregnancyModel>(context, listen: false).init();
+    }
+    Provider.of<PregnancyModel>(context, listen: false).selectedDate =
+        DateTime.now();
+    super.initState();
   }
 
   @override
@@ -77,22 +83,26 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                   itemBuilder: (context, index) {
                     return ListTile(
                         leading: Checkbox(
-                            value: Provider.of<PregnancyModel>(context)
-                                .toDos[index]['isChecked'],
+                            value: Provider.of<PregnancyModel>(context).toDos[index]['is_checked'],
                             onChanged: (value) =>
-                                setState(() => Provider.of<PregnancyModel>(context, listen: false)
-                                .toDos[index]['isChecked'] = value ?? false)),
+                                Provider.of<PregnancyModel>(context, listen: false)
+                                .updateCheckBox(value, Provider.of<PregnancyModel>(context,listen: false).toDos[index]),),
                         title: Text(
-                            '${Provider.of<PregnancyModel>(context).toDos[index]['todo']}'),
+                            '${Provider.of<PregnancyModel>(context).toDos[index]['to_do']}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () => Provider.of<PregnancyModel>(context,
-                                  listen: false)
-                              .deleteToDo(index),
+                          onPressed: () => Provider.of<PregnancyModel>(context, listen: false)
+                              .deleteToDo(Provider.of<PregnancyModel>(context, listen: false).toDos[index]['to_do_id']),
                         ));
                   }),
             ),
           ],
         ));
+  }
+
+  void addToToDo(String todo, bool isChecked) {
+    Provider.of<PregnancyModel>(context, listen: false)
+        .addToDo(todo, isChecked);
+    textController.clear();
   }
 }
