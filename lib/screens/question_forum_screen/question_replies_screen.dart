@@ -70,7 +70,11 @@ class QuestionRepliesState extends State<QuestionReplies> {
     isLiked = widget.questionForumModel.likedRepliesList.contains(widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].replyID);
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
-      subtitle: const Text("The Author"), // prints the author just hardcoded for now
+      subtitle: (widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getAuthor() == 'NULL')
+      ?
+      const Text("Anonymous", style: TextStyle(color: Colors.red),)
+      :
+      Text(widget.questionForumModel.questionsList[questionIndex].getAuthor()), // prints the author just hardcoded for now
       tileColor: Theme.of(context).colorScheme.primaryContainer,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       trailing: Row(
@@ -89,7 +93,11 @@ class QuestionRepliesState extends State<QuestionReplies> {
     isLiked = widget.questionForumModel.likedRepliesList.contains(widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].replyID);
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
-      subtitle: const Text("The Author"), // prints the author just hardcoded for now
+      subtitle: (widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getAuthor() == 'NULL')
+      ?
+      const Text("Anonymous", style: TextStyle(color: Colors.red),)
+      :
+      Text(widget.questionForumModel.questionsList[questionIndex].getAuthor()), // prints the author just hardcoded for now
       tileColor: Theme.of(context).colorScheme.primaryContainer,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       trailing: likeButton(questionIndex, replyIndex)

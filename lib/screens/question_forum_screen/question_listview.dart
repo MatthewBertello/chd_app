@@ -101,7 +101,8 @@ class _QuestionListViewState extends State<QuestionListView> {
         widget.questionForumModel.loadReplyList(questionIndex);
         Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
         Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
-        QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: questionIndex))));
+        QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: questionIndex))))
+        .then((_) => setState((){widget.questionForumModel.loadQuestionList();}));
       },
     );
   }
