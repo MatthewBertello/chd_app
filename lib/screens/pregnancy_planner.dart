@@ -11,7 +11,7 @@ class PregnancyProgress extends StatefulWidget {
 }
 
 class _PregnancyProgressState extends State<PregnancyProgress> {
-  DateTime _focusedDay = DateTime.now();
+  DateTime today = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   bool isChecked = false;
   TextEditingController textController = TextEditingController();
@@ -37,18 +37,19 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TableCalendar(
-              calendarFormat: _calendarFormat,
-              focusedDay: _focusedDay,
-              firstDay: DateTime(_focusedDay.year, _focusedDay.month,
-                  1), // first day of the month
-              lastDay: DateTime(_focusedDay.year, _focusedDay.month + 1,
-                  0), // last day of the month
-              onPageChanged: (focusedDay) {
-                setState(() => _focusedDay = focusedDay);
-              },
-              onFormatChanged: (format) =>
-                  setState(() => _calendarFormat = format),
-              pageJumpingEnabled: true,
+              headerStyle: HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+                titleTextStyle: TextStyle(color: Colors.purple[300], fontSize: 20, fontWeight: FontWeight.bold)
+              ),
+              focusedDay: today,
+              firstDay: DateTime(today.year - 1, DateTime.january, 1), // first day of the month
+              lastDay: DateTime(today.year + 1, DateTime.december, 0), // last day of the month
+              selectedDayPredicate: (day) => isSameDay(today, day),
+              onDaySelected: (selectedDay, focusedDay) => _onDaySelected(selectedDay, focusedDay),
+              calendarBuilders: const CalendarBuilders(
+                
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 40.0),
@@ -104,5 +105,87 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
     Provider.of<PregnancyModel>(context, listen: false)
         .addToDo(todo, isChecked);
     textController.clear();
+  }
+
+  void _onDaySelected(DateTime day, DateTime focusedDay) {
+    setState(() {
+      today = day;
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}'),
+              const SizedBox(
+                height: 16.0,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close'),
+              ),
+            ],),
+          ),
+          );
+        },
+      );
+    });
+  }
+
+  String getWeekday(int dayNum) {
+    String weekday = "";
+    switch (dayNum) {
+      case 1:
+        weekday = "Monday";
+      case 2: 
+        weekday = "Tuesday";
+      case 3:
+        weekday = "Wednesday";
+      case 4:
+        weekday = "Thursday";
+      case 5:
+        weekday = "Friday";
+      case 6:
+        weekday = "Saturday";
+      case 7:
+        weekday = "Sunday";
+    }
+    return weekday;
+  }
+
+  String getMonth(int monthNum) {
+    String month = "";
+    switch(monthNum) {
+      case 1:
+        month = "January";
+      case 2:
+        month = "February";
+      case 3:
+        month = "March";
+      case 4:
+        month = "April";
+      case 5:
+        month = "May";
+      case 6:
+        month = "June";
+      case 7:
+        month = "July";
+      case 8:
+        month = "August";
+      case 9:
+        month = "September";
+      case 10:
+        month = "October";
+      case 11:
+        month = "November";
+      case 12:
+        month = "December";
+    }
+    return month;
   }
 }
