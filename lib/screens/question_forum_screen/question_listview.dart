@@ -32,10 +32,6 @@ class _QuestionListViewState extends State<QuestionListView> {
 
   @override
   Widget build(BuildContext context){
-    // if (!initialized){ // loads the question list when the community page is loaded first time
-    //   _initQuestionsList();
-    //   initialized = true;
-    // }
     return Scaffold(
       appBar: DefaultAppBar(context: context, title: const Text("Question Forum")),
       floatingActionButton: FloatingActionButton(
@@ -82,6 +78,7 @@ class _QuestionListViewState extends State<QuestionListView> {
 
   // the user who posted the question is currently logged in
   ListTile currentUserQuestion(int questionIndex) {
+    isLiked = widget.questionForumModel.likedQuestionsList.contains(widget.questionForumModel.questionsList[questionIndex].questionID);
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[questionIndex].getQuestion(), 
       style: const TextStyle(fontWeight: FontWeight.bold)), // prints question

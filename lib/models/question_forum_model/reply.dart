@@ -1,8 +1,10 @@
 // a class for replies to a question
 class Reply{
-  String reply = "";
-  String replyID = "NULL";
-  String userWhoPosted = "";
+  String reply = ""; // the reply the user posted
+  String replyID = "NULL"; // the uuid of the reply
+  String userWhoPosted = ""; // the id of the user who posted
+  String author = "NULL"; // the username of the user who posted
+  int numLikes = 0; // number of likes
 
   // constructor for reply
   Reply(String newReply, String newID, String newUser){ 
@@ -44,6 +46,16 @@ class Reply{
   // edit reply might be needed later
   void editReply(String editedReply){ 
     reply = editedReply;
+  }
+
+  // retrieves the author of the reply
+  String getAuthor() {
+    return author;
+  }
+
+  // sets the author of the reply
+  void setAuthor(String newAuthor){
+    author = newAuthor;
   }
 
 } // end of Reply class

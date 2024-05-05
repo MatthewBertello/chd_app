@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:chd_app/main.dart';
 import 'package:flutter/services.dart';
+import 'package:like_button/like_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class QuestionReplies extends StatefulWidget {
@@ -18,6 +19,7 @@ class QuestionReplies extends StatefulWidget {
 
 class QuestionRepliesState extends State<QuestionReplies> {
   TextEditingController replyController = TextEditingController(); // controller for the reply text box
+  bool isLiked = false; // whether a comment is liked by you or not
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
 
   // the user who posted the question is currently logged in
   ListTile currentUserReply(int questionIndex, int replyIndex) {
+    isLiked = widget.questionForumModel.likedRepliesList.contains(widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].replyID);
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: const Text("The Author"), // prints the author just hardcoded for now
@@ -73,6 +76,7 @@ class QuestionRepliesState extends State<QuestionReplies> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          likeButton(questionIndex, replyIndex),
           IconButton(onPressed: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditReply(questionForumModel: widget.questionForumModel, reply: widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getReply(), questionIndex: questionIndex, replyIndex: replyIndex,)));}, icon: const Icon(Icons.edit)),
           IconButton(onPressed: () {_deleteReplyVerification(questionIndex, replyIndex);}, icon: const Icon(Icons.delete))
         ]
@@ -82,11 +86,13 @@ class QuestionRepliesState extends State<QuestionReplies> {
 
   // the user who posted the question is not currently logged in
   ListTile notCurrUserReply(int questionIndex, int replyIndex) {
+    isLiked = widget.questionForumModel.likedRepliesList.contains(widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].replyID);
     return ListTile(
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: const Text("The Author"), // prints the author just hardcoded for now
       tileColor: Theme.of(context).colorScheme.primaryContainer,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+      trailing: likeButton(questionIndex, replyIndex)
     );
   }
 
@@ -135,6 +141,41 @@ class QuestionRepliesState extends State<QuestionReplies> {
       ),
     );
   }
+
+  SizedBox likeButton(int questionIndex, int replyIndex) {
+    return SizedBox(
+      width: 50.0,
+      child: LikeButton(
+        animationDuration: const Duration(milliseconds: 0),
+        circleColor: const CircleColor(
+            start: Colors.transparent, end: Colors.transparent),
+        bubblesColor: const BubblesColor(
+            dotPrimaryColor: Colors.transparent,
+            dotSecondaryColor: Colors.transparent,
+            dotThirdColor: Colors.transparent,
+            dotLastColor: Colors.transparent),
+        bubblesSize: 0,
+        likeCount: widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].numLikes,
+        isLiked: isLiked,
+        onTap: (bool isLiked) {
+          if (supabaseModel.supabase!.auth.currentUser?.id == null) {
+            _showNoAccountWarning();
+            return Future.value(isLiked);
+          }
+          else{
+            this.isLiked = !isLiked;
+            (isLiked) 
+            ? 
+            widget.questionForumModel.unlikeReply(questionIndex, replyIndex) 
+            : 
+            widget.questionForumModel.likeReply(questionIndex, replyIndex);
+          }
+          return Future.value(!isLiked);
+        }
+      ),
+    );
+  }
+
 
   // adds a reply to the question
   void _addReply() { // adds a reply to the question

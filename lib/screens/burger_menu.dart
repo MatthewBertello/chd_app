@@ -1,5 +1,6 @@
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/info_entry_model.dart';
+import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/data_entry_screen/personal_info.dart';
 import 'package:chd_app/screens/data_entry_screen/physical_data_entry.dart';
@@ -56,6 +57,7 @@ class BurgerMenu extends StatelessWidget {
                   await supabaseModel.signOut();
                   await Provider.of<InfoEntryModel>(context, listen: false).reset();
                   await Provider.of<VariableEntriesModel>(context, listen: false).reset();
+                  Provider.of<QuestionForumModel>(context, listen: false).reset();
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const Login()));

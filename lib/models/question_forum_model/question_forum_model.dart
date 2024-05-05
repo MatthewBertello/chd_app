@@ -6,6 +6,7 @@ import 'reply.dart';
 class QuestionForumModel extends ChangeNotifier {
   final List<Question> questionsList = []; // the list of questions to be displayed
   final List<String> likedQuestionsList = [];// list of current users liked questions
+  final List<String> likedRepliesList = []; // list of current users liked replies
   bool loaded = false; // shows if the list is loaded or not
 
   // loads the list of questions from the database
@@ -119,6 +120,38 @@ class QuestionForumModel extends ChangeNotifier {
     }
   }
 
+  // adds a like to a reply
+  void likeReply(int questionIndex, int replyIndex) async {
+    try{
+      await supabaseModel.supabase! 
+        .from('forum_reply_likes')
+        .insert([{ 
+          'reply_id': questionsList[questionIndex].replies[replyIndex].replyID,
+          'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
+          },
+        ]);
+    }
+    catch (e){
+      print(e);
+    }
+  }
+
+  // unlikes a reply
+  void unlikeReply(int questionIndex, int replyIndex) async {
+    try{
+      await supabaseModel.supabase! 
+        .from('forum_reply_likes')
+        .delete()
+        .eq('reply_id', questionsList[questionIndex].replies[replyIndex].replyID)
+        .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
+      
+      likedRepliesList.removeWhere((element) => element == questionsList[questionIndex].replies[replyIndex].replyID);
+    }
+    catch (e){
+      print(e);
+    }
+  }
+
   // adds a reply to the question at a given index
   void addReply(int questionIndex, String newReply) async { 
     try{
@@ -141,6 +174,7 @@ class QuestionForumModel extends ChangeNotifier {
   void loadReplyList(int questionIndex) async { 
     loaded = false;
     questionsList[questionIndex].clearReplies();
+    //loadQuestionList();
     try{
       var response = await supabaseModel.supabase!
         .from('forum_replies')
@@ -150,6 +184,28 @@ class QuestionForumModel extends ChangeNotifier {
       for (int i = 0; i < response.length; i++) {
         questionsList[questionIndex].addReply(Reply(response[i]['reply'], response [i]['reply_id'], response[i]['user_id']));
       }
+
+      // pulls the number of likes from the database for each question
+      for (int i = 0; i < questionsList[questionIndex].replies.length; i++){
+        var likesResponse = await supabaseModel.supabase!
+          .from('forum_reply_likes')
+          .select()
+          .eq('reply_id', questionsList[questionIndex].replies[i].replyID)
+          .count();
+        questionsList[questionIndex].replies[i].numLikes = likesResponse.count;
+      }
+      // if user has account then retrieve questions they have liked
+      if (supabaseModel.supabase!.auth.currentUser?.id != null) { 
+        response = await supabaseModel.supabase!
+          .from('forum_reply_likes')
+          .select('reply_id')
+          .eq('user_id' , supabaseModel.supabase!.auth.currentUser!.id);
+
+        for (int i = 0; i < response.length; i++){
+          likedRepliesList.add(response[i]['reply_id']);
+        }
+      }
+      
       loaded = true;
       notifyListeners();
     }
@@ -192,6 +248,12 @@ class QuestionForumModel extends ChangeNotifier {
     catch(e){
       print(e);
     }
+  }
+
+  // clears the lists after a logout
+  void reset() {
+    likedQuestionsList.clear();
+    likedRepliesList.clear();
   }
 
 } // end of the model
