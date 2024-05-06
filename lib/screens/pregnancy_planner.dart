@@ -314,7 +314,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
           return ListTile(
             title: Text('${events[index]['event']}'),
             subtitle: Text('${events[index]['location']}'),
-            trailing: Text('${events[index]['event_date']} ${events[index]['event_time']}'),
+            trailing: Text('${events[index]['event_time']}'),
           );
       }),
     );
