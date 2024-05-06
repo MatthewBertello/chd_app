@@ -17,6 +17,7 @@ class SocialDataEntry extends StatefulWidget {
   const SocialDataEntry({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SocialDataEntryState createState() => _SocialDataEntryState();
 }
 
