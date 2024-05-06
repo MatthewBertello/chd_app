@@ -95,14 +95,23 @@ class PersonalInfoModel extends ChangeNotifier {
         // Otherwise add the values from the variables map to the userInfo map
         for (var varKey in variables[key]!.keys) {
           userInfo[key][varKey] = variables[key]![varKey];
-          // check if userInfo[key][type] is an enum type
-          if (!notEnumTypes.contains(userInfo[key][varKey]['type'])) {
-            userInfo[key][varKey]['values'] = getEnumValues(
-                userInfo[key][varKey]['type']); // get the enum values
-          } else {
-            userInfo[key][varKey]['values'] = userInfo[key][varKey]['type'];
-          }
         }
+        if (!notEnumTypes.contains(userInfo[key]['type'])) {
+          userInfo[key]['values'] =
+              getEnumValues(userInfo[key]['type']); // get the enum values
+        } else {
+          userInfo[key]['values'] = userInfo[key]['type'];
+        }
+      }
+    }
+  }
+
+  void addForms() {
+    for (var key in userInfo.keys) {
+      if (!notEnumTypes.contains(userInfo[key]['type'])) {
+        // add a radio button form
+      } else {
+        // add a text form
       }
     }
   }
