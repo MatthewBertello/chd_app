@@ -1,10 +1,17 @@
+// ignore_for_file: avoid_print
+
 import 'package:chd_app/models/pregnancy_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class PregnancyProgress extends StatefulWidget {
+  const PregnancyProgress({super.key});
+
   @override
   State<PregnancyProgress> createState() => _PregnancyProgressState();
 }
@@ -13,6 +20,12 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   DateTime today = DateTime.now();
   bool isChecked = false;
   TextEditingController textController = TextEditingController();
+  DateTime? selectedEventDateTime = DateTime.now();
+  TimeOfDay? selectedEventTime = TimeOfDay.now();
+  TextEditingController eventDateTextFieldController = TextEditingController();
+  TextEditingController eventTitleTextFieldController = TextEditingController();
+  TextEditingController eventTimeTextFieldController = TextEditingController();
+  DateFormat timeFormat = DateFormat('h:mm a');
 
   @override
   void initState() {
@@ -31,30 +44,32 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
     return Scaffold(
         appBar: DefaultAppBar(
             context: context, title: const Text('Pregnancy Planner')),
-        body: Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              width: MediaQuery.of(context).size.width * 8 / 9,
-              alignment: Alignment.topRight,
-              child: IconButton(icon: Icon(Icons.add), onPressed: (){}, color: Colors.purple[300]),
-            ),
+        body: 
             Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TableCalendar(
-                headerStyle: HeaderStyle(
-                  formatButtonVisible: false,
-                  titleCentered: true,
-                  titleTextStyle: TextStyle(color: Colors.purple[300], fontSize: 20, fontWeight: FontWeight.bold)
+                headerStyle: const HeaderStyle(
+                  formatButtonVisible: false
                 ),
                 focusedDay: today,
                 firstDay: DateTime(today.year - 1, DateTime.january, 1), // first day of the month
                 lastDay: DateTime(today.year + 1, DateTime.december, 0), // last day of the month
                 selectedDayPredicate: (day) => isSameDay(today, day),
                 onDaySelected: (selectedDay, focusedDay) => _onDaySelected(selectedDay, focusedDay),
-                calendarBuilders: const CalendarBuilders(
-                  
+                calendarBuilders: CalendarBuilders(
+                  headerTitleBuilder: (context, day) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${getMonth(day.month)} ${day.year}', 
+                          style: TextStyle(color: Colors.purple[300], fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(icon: Icon(Icons.add, color: Colors.purple[200],), onPressed: () => showAddEventDialog(),)
+                      ]
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -104,8 +119,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                     }),
               ),
             ],
-          ),]
-        ));
+          ),);
   }
 
   void addToDo(String todo, bool isChecked) {
@@ -195,4 +209,87 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
     }
     return month;
   }
+
+  void showAddEventDialog()  {
+    showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          height: MediaQuery.of(context).size.height / 3,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                const Text('Add New Event', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),), 
+                IconButton(icon: const Icon(Icons.add), onPressed: () => addEvent(),)]),
+              TextFormField(
+                controller: eventTitleTextFieldController,
+                decoration: const InputDecoration(
+                  prefix: Padding(padding: EdgeInsets.all(5),),
+                  hintText: 'Title', 
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: eventDateTextFieldController,
+                onTap: () => popUpDatePicker(),
+                decoration: const InputDecoration(
+                  prefix: Padding(padding: EdgeInsets.all(5),),
+                  hintText: 'Date', 
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0), alignLabelWithHint: true),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: eventTimeTextFieldController,
+                onTap: () => popUpTimePicker(),
+                decoration: const InputDecoration(
+                  prefix: Padding(padding: EdgeInsets.all(5),),
+                  hintText: 'Time', 
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0))
+              ),
+            ],
+          ),
+        ),
+      );
+    },);
+
+  }
+
+  Future<void> popUpDatePicker() async {
+    final DateTime? datePicked = await showDatePicker(
+        context: context, 
+        firstDate: DateTime.now(), 
+        lastDate: DateTime(today.year + 1, DateTime.december, 0));
+
+    setState(() {
+        selectedEventDateTime = datePicked;
+        eventDateTextFieldController.text = '${selectedEventDateTime!.month}/${selectedEventDateTime!.day}/${selectedEventDateTime!.year}';
+    });
+  }
+
+  Future<void> popUpTimePicker() async {
+    final TimeOfDay? timePicked = await showTimePicker(context: context, initialTime: TimeOfDay.fromDateTime(DateTime.now()));
+    setState(() {   
+      selectedEventDateTime = DateTime(
+        selectedEventDateTime!.year,
+        selectedEventDateTime!.month,
+        selectedEventDateTime!.day,
+        timePicked!.hour,
+        timePicked.minute
+      );
+      eventTimeTextFieldController.text = timeFormat.format(selectedEventDateTime!);
+    });
+  }
+
+  void addEvent() {
+    
+    
+  }
+
+  
 }
