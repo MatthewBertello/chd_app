@@ -20,6 +20,7 @@ class PersonalInfoModel extends ChangeNotifier {
   Map<String, dynamic> userInfo = {};
   List<Map<String, dynamic>> personalInfoVariables = [];
   Map<String, Map<String, dynamic>> variables = {};
+  List<String> notEnumTypes = ['text', 'date', 'int'];
 
   Future<dynamic> reset() async {
     while (loading) {
@@ -40,14 +41,14 @@ class PersonalInfoModel extends ChangeNotifier {
     }
     loading = true;
 
-    await getUserData();
-    await getUserDemographics();
-    await getUserSocials();
-    await getUserPhysicals();
-    setRadioVariables();
-    setFormFields(demographicsFormFields, userDemographics);
-    setFormFields(socialsFormFields, userSocials);
-    setFormFields(physicalsFormFields, userPhysicals);
+    // await getUserData();
+    // await getUserDemographics();
+    // await getUserSocials();
+    // await getUserPhysicals();
+    // setRadioVariables();
+    // setFormFields(demographicsFormFields, userDemographics);
+    // setFormFields(socialsFormFields, userSocials);
+    // setFormFields(physicalsFormFields, userPhysicals);
 
     loaded = true;
     loading = false;
@@ -63,21 +64,6 @@ class PersonalInfoModel extends ChangeNotifier {
     for (var row in personalInfoVariables) {
       var rowNoName = row.remove(row['name']);
       variables[row['name']] = rowNoName;
-    }
-  }
-
-  void parseUserInfo() {
-    // loop through all the keys in the userInfo map
-    for (var key in userInfo.keys) {
-      if (!variables.containsKey(key)) {
-        // If the key is not in the variables map, remove it from the userInfo map
-        userInfo.remove(key);
-      } else {
-        // Otherwise add the values from the variables map to the userInfo map
-        for (var varKey in variables[key]!.keys) {
-          userInfo[key][varKey] = variables[key]![varKey];
-        }
-      }
     }
   }
 
@@ -97,6 +83,28 @@ class PersonalInfoModel extends ChangeNotifier {
       values.add(value['enumlabel']);
     }
     return values;
+  }
+
+  void prepareUserInfo() {
+    // loop through all the keys in the userInfo map
+    for (var key in userInfo.keys) {
+      if (!variables.containsKey(key)) {
+        // If the key is not in the variables map, remove it from the userInfo map
+        userInfo.remove(key);
+      } else {
+        // Otherwise add the values from the variables map to the userInfo map
+        for (var varKey in variables[key]!.keys) {
+          userInfo[key][varKey] = variables[key]![varKey];
+          // check if userInfo[key][type] is an enum type
+          if (!notEnumTypes.contains(userInfo[key][varKey]['type'])) {
+            userInfo[key][varKey]['values'] = getEnumValues(
+                userInfo[key][varKey]['type']); // get the enum values
+          } else {
+            userInfo[key][varKey]['values'] = userInfo[key][varKey]['type'];
+          }
+        }
+      }
+    }
   }
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -250,17 +258,17 @@ class PersonalInfoModel extends ChangeNotifier {
     List<Widget> varWithRadioButtons = [];
 
     // Add a radio button to all of the different types in the variable category
-    for (var type in variableTypes) {
-      var radioButton = Radio(
-        value: type,
-        groupValue: selectedValue,
-        onChanged: (value) => saveSelectedToDb(variableCategory, value),
-      );
+    // for (var type in variableTypes) {
+    //   var radioButton = Radio(
+    //     value: type,
+    //     groupValue: selectedValue,
+    //     onChanged: (value) => saveSelectedToDb(variableCategory, value),
+    //   );
 
-      var title = Text(type);
+    //   var title = Text(type);
 
-      varWithRadioButtons.add(Row(children: [radioButton, title]));
-    }
+    //   varWithRadioButtons.add(Row(children: [radioButton, title]));
+    // }
 
     return varWithRadioButtons;
   }

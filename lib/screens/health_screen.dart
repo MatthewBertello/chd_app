@@ -19,8 +19,6 @@ class HealthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<PersonalInfoModel>(context, listen: false)
-        .getEnumValues('race');
     if (Provider.of<VariableEntriesModel>(context, listen: false).loaded ==
             false &&
         Provider.of<VariableEntriesModel>(context, listen: false).loading ==
