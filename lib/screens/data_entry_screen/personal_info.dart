@@ -41,23 +41,38 @@ class _PersonalInfoState extends State<PersonalInfo> {
   Column buildBody(BuildContext context) {
     return Column(
       children: [
-        ExpansionTile(
-          title: const Text('Demographics', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
-          children: [
-            createListView(Provider.of<PersonalInfoModel>(context).demographicsFormFields)
-          ]
+      OverflowBox(
+        minWidth: 0.0,
+        maxWidth: double.infinity,
+        alignment: Alignment.center,
+          child: ExpansionTile(
+            title: const Text('Demographics', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
+            children: [
+              createListView(Provider.of<PersonalInfoModel>(context).demographicsFormFields)
+            ]
+          ),
         ),
-        ExpansionTile(
-          title: const Text('Social', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
-          children: [
-            createListView(Provider.of<PersonalInfoModel>(context).socialsFormFields)
-          ]
+           OverflowBox(
+            minWidth: 0.0,
+           maxWidth: double.infinity,
+           alignment: Alignment.center,
+          child: ExpansionTile(
+            title: const Text('Social', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
+            children: [
+              createListView(Provider.of<PersonalInfoModel>(context).socialsFormFields)
+            ]
+          ),
         ),
-        ExpansionTile(
-          title: const Text('Physical', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
-          children: [
-            createListView(Provider.of<PersonalInfoModel>(context).physicalsFormFields)
-          ]
+          OverflowBox(
+            minWidth: 0.0,
+           maxWidth: double.infinity,
+          alignment: Alignment.center,
+          child: ExpansionTile(
+            title: const Text('Physical', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
+            children: [
+              createListView(Provider.of<PersonalInfoModel>(context).physicalsFormFields)
+            ]
+          ),
         )
       ]
     );
