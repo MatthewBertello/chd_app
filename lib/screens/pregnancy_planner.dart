@@ -142,6 +142,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}'),
+              
               const SizedBox(
                 height: 16.0,
               ),
@@ -230,7 +231,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                 ),
               ),
               const SizedBox(height: 20),
-              TextField(
+              TextFormField(
                 controller: eventLocationTextFieldController,
                 decoration: const InputDecoration(
                   prefix: Padding(padding: EdgeInsets.all(5),),
@@ -238,7 +239,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                   contentPadding: EdgeInsets.symmetric(vertical: 10.0))
               ),
               const SizedBox(height: 20),
-              TextField(
+              TextFormField(
                 controller: eventDateTextFieldController,
                 onTap: () => popUpDatePicker(),
                 decoration: const InputDecoration(
