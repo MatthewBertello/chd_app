@@ -132,6 +132,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
+      Provider.of< PregnancyModel>(context, listen: false).selectEvents(day);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -142,6 +143,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}'),
+              showEvents(),
               const SizedBox(
                 height: 16.0,
               ),
@@ -299,5 +301,22 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
 
       Navigator.of(context).pop();
     });
+  }
+
+  Widget showEvents() {
+    List events = Provider.of<PregnancyModel>(context).events;
+    print('events: $events');
+
+    return Expanded(
+      child: ListView.builder(
+        itemCount: events.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('${events[index]['event']}'),
+            subtitle: Text('${events[index]['location']}'),
+            trailing: Text('${events[index]['event_time']}'),
+          );
+      }),
+    );
   }
 }

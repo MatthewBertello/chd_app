@@ -7,7 +7,8 @@ import 'package:chd_app/screens/pregnancy_planner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
-
+import 'package:chd_app/models/pregnancy_model.dart';
+import 'package:provider/provider.dart';
 class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
   final MainModel model;
@@ -16,6 +17,7 @@ class Overview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<PregnancyModel>(context, listen: false).setDueDate();
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: DefaultAppBar(context: context, title: const Text("Overview")),
@@ -32,8 +34,8 @@ class Overview extends StatelessWidget {
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
                   child: PregnancyCountdown(
-                    currentDays: 131,
-                    totalDays: 270,
+                    currentDays: Provider.of<PregnancyModel>(context).currentPregnantDays,
+                    totalDays: Provider.of<PregnancyModel>(context).totalPregnantDays,
                     margin: EdgeInsets.all(innerMargin),
                   ),
                 ),
