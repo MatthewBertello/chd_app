@@ -122,4 +122,15 @@ class PregnancyModel extends ChangeNotifier {
 
     notifyListeners();
   }
+  Future <dynamic> selectEvent(DateTime day) async {
+final response = await supabaseModel.supabase!
+.from('events')
+.select()
+.eq('event_date', day.toIso8601String() );
+return response;
+}
+  String onDaySelected(DateTime day) {
+   var events =  selectEvent(day);
+   return events.toString();
+  }
 }
