@@ -48,50 +48,69 @@ class PregnancyModel extends ChangeNotifier {
       .from('user_info')
       .select('due_date')
       .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)).first;
-    print(response);
-    dueDate = response['due_date'];
-    countTotalPregnantDays();
-    countCurrentPregnantDays();
-    setlastMenstrualPeriod();
+    
+    //print(response);
+
+    if(response['due_date'] != null) {
+      dueDate = response['due_date'];
+      countTotalPregnantDays();
+      countCurrentPregnantDays();
+      setlastMenstrualPeriod();
+    }
     notifyListeners();
   }
 
   Future<void> setlastMenstrualPeriod() async {
-    final response = (await supabaseModel.supabase!
+    try {
+      final response = (await supabaseModel.supabase!
       .from('user_info')
       .select('last_menstrual_cycle')
       .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)).first;
 
     lastMenstrualPeriod = response['last_menstrual_cycle'];
+    } catch(e) {
+      print(e);
+    }
   }
 
   //Method that adds to todo list
   Future<void> addToDo(String todo, bool isChecked) async {
-    final response = (await supabaseModel.supabase!
+    try {
+      final response = (await supabaseModel.supabase!
       .from('user_to_do_lists')
       .insert({'user_id': supabaseModel.supabase!.auth.currentUser!.id, 'to_do': todo, 'is_checked': isChecked})
       .select('to_do_id')).first;
     
     getToDos();
     print(response);
+    } catch(e) {
+      print(e);
+    }
   }
 
   Future<void> deleteToDo(int toDoID) async {
-    final response = await supabaseModel.supabase!
+    try {
+      final response = await supabaseModel.supabase!
       .from('user_to_do_lists')
       .delete()
       .eq('to_do_id', toDoID);
 
     getToDos();
+    } catch(e) {
+      print(e);
+    }
   }
 
   Future<void> updateCheckBox(bool? value, Map todoEntry) async {
-
-    await supabaseModel.supabase!
+    try {
+      await supabaseModel.supabase!
       .from('user_to_do_lists')
       .update({'is_checked': value})
       .eq('to_do_id', todoEntry['to_do_id']);
     getToDos();
+    } catch(e) {
+      print(e);
+    }
   }
 
   // Method to get the countdown for the due date in days
@@ -106,18 +125,22 @@ class PregnancyModel extends ChangeNotifier {
 
   // Method that counts the total number of days in the 9 months of pregnancy
   void countTotalPregnantDays() {
-    int month = dueDate!.month - 9; // Subtract the due dates month from 9 months
-    int year = dueDate!.year;
+    try {
+      int month = dueDate!.month - 9; // Subtract the due dates month from 9 months
+      int year = dueDate!.year;
 
-    while (month <= 0) {
-      // If the month is negative or 0 keep adding 12 until it isn't
-      month += 12;
-      year--;
-    }
+      while (month <= 0) {
+        // If the month is negative or 0 keep adding 12 until it isn't
+        month += 12;
+        year--;
+      }
 
-    // Put together the last time the pregnant person had their period
+      // Put together the last time the pregnant person had their period
     
-    totalPregnantDays = dueDate!.difference(lastMenstrualPeriod).inDays; // Subtract the due date from the last menstrual period
+      totalPregnantDays = dueDate!.difference(lastMenstrualPeriod).inDays; // Subtract the due date from the last menstrual period
+    } catch(e) {
+      print(e);
+    }
   }
 
   Future<void> addEvent(String event, String location,DateTime? date) async {
@@ -149,6 +172,4 @@ class PregnancyModel extends ChangeNotifier {
     events = response;
     notifyListeners();
   }
-
-  
 }

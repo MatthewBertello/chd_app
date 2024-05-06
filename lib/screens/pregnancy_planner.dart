@@ -143,7 +143,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}'),
-               Text('${Provider.of<PregnancyModel>(context).events}'),
+              showEvents(),
               const SizedBox(
                 height: 16.0,
               ),
@@ -300,6 +300,21 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
       eventTimeTextFieldController.clear();
 
       Navigator.of(context).pop();
+    });
+  }
+
+  Widget showEvents() {
+    List events = Provider.of<PregnancyModel>(context, listen: false).events;
+    print('events: $events');
+
+    return ListView.builder(
+      itemCount: events.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: events[index]['event'],
+          subtitle: events[index]['location'],
+          trailing: Text('${events[index]['event_date']} ${events[index]['event_time']}'),
+        );
     });
   }
 }
