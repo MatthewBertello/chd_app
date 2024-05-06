@@ -2,9 +2,6 @@ import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/models/personal_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'demographic_data_entry.dart';
-import 'physical_data_entry.dart';
-import 'social_data_entry.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:provider/provider.dart';
 
