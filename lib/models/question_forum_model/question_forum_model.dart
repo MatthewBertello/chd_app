@@ -17,9 +17,10 @@ class QuestionForumModel extends ChangeNotifier {
       // get the question list from database
       var response = await supabaseModel.supabase! 
         .from('forum_questions')
-        .select('*');
+        .select('*')
+        .order('datetime', ascending: true);
       for (int i = 0; i < response.length; i++) {
-        questionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id']/*, response[i]['user_name']*/));
+        questionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id'],response[i]['datetime'],/* response[i]['user_name']*/));
       }
       // pulls the number of likes from the database for each question
       for (int i = 0; i < questionsList.length; i++){
@@ -48,6 +49,38 @@ class QuestionForumModel extends ChangeNotifier {
     catch (e){
       print(e);
     }
+  }
+
+  // loads the list in oldest to newest
+  void sortQuestionByNewest() {
+    loaded = false;
+    questionsList.sort((a, b) => a.date.compareTo(b.date));
+    loaded = true;
+    notifyListeners();
+  }
+  
+  // loads the list in oldest to newest
+  void sortQuestionsByOldest() {
+    loaded = false;
+    questionsList.sort((b, a) => a.date.compareTo(b.date));
+    loaded = true;
+    notifyListeners();
+  }
+
+  // loads list by most popular
+  void sortQuestionsByMostPopular(){
+    loaded = false;
+    questionsList.sort((b, a) => a.numLikes.compareTo(b.numLikes));
+    loaded = true;
+    notifyListeners();
+  }
+
+  // loads list by least popular
+  void sortQuestionsByLeastPopular(){
+    loaded = false;
+    questionsList.sort((a, b) => a.numLikes.compareTo(b.numLikes));
+    loaded = true;
+    notifyListeners();
   }
 
   // likes the question and adds to database
