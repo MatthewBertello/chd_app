@@ -142,7 +142,6 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}'),
-              Text(Provider.of< PregnancyModel>(context).onDaySelected(day)),
               const SizedBox(
                 height: 16.0,
               ),
