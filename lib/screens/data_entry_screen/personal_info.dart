@@ -72,7 +72,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   Widget createListView(List<Map<String, dynamic>> items) {
     return ListView.separated(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         separatorBuilder: (context, index) {
           return const Divider(
             height: 1,

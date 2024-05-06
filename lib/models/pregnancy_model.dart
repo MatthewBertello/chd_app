@@ -10,6 +10,9 @@ class PregnancyModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;
   DateTime selectedDate = DateTime.now();
+  int totalPregnantDays = 0;
+  int currentPregnantDays = 0;
+  DateTime lastMenstrualPeriod = DateTime.now();
 
   // Initialize the model
   Future<dynamic> init() async {
@@ -40,14 +43,26 @@ class PregnancyModel extends ChangeNotifier {
 
   // Set the due date
   Future<void> setDueDate() async {
-    final response = await supabaseModel.supabase!
+    final response = (await supabaseModel.supabase!
       .from('user_info')
       .select('due_date')
-      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
-      print(response);
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)).first;
+    print(response);
+    dueDate = response['due_date'];
+    countTotalPregnantDays();
+    countCurrentPregnantDays();
+    setlastMenstrualPeriod();
+    notifyListeners();
   }
 
+  Future<void> setlastMenstrualPeriod() async {
+    final response = (await supabaseModel.supabase!
+      .from('user_info')
+      .select('last_menstrual_cycle')
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)).first;
 
+    lastMenstrualPeriod = response['last_menstrual_cycle'];
+  }
 
   //Method that adds to todo list
   Future<void> addToDo(String todo, bool isChecked) async {
@@ -84,12 +99,12 @@ class PregnancyModel extends ChangeNotifier {
   }
 
   // Method that counts the number of pregnant days
-  int countDay() {
-    return (dueDateCountDown() - countTotalPregnantDays()).abs();
+  void countCurrentPregnantDays() {
+    currentPregnantDays = dueDateCountDown() - totalPregnantDays.abs();
   }
 
   // Method that counts the total number of days in the 9 months of pregnancy
-  int countTotalPregnantDays() {
+  void countTotalPregnantDays() {
     int month = dueDate!.month - 9; // Subtract the due dates month from 9 months
     int year = dueDate!.year;
 
@@ -100,10 +115,8 @@ class PregnancyModel extends ChangeNotifier {
     }
 
     // Put together the last time the pregnant person had their period
-    DateTime lastMenstrualPeriod = DateTime(year, month, dueDate!.day);
-    return dueDate!
-        .difference(lastMenstrualPeriod)
-        .inDays; // Subtract the due date from the last menstrual period
+    
+    totalPregnantDays = dueDate!.difference(lastMenstrualPeriod).inDays; // Subtract the due date from the last menstrual period
   }
 
   Future<void> addEvent(String event, String location,DateTime? date) async {
@@ -122,15 +135,18 @@ class PregnancyModel extends ChangeNotifier {
 
     notifyListeners();
   }
-  Future <dynamic> selectEvent(DateTime day) async {
-final response = await supabaseModel.supabase!
-.from('events')
-.select()
-.eq('event_date', day.toIso8601String() );
-return response;
-}
+
+  Future <dynamic> selectEvents(DateTime day) async {
+    final response = await supabaseModel.supabase!
+      .from('events')
+      .select()
+      .eq('event_date', day.toIso8601String() );
+    return response;
+  }
+
   String onDaySelected(DateTime day) {
-   var events =  selectEvent(day);
+   var events =  selectEvents(day);
+   print(events);
    return events.toString();
   }
 }
