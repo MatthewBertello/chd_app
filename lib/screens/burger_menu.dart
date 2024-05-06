@@ -23,11 +23,11 @@ class BurgerMenu extends StatelessWidget {
     // Each page has a name and a widget
     {
       'Settings': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Settings()))
+          context, MaterialPageRoute(builder: (context) => const Settings())) ///on tapped, Re-routes to settings page
     },
     {
-      'Personal Information': (context) => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const PersonalInfo()))
+      'Personal Information': (context) => Navigator.push(context, ///
+          MaterialPageRoute(builder: (context) => const PersonalInfo())) ///on tapped, Re-routes to personal info page
     },
     {
       'Question Forum': (context) {
@@ -35,23 +35,23 @@ class BurgerMenu extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    const CommunityPage())); //On clicked, Re-routes to Online discussion forum
+                    const CommunityPage())); //On tapped, Re-routes to Online discussion forum
       }
     },
     {
       'User Search': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const ShareScreen()))
+          context, MaterialPageRoute(builder: (context) => const ShareScreen())) ///on tapped, Re-Routes to share screen
     },
     {
       'Other Info': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const OtherInfo()))
+          context, MaterialPageRoute(builder: (context) => const OtherInfo())) ///on tapped, Re-routes to 
     },
     {
       'Logout': (context) => showDefaultDialog(context,
-              title: "Logout",
+              title: "Logout", ///on tapped, displays a popup that asks user if they're sure they want to logout?
               message: "Are you sure you want to logout?",
               actions: {
-                "Yes": () async {
+                "Yes": () async { ///if the user does, reset the models and display login screen 
                   await supabaseModel.signOut();
                   await Provider.of<InfoEntryModel>(context, listen: false)
                       .reset();
@@ -64,26 +64,26 @@ class BurgerMenu extends StatelessWidget {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const Login()));
                 },
-                "No": () => Navigator.pop(context)
+                "No": () => Navigator.pop(context) ///if not, pop back to the burger menu
               })
     },
     {
-      'Switch Theme': (context) {
-        bool isDark =
+      'Switch Theme': (context) { ///on tapped, switch theme
+        bool isDark = 
             Provider.of<ThemeManager>(context, listen: false).themeMode ==
-                ThemeMode.dark;
+                ThemeMode.dark;///if the current theme of the app is lightmode, switch to darkMode (and vice versa)
         Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
       }
     },
     {
       'Demo Theme (Dev only)': (context) {
-        Navigator.push(context,
+        Navigator.push(context, ///on tapped, shows the colors of the theme 
             MaterialPageRoute(builder: (context) => const ColorDemo()));
       }
     }
   ];
 
-  // Builds a list of all the other pages that are clickable
+  // Builds a list of all the pages in the menu that are clickable
   Widget buildBody(BuildContext context) {
     return ListView.separated(
       separatorBuilder: (context, index) => const Divider(),

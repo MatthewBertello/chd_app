@@ -9,8 +9,8 @@ class InfoEntryModel extends ChangeNotifier {
   List<int> favorites = [];
   DateTime selectedDate = DateTime.now();
 
-  // Reset the model
-  // This should be called when the user logs out
+  //Reset the model
+  //This should be called when the user logs out
   Future<dynamic> reset() async {
     while (loading) {
       continue;
@@ -22,7 +22,7 @@ class InfoEntryModel extends ChangeNotifier {
     loaded = false;
   }
 
-  // Initialize the model
+  //Initialize the model
   Future<dynamic> init() async {
     // If this model is already loading, wait for it to finish
     while (loading) {
@@ -30,26 +30,26 @@ class InfoEntryModel extends ChangeNotifier {
     }
     loading = true;
 
-    // Reset the model
+    ///Reset the model
     variableDefinitions = [];
     categorizedVariableDefinitions = {};
     favorites = [];
 
-    // Get the variable definitions and favorites
+    ///Get the variable definitions and favorites
     await getVariableDefinitions();
     await getFavorites();
 
-    // Add checkbox, favorite, and form fields to each variable
+    ///Add checkbox, favorite, and form fields to each variable
     for (var element in variableDefinitions) {
       element['favorite'] = favorites.contains(element['id']);
       element['checkbox'] = element['favorite'];
-      element['form'] = TextFormField(
+      element['form'] = TextFormField( 
         controller: TextEditingController(),
         keyboardType: TextInputType.number,
       );
     }
 
-    // Categorize the variables
+    ///Categorize the variables
     for (var element in variableDefinitions) {
       if (!categorizedVariableDefinitions.containsKey(element['category'])) {
         categorizedVariableDefinitions[element['category']] = [];
@@ -62,20 +62,20 @@ class InfoEntryModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Gets the variable definitions from the supabaseModel
+  ///Gets the variable definitions from the supabaseModel
   Future<dynamic> getVariableDefinitions() async {
     variableDefinitions = await supabaseModel.getVariableDefinitions();
     variableDefinitions.sort((a, b) => a['name'].compareTo(b['name']));
   }
 
-  // Gets the user's favorite variables from the supabaseModel
+  ///Gets the user's favorite variables from the supabaseModel
   Future<dynamic> getFavorites() async {
     favorites = (await supabaseModel.getUserVariableFavorites())
         .map<int>((e) => e['variable_id'] as int)
         .toList();
   }
 
-  // Submits the variable entries to the database
+  /// Submits the variable entries to the database
   Future<dynamic> submit() async {
     for (var element in variableDefinitions) {
       if (element['checkbox'] && element['form'].controller!.text.isNotEmpty) {
@@ -100,7 +100,7 @@ class InfoEntryModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Updates the favorite status of a variable
+  /// Updates the favorite status of a variable
   Future<dynamic> updateFavorite(int id, bool favorited) async {
     try {
       if (favorited) {
