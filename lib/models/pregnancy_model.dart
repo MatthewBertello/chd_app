@@ -13,7 +13,7 @@ class PregnancyModel extends ChangeNotifier {
   int totalPregnantDays = 0;
   int currentPregnantDays = 0;
   DateTime lastMenstrualPeriod = DateTime.now();
-  var events;
+  List<Map<String, dynamic>> events = [];
 
   // Initialize the model
   Future<dynamic> init() async {

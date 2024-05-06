@@ -304,17 +304,19 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   }
 
   Widget showEvents() {
-    List events = Provider.of<PregnancyModel>(context, listen: false).events;
+    List events = Provider.of<PregnancyModel>(context).events;
     print('events: $events');
 
-    return ListView.builder(
-      itemCount: events.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: events[index]['event'],
-          subtitle: events[index]['location'],
-          trailing: Text('${events[index]['event_date']} ${events[index]['event_time']}'),
-        );
-    });
+    return Expanded(
+      child: ListView.builder(
+        itemCount: events.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('${events[index]['event']}'),
+            subtitle: Text('${events[index]['location']}'),
+            trailing: Text('${events[index]['event_date']} ${events[index]['event_time']}'),
+          );
+      }),
+    );
   }
 }
