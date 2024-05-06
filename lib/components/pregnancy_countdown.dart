@@ -7,10 +7,11 @@ class PregnancyCountdown extends StatelessWidget {
   final Widget? centerWidget;
   final EdgeInsetsGeometry? margin;
 
-  const PregnancyCountdown({
+  const PregnancyCountdown({  
+    ///this shows a countdown based on the curent date and the users entered due date
     super.key,
-    required this.currentDays,
-    required this.totalDays,
+    required this.currentDays, 
+    required this.totalDays, 
     this.centerWidget,
     this.margin,
   });

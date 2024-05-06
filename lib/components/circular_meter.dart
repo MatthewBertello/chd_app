@@ -26,18 +26,18 @@ class CircularMeter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(fit: StackFit.expand, children: [
-      SfCircularChart(
-        series: <CircularSeries>[
-          DoughnutSeries<String, Object>(
+      SfCircularChart( ///displays circular chart
+        series: <CircularSeries>[ 
+          DoughnutSeries<String, Object>( 
             dataSource: const ['Full', 'Empty'],
             xValueMapper: (datum, _) => datum,
             yValueMapper: (datum, _) => datum == 'Full' ? value : 100 - value,
             pointColorMapper: (datum, _) {
-              switch (datum) {
-                case 'Full':
-                  return getColor(value);
+              switch (datum) { ///has the user entered any data to be averaged?
+                case 'Full': 
+                  return getColor(value); ///if yes, get the color given by average
                 case 'Empty':
-                  return Colors.transparent;
+                  return Colors.transparent; ///if not, the circle is empty
               }
               return null;
             },
