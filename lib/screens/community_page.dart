@@ -11,7 +11,7 @@ class CommunityPage extends StatelessWidget//<CommunityPage>
 @override
 Widget build(BuildContext context){
   return Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
-          QuestionListView(questionForumModel: questionsChangeNotifier));
+        QuestionListView(questionForumModel: questionsChangeNotifier));
 }
 
 }

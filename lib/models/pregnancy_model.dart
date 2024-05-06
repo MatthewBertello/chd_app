@@ -172,4 +172,12 @@ class PregnancyModel extends ChangeNotifier {
     events = response;
     notifyListeners();
   }
+   Future <void> updateSubstantial(String colName, dynamic variable) async {
+    final response = await supabaseModel.supabase!
+     .from('user_info')
+     .update({
+       colName : variable
+       });
+  }
+
 }
