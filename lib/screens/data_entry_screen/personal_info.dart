@@ -43,7 +43,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       children: [
       OverflowBox(
         minWidth: 0.0,
-        maxWidth: double.infinity,
+        maxWidth:MediaQuery.of(context).size.width,
         alignment: Alignment.center,
           child: ExpansionTile(
             title: const Text('Demographics', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
@@ -54,7 +54,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         ),
            OverflowBox(
             minWidth: 0.0,
-           maxWidth: double.infinity,
+           maxWidth:MediaQuery.of(context).size.width,
            alignment: Alignment.center,
           child: ExpansionTile(
             title: const Text('Social', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
@@ -65,7 +65,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         ),
           OverflowBox(
             minWidth: 0.0,
-           maxWidth: double.infinity,
+          maxWidth:MediaQuery.of(context).size.width,
           alignment: Alignment.center,
           child: ExpansionTile(
             title: const Text('Physical', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
