@@ -287,9 +287,14 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   }
 
   void addEvent() {
+    Provider.of<PregnancyModel>(context, listen: false).addEvent(eventTitleTextFieldController.text, selectedEventDateTime);
     
-    
-  }
+    setState(() {
+      eventTitleTextFieldController.clear();
+      eventDateTextFieldController.clear();
+      eventTimeTextFieldController.clear();
 
-  
+      Navigator.of(context).pop();
+    });
+  }
 }

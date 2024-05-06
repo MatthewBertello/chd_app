@@ -2,6 +2,7 @@
 
 import 'package:chd_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PregnancyModel extends ChangeNotifier {
   List toDos = [];
@@ -103,5 +104,21 @@ class PregnancyModel extends ChangeNotifier {
     return dueDate!
         .difference(lastMenstrualPeriod)
         .inDays; // Subtract the due date from the last menstrual period
+  }
+
+  Future<void> addEvent(String event, DateTime? date) async {
+    String supabaseDate = date!.toIso8601String();
+    DateFormat timeFormat = DateFormat('HH:mm:ss.SSSSSS');
+    String supabaseTime = timeFormat.format(date);
+
+    final response = await supabaseModel.supabase!
+      .from('user_events')
+      .insert({
+        'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
+        'event': event, 
+        'event_date': supabaseDate, 
+        'event_time': supabaseTime});
+
+    notifyListeners();
   }
 }
