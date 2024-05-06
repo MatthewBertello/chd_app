@@ -132,6 +132,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
+      Provider.of< PregnancyModel>(context, listen: false).selectEvents(day);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -142,7 +143,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}'),
-               Text(Provider.of< PregnancyModel>(context).onDaySelected(day)),
+               Text('${Provider.of<PregnancyModel>(context).events}'),
               const SizedBox(
                 height: 16.0,
               ),

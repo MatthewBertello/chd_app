@@ -13,6 +13,7 @@ class PregnancyModel extends ChangeNotifier {
   int totalPregnantDays = 0;
   int currentPregnantDays = 0;
   DateTime lastMenstrualPeriod = DateTime.now();
+  var events;
 
   // Initialize the model
   Future<dynamic> init() async {
@@ -136,17 +137,18 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future <dynamic> selectEvents(DateTime day) async {
+  Future <void> selectEvents(DateTime day) async {
     final response = await supabaseModel.supabase!
-      .from('events')
+      .from('user_events')
       .select()
-      .eq('event_date', day.toIso8601String() );
-    return response;
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)
+      .eq('event_date', day.toIso8601String());
+    
+    print(day.toIso8601String());
+    print(response);
+    events = response;
+    notifyListeners();
   }
 
-  String onDaySelected(DateTime day) {
-   var events =  selectEvents(day);
-   print(events);
-   return events.toString();
-  }
+  
 }
