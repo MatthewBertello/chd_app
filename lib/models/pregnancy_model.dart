@@ -106,7 +106,7 @@ class PregnancyModel extends ChangeNotifier {
         .inDays; // Subtract the due date from the last menstrual period
   }
 
-  Future<void> addEvent(String event, DateTime? date) async {
+  Future<void> addEvent(String event, String location,DateTime? date) async {
     String supabaseDate = date!.toIso8601String();
     DateFormat timeFormat = DateFormat('HH:mm:ss.SSSSSS');
     String supabaseTime = timeFormat.format(date);
@@ -117,7 +117,8 @@ class PregnancyModel extends ChangeNotifier {
         'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
         'event': event, 
         'event_date': supabaseDate, 
-        'event_time': supabaseTime});
+        'event_time': supabaseTime,
+        'location': location});
 
     notifyListeners();
   }

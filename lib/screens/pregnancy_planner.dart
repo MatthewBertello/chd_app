@@ -25,6 +25,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   TextEditingController eventDateTextFieldController = TextEditingController();
   TextEditingController eventTitleTextFieldController = TextEditingController();
   TextEditingController eventTimeTextFieldController = TextEditingController();
+  TextEditingController eventLocationTextFieldController = TextEditingController();
   DateFormat timeFormat = DateFormat('h:mm a');
 
   @override
@@ -144,12 +145,6 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
               const SizedBox(
                 height: 16.0,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Close'),
-              ),
             ],),
           ),
           );
@@ -217,7 +212,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
       return Dialog(
         child: Container(
           padding: const EdgeInsets.all(20.0),
-          height: MediaQuery.of(context).size.height / 3,
+          height: 350,
           alignment: Alignment.center,
           child: Column(
             children: [
@@ -233,6 +228,14 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                   hintText: 'Title', 
                   contentPadding: EdgeInsets.symmetric(vertical: 10.0),
                 ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: eventLocationTextFieldController,
+                decoration: const InputDecoration(
+                  prefix: Padding(padding: EdgeInsets.all(5),),
+                  hintText: 'Location', 
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0))
               ),
               const SizedBox(height: 20),
               TextField(
@@ -287,7 +290,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   }
 
   void addEvent() {
-    Provider.of<PregnancyModel>(context, listen: false).addEvent(eventTitleTextFieldController.text, selectedEventDateTime);
+    Provider.of<PregnancyModel>(context, listen: false).addEvent(eventTitleTextFieldController.text, eventLocationTextFieldController.text,selectedEventDateTime);
     
     setState(() {
       eventTitleTextFieldController.clear();
