@@ -15,7 +15,7 @@ class PregnancyModel extends ChangeNotifier {
   DateTime lastMenstrualPeriod = DateTime.now(); //assumes the date of the last menstura period is the current date
   List<Map<String, dynamic>> events = []; 
 
-  // Initialize the model
+  ///Initialize the model
   Future<dynamic> init() async {
     // If this model is already loading, wait for it to finish
     while (loading) {
@@ -32,7 +32,7 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners(); 
   }
 
-//gets the users to do list from db
+///gets the users to do list from db
   Future<void> getToDos() async {
     toDos = await supabaseModel.supabase!
       .from('user_to_do_lists')
@@ -43,7 +43,7 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Set the due date
+  ///Set the due date
   Future<void> setDueDate() async {
     final response = (await supabaseModel.supabase!
       .from('user_info')
@@ -103,6 +103,7 @@ class PregnancyModel extends ChangeNotifier {
     }
   }
 
+///method that updates checkboxes in multiple selection
   Future<void> updateCheckBox(bool? value, Map todoEntry) async {
     try {
       await supabaseModel.supabase!
@@ -115,17 +116,17 @@ class PregnancyModel extends ChangeNotifier {
     }
   }
 
-  // Method to get the countdown for the due date in days
+  /// Method to get the countdown for the due date in days
   int dueDateCountDown() {
     return dueDate!.difference(DateTime.now()).inDays;
   }
 
-  // Method that counts the number of pregnant days
+  ///Method that counts the number of pregnant days
   void countCurrentPregnantDays() {
     currentPregnantDays = dueDateCountDown() - totalPregnantDays.abs();
   }
 
-  // Method that counts the total number of days in the 9 months of pregnancy
+  ///Method that counts the total number of days in the 9 months of pregnancy
   void countTotalPregnantDays() {
     try {
       int month = dueDate!.month - 9; // Subtract the due dates month from 9 months
@@ -145,6 +146,7 @@ class PregnancyModel extends ChangeNotifier {
     }
   }
 
+///updates events user added to the calender in the db
   Future<void> addEvent(String event, String location,DateTime? date) async {
     String supabaseDate = date!.toIso8601String();
     DateFormat timeFormat = DateFormat('HH:mm:ss.SSSSSS');
@@ -162,6 +164,7 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
+///updates selected events in the db
   Future <void> selectEvents(DateTime day) async {
     final response = await supabaseModel.supabase!
       .from('user_events')
@@ -174,12 +177,14 @@ class PregnancyModel extends ChangeNotifier {
     events = response;
     notifyListeners();
   }
+
+  ///updates personal data entry in the db
    Future <void> updateSubstantial(String colName, dynamic variable) async {
     final response = await supabaseModel.supabase!
      .from('user_info')
      .update({
         'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
-        colName : variable
+         colName : variable
        });
   }
 
