@@ -3,6 +3,7 @@ import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
+import 'package:chd_app/models/personal_info_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/entry_screen.dart';
 import 'package:chd_app/screens/more_entries_screen.dart';
@@ -18,6 +19,8 @@ class HealthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<PersonalInfoModel>(context, listen: false)
+        .getEnumValues('race');
     if (Provider.of<VariableEntriesModel>(context, listen: false).loaded ==
             false &&
         Provider.of<VariableEntriesModel>(context, listen: false).loading ==

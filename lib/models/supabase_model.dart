@@ -13,6 +13,7 @@ class SupabaseModel {
   List<Map<String, dynamic>> userVariableFavorites = [];
   List<Map<String, dynamic>> variableDefinitions = [];
   List<Map<String, dynamic>> variableEntries = [];
+  List<Map<String, dynamic>> personalInfoVariables = [];
   bool forumQuestionsLoaded = false;
   bool forumRepliesLoaded = false;
   bool stringVariableDefinitionsLoaded = false;
@@ -20,6 +21,7 @@ class SupabaseModel {
   bool userVariableFavoritesLoaded = false;
   bool variableDefinitionsLoaded = false;
   bool variableEntriesLoaded = false;
+  bool personalInfoVariablesLoaded = false;
 
   // Initialize the Supabase client and load data
   Future<dynamic> initialize() async {
@@ -202,5 +204,20 @@ class SupabaseModel {
       variableEntriesLoaded = true;
     }
     return variableEntries;
+  }
+
+  // Gets the personal info variables from the database
+  Future<dynamic> getPersonalInfoVariables({bool reload = false}) async {
+    await ensureSupabaseIntialized();
+    if (!personalInfoVariablesLoaded || reload) {
+      try {
+        personalInfoVariables =
+            await supabase!.from('personal_info_variables').select();
+      } catch (e) {
+        print(e);
+      }
+      personalInfoVariablesLoaded = true;
+    }
+    return personalInfoVariables;
   }
 }

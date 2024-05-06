@@ -22,6 +22,7 @@ class BurgerMenu extends StatelessWidget {
   final List<Map<String, Function>> otherPages = [
     // Each page has a name and a widget
     {
+
       'Settings': (context) => Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Settings()))
     },
