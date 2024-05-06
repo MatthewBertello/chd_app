@@ -3,7 +3,6 @@ import 'package:chd_app/models/info_entry_model.dart';
 import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/data_entry_screen/personal_info.dart';
-import 'package:chd_app/screens/data_entry_screen/physical_data_entry.dart';
 import 'package:chd_app/screens/login_screen.dart';
 import 'package:chd_app/theme/theme_manager.dart';
 import 'package:chd_app/utils/show_default_dialog.dart';
@@ -15,7 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
 import 'package:chd_app/theme/color_demo.dart';
 import 'package:chd_app/screens/community_page.dart';
-import 'package:chd_app/screens/data_entry_screen/demographic_data_entry.dart';
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
@@ -28,8 +26,8 @@ class BurgerMenu extends StatelessWidget {
           context, MaterialPageRoute(builder: (context) => const Settings()))
     },
     {
-      'Personal Information': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const PersonalInfo()))
+      'Personal Information': (context) => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const PersonalInfo()))
     },
     {
       'Question Forum': (context) {
@@ -55,9 +53,13 @@ class BurgerMenu extends StatelessWidget {
               actions: {
                 "Yes": () async {
                   await supabaseModel.signOut();
-                  await Provider.of<InfoEntryModel>(context, listen: false).reset();
-                  await Provider.of<VariableEntriesModel>(context, listen: false).reset();
-                  Provider.of<QuestionForumModel>(context, listen: false).reset();
+                  await Provider.of<InfoEntryModel>(context, listen: false)
+                      .reset();
+                  await Provider.of<VariableEntriesModel>(context,
+                          listen: false)
+                      .reset();
+                  Provider.of<QuestionForumModel>(context, listen: false)
+                      .reset();
                   Navigator.of(context).pop();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => const Login()));
