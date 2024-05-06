@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PregnancyModel extends ChangeNotifier {
-  List toDos = [];
-  DateTime? dueDate;
+  List toDos = []; //sets to-dos to empty to start
+  DateTime? dueDate; 
   bool loaded = false;
   bool loading = false;
-  DateTime selectedDate = DateTime.now();
-  int totalPregnantDays = 0;
+  DateTime selectedDate = DateTime.now(); //time selected is the current date
+  int totalPregnantDays = 0; 
   int currentPregnantDays = 0;
-  DateTime lastMenstrualPeriod = DateTime.now();
-  List<Map<String, dynamic>> events = [];
+  DateTime lastMenstrualPeriod = DateTime.now(); //assumes the date of the last menstura period is the current date
+  List<Map<String, dynamic>> events = []; 
 
   // Initialize the model
   Future<dynamic> init() async {
@@ -24,14 +24,15 @@ class PregnancyModel extends ChangeNotifier {
     loading = true;
 
     setDueDate();
-    await getToDos();
+    await getToDos(); //gets the to-dos user has set 
 
     selectedDate = DateTime.now();
     loaded = true;
     loading = false;
-    notifyListeners();
+    notifyListeners(); 
   }
 
+//gets the users to do list from db
   Future<void> getToDos() async {
     toDos = await supabaseModel.supabase!
       .from('user_to_do_lists')
@@ -60,6 +61,7 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ///sets date of last period in db
   Future<void> setlastMenstrualPeriod() async {
     try {
       final response = (await supabaseModel.supabase!
@@ -176,7 +178,8 @@ class PregnancyModel extends ChangeNotifier {
     final response = await supabaseModel.supabase!
      .from('user_info')
      .update({
-       colName : variable
+        'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
+        colName : variable
        });
   }
 
