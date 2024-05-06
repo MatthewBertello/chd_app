@@ -15,8 +15,8 @@ class SubstantialEntry extends StatelessWidget {
 
 class PhysicalDataEntry extends StatefulWidget {
   const PhysicalDataEntry({super.key});
-
   @override
+  // ignore: library_private_types_in_public_api
   _PhysicalDataEntryState createState() => _PhysicalDataEntryState();
 }
 
@@ -56,7 +56,6 @@ class _PhysicalDataEntryState extends State<PhysicalDataEntry> {
 
   Map<String, bool> selectedDrugs = {};
 
-  @override
   void state1() {
     super.initState();
     // Initialize the selection state
