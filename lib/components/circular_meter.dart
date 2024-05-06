@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+///circular meter is used to give user a visual of how their health is. 'health' is calculated by rolling
+///data that is self entered. these values are then averaged based on catagory and the dial changes  
+///apperance based off the range of the values
 class CircularMeter extends StatelessWidget {
   late final int value;
   final Map<int, Color> colorMap;
@@ -8,12 +11,12 @@ class CircularMeter extends StatelessWidget {
 
   CircularMeter({
     super.key,
-    required value,
+    required value, 
     this.colorMap = const {
-      0: Colors.red,
-      50: Colors.yellow,
-      75: Colors.lightGreen,
-      100: Colors.green
+      0: Colors.red,  ///values are in the 'poor' range
+      50: Colors.yellow, ///values are in the 'average' range
+      75: Colors.lightGreen, ///values are in the 'good' range
+      100: Colors.green ///values are in the 'excellent' range
     },
     this.centerWidget,
   }) {
