@@ -61,29 +61,30 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
                 ),
               ),
               // List of displayed variables
-              ListView.separated(
-                shrinkWrap: true,
-                itemCount: displayedVariables.length,
-                itemBuilder: (context, index) {
-                  // Display a list tile with the title, unit, and a form field
-                  return ListTile(
-                    title: Text(displayedVariables[index]['name'] ?? ""),
-                    subtitle: Text(displayedVariables[index]['unit'] ?? ""),
-                    trailing: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: 100,
-                        child: displayedVariables[index]['form'] ??
-                            const Text("Error"),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: displayedVariables.length,
+                  itemBuilder: (context, index) {
+                    // Display a list tile with the title, unit, and a form field
+                    return ListTile(
+                      title: Text(displayedVariables[index]['name'] ?? ""),
+                      subtitle: Text(displayedVariables[index]['unit'] ?? ""),
+                      trailing: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 100,
+                          child: displayedVariables[index]['form'] ??
+                              const Text("Error"),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    height: 1,
-                  );
-                },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider(
+                      height: 1,
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -134,7 +135,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
           final future =
               Provider.of<InfoEntryModel>(context, listen: false).submit();
           future.then((value) {
-            Provider.of<VariableEntriesModel>(context, listen:false).init();
+            Provider.of<VariableEntriesModel>(context, listen: false).init();
             setState(() {
               loading = false;
             });
