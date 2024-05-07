@@ -7,8 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class VariableScreen extends StatelessWidget {
-  final int variableId; ///corisponds to ID in db
-  List<int> values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final int variableId;
+  // set the startdate to 1 month ago
+  final DateTime startDate = DateTime.now().subtract(Duration(days: 35));
 
   @override
   VariableScreen({required this.variableId, super.key});
@@ -25,13 +26,29 @@ class VariableScreen extends StatelessWidget {
 
     List entries = Provider.of<VariableEntriesModel>(context)
         .getVariableEntriesById(
-            id: variableId, 
+            id: variableId,
             entries:
                 Provider.of<VariableEntriesModel>(context).variableEntries);
+    double average = entries
+            .map((entry) => entry['value'])
+            .reduce((value, element) => value + element) /
+        entries.length;
+    entries =
+        entries.where((entry) => entry['date'].isAfter(startDate)).toList();
+    entries = entries
+        .where((entry) =>
+            entry['date'].isBefore(DateTime.now().add(Duration(days: 1))))
+        .toList();
     entries.sort((entry1, entry2) => entry1['date'].compareTo(entry2['date']));
+    double averageLastFiveWeeks = entries
+            .map((entry) => entry['value'])
+            .reduce((value, element) => value + element) /
+        entries.length;
+
     List<FlSpot> spots = entries
         .map((entry) => FlSpot(
-            entries.indexOf(entry).toDouble(), entry['value'].toDouble()))
+            entry['date'].difference(DateTime.now()).inDays.toDouble(),
+            entry['value'].toDouble()))
         .toList();
     return Scaffold(
         appBar: DefaultAppBar(
@@ -39,27 +56,68 @@ class VariableScreen extends StatelessWidget {
             title: Text(Provider.of<VariableEntriesModel>(context)
                 .variableDefinitions
                 .firstWhere((element) => element['id'] == variableId)['name'])),
-        body: Column(
-          children: [
-            Container(
-              height: 200,
-              child: LineChart(
-                LineChartData(
-                  minY: 0,
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: spots,
-                      isCurved: true,
-                      dotData: FlDotData(show: false),
-                      belowBarData: BarAreaData(show: false),
-                      curveSmoothness: 0.1,
-                    )
-                  ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
+                height: 250,
+                child: LineChart(
+                  LineChartData(
+                    minX: -35.0,
+                    maxX: 0,
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: spots,
+                        isCurved: true,
+                        dotData: FlDotData(show: false),
+                        belowBarData: BarAreaData(show: false),
+                        curveSmoothness: 0.01,
+                      )
+                    ],
+                    titlesData: FlTitlesData(
+                      show: true,
+                      topTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      rightTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        axisNameWidget: Text('Date'),
+                        sideTitles: SideTitles(
+                          // set the interval to the difference between the first and last date
+                          interval: 7,
+                          showTitles: true,
+                          getTitlesWidget: (value, meta) {
+                            return Text(
+                              DateFormat.Md().format(DateTime.now()
+                                  .add(Duration(days: value.toInt()))),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: ListView.separated(
+              ListTile(
+                title: Text('Overall Average'),
+                subtitle: Text(
+                  double.parse(average.toStringAsFixed(2)).toString(),
+                ),
+              ),
+              ListTile(
+                title: Text('Average Last 5 Weeks'),
+                subtitle: Text(
+                    double.parse(averageLastFiveWeeks.toStringAsFixed(2))
+                        .toString()),
+              ),
+              Text('Previous Entries'),
+              const Divider(),
+              ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
                 separatorBuilder: (context, index) => const Divider(),
                 itemCount: entries.length,
                 itemBuilder: (context, index) {
@@ -69,11 +127,12 @@ class VariableScreen extends StatelessWidget {
                       subtitle: Text(DateFormat.yMd()
                           .add_jm()
                           .format(entries[reversedIndex]['date'])),
-                      trailing: Text(entries[reversedIndex]['value'].toString()));
+                      trailing:
+                          Text(entries[reversedIndex]['value'].toString()));
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }
