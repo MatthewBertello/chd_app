@@ -11,6 +11,7 @@ import 'package:chd_app/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 final SupabaseModel supabaseModel = SupabaseModel();
 
 Future<void> main() async {

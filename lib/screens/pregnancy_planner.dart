@@ -27,6 +27,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   TextEditingController eventTimeTextFieldController = TextEditingController();
   TextEditingController eventLocationTextFieldController = TextEditingController();
   DateFormat timeFormat = DateFormat('h:mm a');
+  List events = [];
 
   @override
   void initState() {
@@ -67,7 +68,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                           '${getMonth(day.month)} ${day.year}', 
                           style: TextStyle(color: Colors.purple[300], fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        IconButton(icon: Icon(Icons.add, color: Colors.purple[200],), onPressed: () => showAddEventDialog(),)
+                        IconButton(icon: Icon(Icons.add, color: Colors.purple[200],), onPressed: () => showAddEventDialog('Add New Event', addEvent),)
                       ]
                     );
                   },
@@ -129,10 +130,11 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
     textController.clear();
   }
 
-  void _onDaySelected(DateTime day, DateTime focusedDay) {
+  Future<void> _onDaySelected(DateTime day, DateTime focusedDay) async {
+    print('clicked');
+    await Provider.of< PregnancyModel>(context, listen: false).selectEvents(day);
     setState(() {
       today = day;
-      Provider.of< PregnancyModel>(context, listen: false).selectEvents(day);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -142,7 +144,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}'),
+              Text('${getWeekday(day.weekday)}, ${getMonth(day.month)} ${day.day} ${day.year}', style: const TextStyle(fontWeight: FontWeight.bold)),
               showEvents(),
               const SizedBox(
                 height: 16.0,
@@ -207,7 +209,13 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
     return month;
   }
 
-  void showAddEventDialog()  {
+  void showAddEventDialog(String dialogTitle, Function addOrUpdate, {String event = 'Title', String? location = 'Location', String date = 'Date', String time = 'Time'})  {
+    if(dialogTitle.contains('Update')) {
+      eventTitleTextFieldController.text = event;
+      eventLocationTextFieldController.text = (location == null) ? "" : location;
+      eventDateTextFieldController.text = date;
+      eventTimeTextFieldController.text = time;
+    }
     showDialog(
     context: context,
     builder: (context) {
@@ -221,41 +229,41 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                const Text('Add New Event', style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),), 
-                IconButton(icon: const Icon(Icons.add), onPressed: () => addEvent(),)]),
+                Text(dialogTitle , style: const TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),), 
+                IconButton(icon: const Icon(Icons.add), onPressed: () => addOrUpdate(),)]),
               TextFormField(
                 controller: eventTitleTextFieldController,
-                decoration: const InputDecoration(
-                  prefix: Padding(padding: EdgeInsets.all(5),),
-                  hintText: 'Title', 
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                decoration: InputDecoration(
+                  prefix: const Padding(padding: EdgeInsets.all(5),),
+                  hintText: event, 
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
                 ),
               ),
               const SizedBox(height: 20),
               TextField(
                 controller: eventLocationTextFieldController,
-                decoration: const InputDecoration(
-                  prefix: Padding(padding: EdgeInsets.all(5),),
-                  hintText: 'Location', 
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0))
+                decoration: InputDecoration(
+                  prefix: const Padding(padding: EdgeInsets.all(5),),
+                  hintText: location, 
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0))
               ),
               const SizedBox(height: 20),
               TextField(
                 controller: eventDateTextFieldController,
                 onTap: () => popUpDatePicker(),
-                decoration: const InputDecoration(
-                  prefix: Padding(padding: EdgeInsets.all(5),),
-                  hintText: 'Date', 
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0), alignLabelWithHint: true),
+                decoration: InputDecoration(
+                  prefix: const Padding(padding: EdgeInsets.all(5),),
+                  hintText: date, 
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0), alignLabelWithHint: true),
               ),
               const SizedBox(height: 20),
               TextField(
                 controller: eventTimeTextFieldController,
                 onTap: () => popUpTimePicker(),
-                decoration: const InputDecoration(
-                  prefix: Padding(padding: EdgeInsets.all(5),),
-                  hintText: 'Time', 
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0))
+                decoration: InputDecoration(
+                  prefix: const Padding(padding: EdgeInsets.all(5),),
+                  hintText: time, 
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0))
               ),
             ],
           ),
@@ -292,10 +300,30 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   }
 
   void addEvent() {
-    Provider.of<PregnancyModel>(context, listen: false).addEvent(eventTitleTextFieldController.text, eventLocationTextFieldController.text,selectedEventDateTime);
+    Provider.of<PregnancyModel>(context, listen: false).addEvent(
+      eventTitleTextFieldController.text, 
+      eventLocationTextFieldController.text,
+      selectedEventDateTime);
     
     setState(() {
       eventTitleTextFieldController.clear();
+      eventDateTextFieldController.clear();
+      eventTimeTextFieldController.clear();
+      Navigator.of(context).pop();
+    });
+  }
+
+  Future<void> updateEvent(int eventID) async {
+    await Provider.of<PregnancyModel>(context, listen: false).updateEvent(
+      eventID, 
+      eventTitleTextFieldController.text, 
+      eventLocationTextFieldController.text, 
+      eventDateTextFieldController.text, 
+      eventTimeTextFieldController.text);
+
+    setState(() {
+      eventTitleTextFieldController.clear();
+      eventLocationTextFieldController.clear();
       eventDateTextFieldController.clear();
       eventTimeTextFieldController.clear();
 
@@ -304,19 +332,55 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   }
 
   Widget showEvents() {
-    List events = Provider.of<PregnancyModel>(context).events;
+    events = Provider.of<PregnancyModel>(context).events;
     print('events: $events');
 
-    return Expanded(
-      child: ListView.builder(
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: events.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text('${events[index]['event']}'),
-            subtitle: Text('${events[index]['location']}'),
-            trailing: Text('${events[index]['event_time']}'),
+            leading: IconButton(
+              icon: const Icon(Icons.edit, 
+              size: 17), onPressed: () => showAddEventDialog('Update Event', () async => await updateEvent(
+                events[index]['event_id']), 
+                event: events[index]['event'], 
+                location: events[index]['location'], 
+                date: events[index]['event_date'], 
+                time: formatStringTime(events[index]['event_time'])),),
+            title: (events[index]['event'] == null) ? null :Text('${events[index]['event']}', style: const TextStyle(fontSize: 15)),
+            subtitle: (events[index]['location'] == null) ? null : Text('Location: ${events[index]['location']}', style: const TextStyle(fontSize: 10)),
+            trailing: (events[index]['event_time'] == null) ? null :Text(formatStringTime(events[index]['event_time'])),
           );
-      }),
-    );
+      });
   }
+
+  String formatStringTime(String time) {
+    List timeSplit = time.split(":");
+    String aMpM = (int.parse(timeSplit[0]) > 12) ? "PM" : "AM";
+    String hour = (int.parse(timeSplit[0]) > 12) ? '${int.parse(timeSplit[0]) - 12}': timeSplit[0];
+    String min = timeSplit[1];
+
+    return '$hour:$min $aMpM';
+  }
+
+
+  String convertToMilitaryTime(String time) {
+    List timeSplit = time.split(' ');
+    List hourMin = timeSplit[0].split(':');
+    String hour = hourMin[0];
+    String min = hourMin[1];
+
+    if(timeSplit[1] == 'PM') {
+      hour = '${int.parse(hour[0]) + 12}';
+    }
+
+    if (hour.length < 2) {
+      hour = '0$hour';
+    }
+
+    return '$hour:$min:00';
+  }
+  
 }

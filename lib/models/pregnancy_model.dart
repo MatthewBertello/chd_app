@@ -14,6 +14,7 @@ class PregnancyModel extends ChangeNotifier {
   int currentPregnantDays = 0;
   DateTime lastMenstrualPeriod = DateTime.now(); //assumes the date of the last menstura period is the current date
   List<Map<String, dynamic>> events = []; 
+  DateTime currentEventDay = DateTime.now();
 
   ///Initialize the model
   Future<dynamic> init() async {
@@ -147,7 +148,7 @@ class PregnancyModel extends ChangeNotifier {
   }
 
 ///updates events user added to the calender in the db
-  Future<void> addEvent(String event, String location,DateTime? date) async {
+  Future<void> addEvent(String event, String location, DateTime? date) async {
     String supabaseDate = date!.toIso8601String();
     DateFormat timeFormat = DateFormat('HH:mm:ss.SSSSSS');
     String supabaseTime = timeFormat.format(date);
@@ -164,8 +165,23 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateEvent(int eventID, String event, String location, String date, String time) async {
+    try {
+      final response = await supabaseModel.supabase!
+        .from('user_events')
+        .update({'event': event, 'event_date': date, 'event_time': time, 'location': location})
+        .eq('event_id', eventID);
+
+      notifyListeners();
+        
+    } catch(e) {
+      print(e);
+    }
+  }
+
 ///updates selected events in the db
   Future <void> selectEvents(DateTime day) async {
+    currentEventDay = day;
     final response = await supabaseModel.supabase!
       .from('user_events')
       .select()
@@ -187,5 +203,4 @@ class PregnancyModel extends ChangeNotifier {
          colName : variable
        });
   }
-
 }
