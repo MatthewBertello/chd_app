@@ -5,12 +5,14 @@ class Reply{
   String userWhoPosted = ""; // the id of the user who posted
   String author = "NULL"; // the username of the user who posted
   int numLikes = 0; // number of likes
+  var date; // date when posted
 
   // constructor for reply
-  Reply(String newReply, String newID, String newUser){ 
+  Reply(String newReply, String newID, String newUser, var newDate){ 
     reply = newReply;
     replyID = newID;
     userWhoPosted = newUser;
+    date = newDate;
   }
 
   // sets the id for a reply

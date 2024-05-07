@@ -18,7 +18,7 @@ class QuestionForumModel extends ChangeNotifier {
       var response = await supabaseModel.supabase! 
         .from('forum_questions')
         .select('*')
-        .order('datetime', ascending: true);
+        .order('datetime', ascending: false);
       for (int i = 0; i < response.length; i++) {
         questionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id'],response[i]['datetime'],/* response[i]['user_name']*/));
       }
@@ -51,10 +51,10 @@ class QuestionForumModel extends ChangeNotifier {
     }
   }
 
-  // loads the list in oldest to newest
+  // loads the list newest to oldest
   void sortQuestionByNewest() {
     loaded = false;
-    questionsList.sort((a, b) => a.date.compareTo(b.date));
+    questionsList.sort((b, a) => a.date.compareTo(b.date));
     loaded = true;
     notifyListeners();
   }
@@ -62,7 +62,7 @@ class QuestionForumModel extends ChangeNotifier {
   // loads the list in oldest to newest
   void sortQuestionsByOldest() {
     loaded = false;
-    questionsList.sort((b, a) => a.date.compareTo(b.date));
+    questionsList.sort((a, b) => a.date.compareTo(b.date));
     loaded = true;
     notifyListeners();
   }
@@ -215,7 +215,7 @@ class QuestionForumModel extends ChangeNotifier {
         .eq('question_id', questionsList[questionIndex].getQuestionID())
         .order('datetime', ascending: true);
       for (int i = 0; i < response.length; i++) {
-        questionsList[questionIndex].addReply(Reply(response[i]['reply'], response [i]['reply_id'], response[i]['user_id']));
+        questionsList[questionIndex].addReply(Reply(response[i]['reply'], response [i]['reply_id'], response[i]['user_id'], response[i]['datetime']));
       }
 
       // pulls the number of likes from the database for each question
@@ -281,6 +281,38 @@ class QuestionForumModel extends ChangeNotifier {
     catch(e){
       print(e);
     }
+  }
+
+   // loads the list newest to oldest
+  void sortRepliesByNewest(int questionIndex) {
+    loaded = false;
+    questionsList[questionIndex].replies.sort((b, a) => a.date.compareTo(b.date));
+    loaded = true;
+    notifyListeners();
+  }
+  
+  // loads the list in oldest to newest
+  void sortRepliesByOldest(int questionIndex) {
+    loaded = false;
+    questionsList[questionIndex].replies.sort((a, b) => a.date.compareTo(b.date));
+    loaded = true;
+    notifyListeners();
+  }
+
+  // loads list by most popular
+  void sortRepliesByMostPopular(int questionIndex){
+    loaded = false;
+    questionsList[questionIndex].replies.sort((b, a) => a.numLikes.compareTo(b.numLikes));
+    loaded = true;
+    notifyListeners();
+  }
+
+  // loads list by least popular
+  void sortRepliesByLeastPopular(int questionIndex){
+    loaded = false;
+    questionsList[questionIndex].replies.sort((a, b) => a.numLikes.compareTo(b.numLikes));
+    loaded = true;
+    notifyListeners();
   }
 
   // clears the lists after a logout

@@ -20,8 +20,9 @@ class QuestionListView extends StatefulWidget{
 
 class _QuestionListViewState extends State<QuestionListView> {
 
-  bool initialized = false;
-  bool isLiked = false;
+  bool initialized = false; // whether or not the page has been initialized
+  bool isLiked = false; // whether not this question was liked by you
+  bool isNull = true; // so it doesn't show which choice there is by the sort button
 
   @override
   void initState() {
@@ -31,8 +32,8 @@ class _QuestionListViewState extends State<QuestionListView> {
 
   }
 
-  List<String> sortChoices = ['', 'Newest', 'Oldest', 'Most Popular', 'Least Popular']; // choices for sorting
-  String selectedSortChoice = ''; // the default choice
+  List<String> sortChoices = [ 'Newest', 'Oldest', 'Most Popular', 'Least Popular']; // choices for sorting
+  String selectedSortChoice = 'Newest'; // the default choice
 
   void sortBy(String? choice){ // sorts the questions based off some choices in the dropdown
     if (initialized) {  
@@ -53,23 +54,21 @@ class _QuestionListViewState extends State<QuestionListView> {
         title: const Text("Question Forum"),
         actions: [
           DropdownButton( 
-              iconDisabledColor: Theme.of(context).colorScheme.primaryContainer,
-              iconEnabledColor: Theme.of(context).colorScheme.primaryContainer,
-              value: selectedSortChoice, //////////////////////////////////////////
-              underline: Container(),
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              icon: const Icon(Icons.sort_rounded),     
-              items: sortChoices.map((String items) { 
-                return DropdownMenuItem(value: items, child: Text(items));
-              }).toList(), 
-              onChanged: (String? newValue) {  
-                setState(() { 
-                  // selectedSortChoice = newValue!; 
-                  // sortBy(selectedSortChoice);
-                  sortBy(newValue);
-                }); 
-              }, 
-            )
+            iconDisabledColor: Theme.of(context).colorScheme.primaryContainer,
+            iconEnabledColor: Theme.of(context).colorScheme.primaryContainer,
+            value: (isNull) ? null : selectedSortChoice,
+            underline: Container(),
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            icon: const Icon(Icons.sort_rounded),     
+            items: sortChoices.map((String items) { 
+              return DropdownMenuItem(value: items, child: Text(items));
+            }).toList(), 
+            onChanged: (String? newValue) {  
+              setState(() { 
+                sortBy(newValue);
+              }); 
+            }, 
+          )
         ]
       ),
       floatingActionButton: FloatingActionButton(

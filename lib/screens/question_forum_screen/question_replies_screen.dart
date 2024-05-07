@@ -20,11 +20,45 @@ class QuestionReplies extends StatefulWidget {
 class QuestionRepliesState extends State<QuestionReplies> {
   TextEditingController replyController = TextEditingController(); // controller for the reply text box
   bool isLiked = false; // whether a comment is liked by you or not
+  bool isNull = true; // so it doesn't show which choice there is by the sort button
+
+  List<String> sortChoices = ['Newest', 'Oldest', 'Most Popular', 'Least Popular']; // choices for sorting
+  String selectedSortChoice = 'Newest'; // the default choice
+
+  void sortBy(String? choice){ // sorts the questions based off some choices in the dropdown
+    switch (choice){
+      case 'Newest': {setState(() {widget.questionForumModel.sortRepliesByNewest(widget.questionIndex);});} break;
+      case 'Oldest': {setState(() {widget.questionForumModel.sortRepliesByOldest(widget.questionIndex);});} break;
+      case 'Most Popular': {setState(() {widget.questionForumModel.sortRepliesByMostPopular(widget.questionIndex);});} break;
+      case 'Least Popular': {setState(() {widget.questionForumModel.sortRepliesByLeastPopular(widget.questionIndex);});} break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: const Text("Replies")),
+      appBar: DefaultAppBar(
+        context: context, 
+        title: const Text("Replies"),
+        actions: [
+          DropdownButton( 
+            iconDisabledColor: Theme.of(context).colorScheme.primaryContainer,
+            iconEnabledColor: Theme.of(context).colorScheme.primaryContainer,
+            value: (isNull) ? null : selectedSortChoice,
+            underline: Container(),
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            icon: const Icon(Icons.sort_rounded),     
+            items: sortChoices.map((String items) { 
+              return DropdownMenuItem(value: items, child: Text(items));
+            }).toList(), 
+            onChanged: (String? newValue) {  
+              setState(() { 
+                sortBy(newValue);
+              }); 
+            }, 
+          )
+        ]
+      ),
       body: (widget.questionForumModel.loaded) ? replyListView() : loadingAnimationWidget(context)
     );
   }
