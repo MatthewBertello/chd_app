@@ -4,6 +4,7 @@ import 'package:chd_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// Pregnancy model that helps with the pregnancy planner and the pregnancy countdown
 class PregnancyModel extends ChangeNotifier {
   List toDos = []; //sets to-dos to empty to start
   DateTime? dueDate; 
@@ -33,26 +34,24 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners(); 
   }
 
-///gets the users to do list from db
+  // Gets the users to do list from db
   Future<void> getToDos() async {
     toDos = await supabaseModel.supabase!
       .from('user_to_do_lists')
       .select()
       .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
 
-    print(toDos);
     notifyListeners();
   }
 
-  ///Set the due date
+  // Set the due date
   Future<void> setDueDate() async {
     final response = (await supabaseModel.supabase!
       .from('user_info')
       .select('due_date')
       .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)).first;
-    
-    //print(response);
 
+    // If there is a due date present, calculate the pregnant days
     if(response['due_date'] != null) {
       dueDate = response['due_date'];
       countTotalPregnantDays();
@@ -62,7 +61,7 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  ///sets date of last period in db
+  // Sets date of last period from db
   Future<void> setlastMenstrualPeriod() async {
     try {
       final response = (await supabaseModel.supabase!
@@ -76,7 +75,7 @@ class PregnancyModel extends ChangeNotifier {
     }
   }
 
-  //Method that adds to todo list
+  // Method that adds to todo list
   Future<void> addToDo(String todo, bool isChecked) async {
     try {
       final response = (await supabaseModel.supabase!
@@ -84,13 +83,13 @@ class PregnancyModel extends ChangeNotifier {
       .insert({'user_id': supabaseModel.supabase!.auth.currentUser!.id, 'to_do': todo, 'is_checked': isChecked})
       .select('to_do_id')).first;
     
-    getToDos();
-    print(response);
+    getToDos(); // Call get to dos to update the todo list
     } catch(e) {
       print(e);
     }
   }
 
+  // Method that deletes a to do item from db according to the to do ID
   Future<void> deleteToDo(int toDoID) async {
     try {
       final response = await supabaseModel.supabase!
@@ -98,36 +97,37 @@ class PregnancyModel extends ChangeNotifier {
       .delete()
       .eq('to_do_id', toDoID);
 
-    getToDos();
+    getToDos(); // Call get to dos to update the todo list
     } catch(e) {
       print(e);
     }
   }
 
-///method that updates checkboxes in multiple selection
+  // Method that updates a checkbox corresponding to the to do item
   Future<void> updateCheckBox(bool? value, Map todoEntry) async {
     try {
       await supabaseModel.supabase!
       .from('user_to_do_lists')
       .update({'is_checked': value})
       .eq('to_do_id', todoEntry['to_do_id']);
-    getToDos();
+
+    getToDos(); // Call get to dos to update the todo list
     } catch(e) {
       print(e);
     }
   }
 
-  /// Method to get the countdown for the due date in days
+  // Method to get the countdown for the due date in days
   int dueDateCountDown() {
     return dueDate!.difference(DateTime.now()).inDays;
   }
 
-  ///Method that counts the number of pregnant days
+  // Method that counts the number of pregnant days
   void countCurrentPregnantDays() {
     currentPregnantDays = dueDateCountDown() - totalPregnantDays.abs();
   }
 
-  ///Method that counts the total number of days in the 9 months of pregnancy
+  // Method that counts the total number of days in the 9 months of pregnancy
   void countTotalPregnantDays() {
     try {
       int month = dueDate!.month - 9; // Subtract the due dates month from 9 months
@@ -140,19 +140,19 @@ class PregnancyModel extends ChangeNotifier {
       }
 
       // Put together the last time the pregnant person had their period
-    
       totalPregnantDays = dueDate!.difference(lastMenstrualPeriod).inDays; // Subtract the due date from the last menstrual period
     } catch(e) {
       print(e);
     }
   }
 
-///updates events user added to the calender in the db
+  // Adds an event to the calender in the db
   Future<void> addEvent(String event, String location, DateTime? date) async {
-    String supabaseDate = date!.toIso8601String();
-    DateFormat timeFormat = DateFormat('HH:mm:ss.SSSSSS');
-    String supabaseTime = timeFormat.format(date);
+    String supabaseDate = date!.toIso8601String(); // get the supabase date format
+    DateFormat timeFormat = DateFormat('HH:mm:ss.SSSSSS'); // time formatter 
+    String supabaseTime = timeFormat.format(date); // formate the time for supabase
 
+    // Insert into supabase
     final response = await supabaseModel.supabase!
       .from('user_events')
       .insert({
@@ -165,8 +165,10 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Method that updates an event in the db
   Future<void> updateEvent(int eventID, String event, String location, String date, String time) async {
     try {
+      // Update the event according to the event ID
       final response = await supabaseModel.supabase!
         .from('user_events')
         .update({'event': event, 'event_date': date, 'event_time': time, 'location': location})
@@ -179,9 +181,10 @@ class PregnancyModel extends ChangeNotifier {
     }
   }
 
-///updates selected events in the db
+  // Select all of the events according to the day that is passed in
   Future <void> selectEvents(DateTime day) async {
-    currentEventDay = day;
+    currentEventDay = day; // Set the instance variable
+    // Get all the user's events from the day
     final response = await supabaseModel.supabase!
       .from('user_events')
       .select()
@@ -194,13 +197,13 @@ class PregnancyModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  ///updates personal data entry in the db
-   Future <void> updateSubstantial(String colName, dynamic variable) async {
+  // Updates the user's ID 
+  Future <void> updateSubstantial(String colName, dynamic variable) async {
     final response = await supabaseModel.supabase!
      .from('user_info')
      .update({
         'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
          colName : variable
-       });
+      });
   }
 }

@@ -9,17 +9,20 @@ import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
 import 'package:chd_app/models/pregnancy_model.dart';
 import 'package:provider/provider.dart';
+
+// Builds the Overview screen
 class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
   final MainModel model;
   final double innerMargin = 15;
   final double outerPadding = 20;
 
-///this shows the overview screen
+///This shows the overview screen
   @override
   Widget build(BuildContext context) {
-    Provider.of<PregnancyModel>(context, listen: false).setDueDate();
+    Provider.of<PregnancyModel>(context, listen: false).setDueDate(); // Find the user's due date and set it
     final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: DefaultAppBar(context: context, title: const Text("Overview")),
       body: Padding(
@@ -27,7 +30,7 @@ class Overview extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector( 
+            GestureDetector(  // For the pregnancy countdown
               behavior: HitTestBehavior.opaque,
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PregnancyProgress())),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -40,7 +43,7 @@ class Overview extends StatelessWidget {
                     margin: EdgeInsets.all(innerMargin),
                   ),
                 ),
-                GestureDetector(
+                GestureDetector( // For the health meter
                   onTap: () => DefaultTabController.of(context).animateTo(1),
                   child: SizedBox(
                     width: screenWidth / 2 - outerPadding,
@@ -54,7 +57,7 @@ class Overview extends StatelessWidget {
                 )
               ]),
             ),
-            Expanded(
+            Expanded( // Displays all the recommendations
               child: Tile(
                 margin: EdgeInsets.all(innerMargin),
                 child: displayRecommendations(context),
@@ -66,7 +69,7 @@ class Overview extends StatelessWidget {
     );
   }
 
-///displays recomendations for users based on average values of the rolling data entered (triggered if they are too low)
+///Displays recommendations for users based on average values of the rolling data entered (triggered if they are too low)
   Widget displayRecommendations(BuildContext context) {
     // List of recommendations, hardcoded for now, will need to get it from database later
     List recommendations = [
@@ -90,7 +93,7 @@ class Overview extends StatelessWidget {
       }
     ];
 
-    return ListView.separated(
+    return ListView.separated( 
       separatorBuilder: (context, index) => const Divider(),
       itemCount: recommendations.length,
       itemBuilder: (context, index) {
