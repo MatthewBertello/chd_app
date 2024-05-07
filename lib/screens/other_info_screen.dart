@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class OtherInfo extends StatelessWidget {
   const OtherInfo({super.key});
 
+///This is a page displayed in the menu that allows the user to get more info on CHD from reputable sources
   @override
   Widget build(BuildContext context) {
     return Scaffold(
