@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class VariableScreen extends StatelessWidget {
-  final int variableId;
+  final int variableId; ///corisponds to ID in db
   List<int> values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   @override
@@ -25,7 +25,7 @@ class VariableScreen extends StatelessWidget {
 
     List entries = Provider.of<VariableEntriesModel>(context)
         .getVariableEntriesById(
-            id: variableId,
+            id: variableId, 
             entries:
                 Provider.of<VariableEntriesModel>(context).variableEntries);
     entries.sort((entry1, entry2) => entry1['date'].compareTo(entry2['date']));

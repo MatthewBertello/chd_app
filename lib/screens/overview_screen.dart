@@ -15,6 +15,7 @@ class Overview extends StatelessWidget {
   final double innerMargin = 15;
   final double outerPadding = 20;
 
+///this shows the overview screen
   @override
   Widget build(BuildContext context) {
     Provider.of<PregnancyModel>(context, listen: false).setDueDate();
@@ -26,7 +27,7 @@ class Overview extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector(
+            GestureDetector( 
               behavior: HitTestBehavior.opaque,
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PregnancyProgress())),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -65,6 +66,7 @@ class Overview extends StatelessWidget {
     );
   }
 
+///displays recomendations for users based on average values of the rolling data entered (triggered if they are too low)
   Widget displayRecommendations(BuildContext context) {
     // List of recommendations, hardcoded for now, will need to get it from database later
     List recommendations = [
