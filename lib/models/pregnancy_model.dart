@@ -13,7 +13,7 @@ class PregnancyModel extends ChangeNotifier {
   DateTime selectedDate = DateTime.now(); //time selected is the current date
   int totalPregnantDays = 0; 
   int currentPregnantDays = 0;
-  DateTime lastMenstrualPeriod = DateTime.now(); //assumes the date of the last menstura period is the current date
+  DateTime lastMenstrualPeriod = DateTime.now(); //assumes the date of the last menstrual period is the current date
   List<Map<String, dynamic>> events = []; 
   DateTime currentEventDay = DateTime.now();
 
