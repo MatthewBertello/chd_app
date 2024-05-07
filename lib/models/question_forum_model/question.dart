@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'reply.dart';
 
 // class to form the backbone of the questions
@@ -8,13 +10,14 @@ class Question {
   String userWhoPosted = ""; // user_id of the person who posted the question
   int numLikes = 0; // number of likes on a question
   String author = "NULL"; // who wrote the question
+  var date; // date it was posted
 
   // constructor for question
-  Question(String newQuestion, String newID, String newUser, /*String newAuthor*/){ 
+  Question(String newQuestion, String newID, String newUser, var newDate /*String newAuthor*/){ 
     question = newQuestion;
     questionID = newID;
     userWhoPosted = newUser;
-    //author = newAuthor;
+    date = newDate;
     replies = [];
   }
 
@@ -77,5 +80,10 @@ class Question {
   void setAuthor(String newAuthor){
     author = newAuthor;
   }
+
+  // // returns the date when it was posted
+  // DateTime getDate() {
+  //   return date;
+  // }
 
 } // end of Question class

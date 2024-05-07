@@ -27,13 +27,51 @@ class _QuestionListViewState extends State<QuestionListView> {
   void initState() {
     super.initState();
     _initQuestionsList();
+    initialized = true;
 
+  }
+
+  List<String> sortChoices = ['', 'Newest', 'Oldest', 'Most Popular', 'Least Popular']; // choices for sorting
+  String selectedSortChoice = ''; // the default choice
+
+  void sortBy(String? choice){ // sorts the questions based off some choices in the dropdown
+    if (initialized) {  
+      switch (choice){
+        case 'Newest': {setState(() {widget.questionForumModel.sortQuestionByNewest();});} break;
+        case 'Oldest': {setState(() {widget.questionForumModel.sortQuestionsByOldest();});} break;
+        case 'Most Popular': {setState(() {widget.questionForumModel.sortQuestionsByMostPopular();});} break;
+        case 'Least Popular': {setState(() {widget.questionForumModel.sortQuestionsByLeastPopular();});} break;
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: const Text("Question Forum")),
+      appBar: DefaultAppBar(
+        context: context, 
+        title: const Text("Question Forum"),
+        actions: [
+          DropdownButton( 
+              iconDisabledColor: Theme.of(context).colorScheme.primaryContainer,
+              iconEnabledColor: Theme.of(context).colorScheme.primaryContainer,
+              value: selectedSortChoice, //////////////////////////////////////////
+              underline: Container(),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              icon: const Icon(Icons.sort_rounded),     
+              items: sortChoices.map((String items) { 
+                return DropdownMenuItem(value: items, child: Text(items));
+              }).toList(), 
+              onChanged: (String? newValue) {  
+                setState(() { 
+                  // selectedSortChoice = newValue!; 
+                  // sortBy(selectedSortChoice);
+                  sortBy(newValue);
+                }); 
+              }, 
+            )
+        ]
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {(supabaseModel.supabase!.auth.currentUser?.id != null) ? _addQuestion() : _showNoAccountWarning();}, 
         child: const Icon(Icons.add)
