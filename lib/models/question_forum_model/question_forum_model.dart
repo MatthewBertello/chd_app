@@ -5,6 +5,7 @@ import 'reply.dart';
 
 class QuestionForumModel extends ChangeNotifier {
   final List<Question> questionsList = []; // the list of questions to be displayed
+  final List<Question> myQuestionsList = []; // list of questions you posted
   final List<String> likedQuestionsList = [];// list of current users liked questions
   final List<String> likedRepliesList = []; // list of current users liked replies
   bool loaded = false; // shows if the list is loaded or not
@@ -147,6 +148,36 @@ class QuestionForumModel extends ChangeNotifier {
           .eq('question_id', questionsList[questionIndex].getQuestionID());
         loadQuestionList();
       }
+    }
+    catch(e){
+      print(e);
+    }
+  }
+
+  void getMyQuestions() async {
+    try {  
+      loaded = false;
+      myQuestionsList.clear();
+      var response = await supabaseModel.supabase!
+      .from('forum_questions')
+      .select('*')
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
+
+      for (int i = 0; i < response.length; i++){
+        myQuestionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id'],response[i]['datetime']));
+      }
+
+      for (int i = 0; i < myQuestionsList.length; i++){
+        var likesResponse = await supabaseModel.supabase!
+          .from('forum_question_likes')
+          .select()
+          .eq('question_id', myQuestionsList[i].questionID)
+          .count();
+        myQuestionsList[i].numLikes = likesResponse.count;
+      }    
+
+      loaded = true;
+      notifyListeners();  
     }
     catch(e){
       print(e);

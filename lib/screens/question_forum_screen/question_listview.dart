@@ -1,4 +1,5 @@
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:chd_app/screens/question_forum_screen/my_questions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:like_button/like_button.dart';
@@ -46,6 +47,19 @@ class _QuestionListViewState extends State<QuestionListView> {
     }
   }
 
+  void seeMyQuestions() { // go to the archive and view your questions
+    if (supabaseModel.supabase!.auth.currentUser?.id == null) {
+    _showNoAccountWarning();
+    }
+    else {
+    widget.questionForumModel.getMyQuestions();
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
+        Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
+        MyQuestions(questionForumModel: widget.questionForumModel))))
+        .then((_) => setState((){widget.questionForumModel.loadQuestionList();}));
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -68,7 +82,14 @@ class _QuestionListViewState extends State<QuestionListView> {
                 sortBy(newValue);
               }); 
             }, 
-          )
+          ),
+          IconButton(
+            onPressed: seeMyQuestions, 
+            icon: const Icon(Icons.archive_rounded),
+            color: Theme.of(context).colorScheme.primaryContainer,
+            focusColor: Theme.of(context).colorScheme.primaryContainer
+          ),
+          const SizedBox(width: 8.0)
         ]
       ),
       floatingActionButton: FloatingActionButton(
@@ -161,7 +182,8 @@ class _QuestionListViewState extends State<QuestionListView> {
         widget.questionForumModel.loadReplyList(questionIndex);
         Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
         Consumer<QuestionForumModel>(builder: (context, questionsChangeNotifier, child) =>  
-        QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: questionIndex))));
+        QuestionReplies(questionForumModel: widget.questionForumModel, questionIndex: questionIndex))))
+        .then((_) => setState((){widget.questionForumModel.loadQuestionList();}));
       },
       trailing: likeButton(questionIndex)
     );
