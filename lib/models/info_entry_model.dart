@@ -124,6 +124,6 @@ class InfoEntryModel extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    await supabaseModel.getUserVariableFavorites(reload: true);
+    supabaseModel.getUserVariableFavorites(reload: true);
   }
 }

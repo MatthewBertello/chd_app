@@ -14,6 +14,7 @@ class PersonalInfo extends StatefulWidget {
 
 class _PersonalInfoState extends State<PersonalInfo> {
   bool loading = false;
+  var userInfo;
 
   @override
   void initState() {
@@ -31,6 +32,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   @override
   Widget build(BuildContext context) {
+    userInfo = Provider.of<PersonalInfoModel>(context).variables;
+
     ///build method, returns dropdown menu
     return Scaffold(
         appBar: DefaultAppBar(
@@ -39,32 +42,45 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   Widget buildBody(BuildContext context) {
+    List<Map<String, dynamic>> demoItems = [];
+    List<Map<String, dynamic>> socialItems = [];
+    List<Map<String, dynamic>> physicalItems = [];
+    List<Map<String, dynamic>> mentalItems = [];
+
+    for (var key in userInfo.keys) {
+      if (userInfo[key]!['category'] == 'Demographic') {
+        demoItems.add(userInfo[key]!);
+      } else if (userInfo[key]!['category'] == 'Social') {
+        socialItems.add(userInfo[key]!);
+      } else if (userInfo[key]!['category'] == 'Physical') {
+        physicalItems.add(userInfo[key]!);
+      } else if (userInfo[key]!['category'] == 'Mental') {
+        mentalItems.add(userInfo[key]!);
+      }
+    }
+
     return SingleChildScrollView(
       child: Column(children: [
         ExpansionTile(
             title: const Text('Demographics',
                 style: TextStyle(
                     color: Colors.purple, fontWeight: FontWeight.bold)),
-            children: [
-              createListView(Provider.of<PersonalInfoModel>(context)
-                  .demographicsFormFields)
-            ]),
+            children: [createListView(demoItems)]),
         ExpansionTile(
             title: const Text('Social',
                 style: TextStyle(
                     color: Colors.purple, fontWeight: FontWeight.bold)),
-            children: [
-              createListView(
-                  Provider.of<PersonalInfoModel>(context).socialsFormFields)
-            ]),
+            children: [createListView(socialItems)]),
         ExpansionTile(
             title: const Text('Physical',
                 style: TextStyle(
                     color: Colors.purple, fontWeight: FontWeight.bold)),
-            children: [
-              createListView(
-                  Provider.of<PersonalInfoModel>(context).physicalsFormFields)
-            ])
+            children: [createListView(physicalItems)]),
+        ExpansionTile(
+            title: const Text('Mental',
+                style: TextStyle(
+                    color: Colors.purple, fontWeight: FontWeight.bold)),
+            children: [createListView(mentalItems)]),
       ]),
     );
   }
@@ -80,19 +96,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
         },
         itemCount: items.length,
         itemBuilder: (context, index) {
-          if (items[index]['isTextFormField']) {
+          if (items[index]['unit'] == 'text' ||
+              items[index]['unit'] == 'date' ||
+              items[index]['unit'] == 'int') {
             return ListTile(
-                title: Text(items[index]['title']),
-                trailing: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 100,
-                      child: items[index]['input'] ?? const Text("Error"),
-                    ),
+              title: Text(items[index]['title']),
+              trailing: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 100,
+                    child: items[index]['input'] ?? const Text("Error"),
                   ),
-                ));
+                ),
+              ),
+            );
           } else {
             return ListTile(
                 title: Text(items[index]['title']),
@@ -102,9 +121,32 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       crossAxisAlignment: CrossAxisAlignment
                           .start, // Align columns to the start
                       mainAxisSize: MainAxisSize.min,
-                      children: items[index]['input'],
+                      children: createRadioButtons(items[index]['key']),
                     )));
           }
         });
+  }
+
+  List<Widget> createRadioButtons(String key) {
+    List<Widget> varWithRadioButtons = [];
+
+    // Add a radio button to all of the different types in the variable category
+    for (var type in userInfo[key]!['values']) {
+      var radioButton = Radio<String>(
+        value: type,
+        groupValue: userInfo[key]!['value'],
+        onChanged: (value) {
+          setState(() {
+            userInfo[key]!['value'] = value;
+          });
+        },
+      );
+
+      var title = Text(type);
+
+      varWithRadioButtons.add(Row(children: [radioButton, title]));
+    }
+
+    return varWithRadioButtons;
   }
 }
