@@ -3,19 +3,22 @@ import 'package:chd_app/components/health_meter.dart';
 import 'package:chd_app/components/pregnancy_countdown.dart';
 import 'package:chd_app/components/tile.dart';
 import 'package:chd_app/models/main_model.dart';
-import 'package:chd_app/screens/pregnancy_progress.dart';
+import 'package:chd_app/screens/pregnancy_planner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
-
+import 'package:chd_app/models/pregnancy_model.dart';
+import 'package:provider/provider.dart';
 class Overview extends StatelessWidget {
   const Overview({super.key, required this.model});
   final MainModel model;
   final double innerMargin = 15;
   final double outerPadding = 20;
 
+///this shows the overview screen
   @override
   Widget build(BuildContext context) {
+    Provider.of<PregnancyModel>(context, listen: false).setDueDate();
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: DefaultAppBar(context: context, title: const Text("Overview")),
@@ -24,7 +27,7 @@ class Overview extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector(
+            GestureDetector( 
               behavior: HitTestBehavior.opaque,
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PregnancyProgress())),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -32,8 +35,8 @@ class Overview extends StatelessWidget {
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
                   child: PregnancyCountdown(
-                    currentDays: 131,
-                    totalDays: 270,
+                    currentDays: Provider.of<PregnancyModel>(context).currentPregnantDays,
+                    totalDays: Provider.of<PregnancyModel>(context).totalPregnantDays,
                     margin: EdgeInsets.all(innerMargin),
                   ),
                 ),
@@ -63,6 +66,7 @@ class Overview extends StatelessWidget {
     );
   }
 
+///displays recomendations for users based on average values of the rolling data entered (triggered if they are too low)
   Widget displayRecommendations(BuildContext context) {
     // List of recommendations, hardcoded for now, will need to get it from database later
     List recommendations = [

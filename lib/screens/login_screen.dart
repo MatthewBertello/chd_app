@@ -22,9 +22,23 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+    _authStateSubscription =
+        supabaseModel.supabase!.auth.onAuthStateChange.listen((data) {
       final session = data.session;
       if (data.event == AuthChangeEvent.passwordRecovery && session != null) {
+        supabaseModel.initialize();
+        if (Provider.of<InfoEntryModel>(context, listen: false).loaded ==
+                false &&
+            Provider.of<InfoEntryModel>(context, listen: false).loading ==
+                false) {
+          Provider.of<InfoEntryModel>(context, listen: false).init();
+        }
+        if (Provider.of<VariableEntriesModel>(context, listen: false).loaded ==
+                false &&
+            Provider.of<VariableEntriesModel>(context, listen: false).loading ==
+                false) {
+          Provider.of<VariableEntriesModel>(context, listen: false).init();
+        }
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -41,12 +55,17 @@ class _LoginState extends State<Login> {
       }
 
       if (session != null) {
-        if (Provider.of<InfoEntryModel>(context, listen: false).loaded == false &&
-            Provider.of<InfoEntryModel>(context, listen: false).loading == false) {
+        supabaseModel.initialize();
+        if (Provider.of<InfoEntryModel>(context, listen: false).loaded ==
+                false &&
+            Provider.of<InfoEntryModel>(context, listen: false).loading ==
+                false) {
           Provider.of<InfoEntryModel>(context, listen: false).init();
         }
-        if (Provider.of<VariableEntriesModel>(context, listen: false).loaded == false &&
-            Provider.of<VariableEntriesModel>(context, listen: false).loading == false) {
+        if (Provider.of<VariableEntriesModel>(context, listen: false).loaded ==
+                false &&
+            Provider.of<VariableEntriesModel>(context, listen: false).loading ==
+                false) {
           Provider.of<VariableEntriesModel>(context, listen: false).init();
         }
         Navigator.pushReplacement(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// A demo that displays all the colors in the current theme
 class ColorDemo extends StatelessWidget {
   const ColorDemo({super.key});
 
@@ -110,10 +111,7 @@ class ColorTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Row(
-        children: [
-          Text('$name ', style: white),
-          Text(name, style: black)
-        ],
+        children: [Text('$name ', style: white), Text(name, style: black)],
       ),
       tileColor: color,
       // Show the hex value of the color in the subtitle

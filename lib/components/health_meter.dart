@@ -11,7 +11,8 @@ class HealthMeter extends StatelessWidget {
     required this.value,
     this.margin,
   });
-
+///health meter is used to give the user an interactive visual of their health (physical, mental and social)
+///the health meter is circled by the circular_meter
   @override
   Widget build(BuildContext context) {
     return Tile(

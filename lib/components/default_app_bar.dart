@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-class DefaultAppBar extends AppBar {
+///Appbar used for all files. This gives the app a streamlined feel across all screens
+class DefaultAppBar extends AppBar { 
   DefaultAppBar({Key? key, Widget? title, required BuildContext context, List<Widget>? actions})
       : super(
           key: key,

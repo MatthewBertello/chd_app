@@ -9,6 +9,8 @@ class InfoEntryModel extends ChangeNotifier {
   List<int> favorites = [];
   DateTime selectedDate = DateTime.now();
 
+  //Reset the model
+  //This should be called when the user logs out
   Future<dynamic> reset() async {
     while (loading) {
       continue;
@@ -20,70 +22,67 @@ class InfoEntryModel extends ChangeNotifier {
     loaded = false;
   }
 
+  //Initialize the model
   Future<dynamic> init() async {
+    // If this model is already loading, wait for it to finish
     while (loading) {
       continue;
     }
     loading = true;
+
+    ///Reset the model
     variableDefinitions = [];
     categorizedVariableDefinitions = {};
     favorites = [];
+
+    ///Get the variable definitions and favorites
     await getVariableDefinitions();
     await getFavorites();
 
-    // Add checkbox, favorite, and form fields to each variable
+    ///Add checkbox, favorite, and form fields to each variable
     for (var element in variableDefinitions) {
       element['favorite'] = favorites.contains(element['id']);
       element['checkbox'] = element['favorite'];
-      element['form'] = TextFormField(
+      element['form'] = TextFormField( 
         controller: TextEditingController(),
         keyboardType: TextInputType.number,
       );
     }
 
-    // Categorize the variables
+    ///Categorize the variables
     for (var element in variableDefinitions) {
       if (!categorizedVariableDefinitions.containsKey(element['category'])) {
         categorizedVariableDefinitions[element['category']] = [];
       }
       categorizedVariableDefinitions[element['category']]!.add(element);
     }
-
+    selectedDate = DateTime.now();
     loaded = true;
     loading = false;
     notifyListeners();
   }
 
+  ///Gets the variable definitions from the supabaseModel
   Future<dynamic> getVariableDefinitions() async {
-    try {
-      variableDefinitions =
-          await supabase.from('variable_definitions').select();
-    } catch (e) {
-      print(e);
-    }
+    variableDefinitions = await supabaseModel.getVariableDefinitions();
     variableDefinitions.sort((a, b) => a['name'].compareTo(b['name']));
   }
 
+  ///Gets the user's favorite variables from the supabaseModel
   Future<dynamic> getFavorites() async {
-    try {
-      favorites = (await supabase
-              .from('user_variable_favorites')
-              .select('variable_id')
-              .eq('user_id', supabase.auth.currentUser!.id))
-          .map<int>((e) => e['variable_id'] as int)
-          .toList();
-    } catch (e) {
-      print(e);
-    }
+    favorites = (await supabaseModel.getUserVariableFavorites())
+        .map<int>((e) => e['variable_id'] as int)
+        .toList();
   }
 
+  /// Submits the variable entries to the database
   Future<dynamic> submit() async {
     for (var element in variableDefinitions) {
       if (element['checkbox'] && element['form'].controller!.text.isNotEmpty) {
         try {
-          await supabase.from('variable_entries').insert([
+          await supabaseModel.supabase!.from('variable_entries').insert([
             {
-              'user_id': supabase.auth.currentUser!.id,
+              'user_id': supabaseModel.supabase!.auth.currentUser!.id,
               'variable_id': element['id'],
               'value': double.tryParse(element['form'].controller!.text),
               'date': selectedDate.toIso8601String(),
@@ -97,15 +96,17 @@ class InfoEntryModel extends ChangeNotifier {
       element['form'].controller!.clear();
     }
     selectedDate = DateTime.now();
+    await supabaseModel.getVariableEntries(reload: true);
     notifyListeners();
   }
 
+  /// Updates the favorite status of a variable
   Future<dynamic> updateFavorite(int id, bool favorited) async {
     try {
       if (favorited) {
-        await supabase.from('user_variable_favorites').upsert(
+        await supabaseModel.supabase!.from('user_variable_favorites').upsert(
           {
-            'user_id': supabase.auth.currentUser!.id,
+            'user_id': supabaseModel.supabase!.auth.currentUser!.id,
             'variable_id': id,
           },
         );
@@ -113,15 +114,16 @@ class InfoEntryModel extends ChangeNotifier {
           favorites.add(id);
         }
       } else {
-        await supabase
+        await supabaseModel.supabase!
             .from('user_variable_favorites')
             .delete()
-            .eq('user_id', supabase.auth.currentUser!.id)
+            .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)
             .eq('variable_id', id);
         favorites.remove(id);
       }
     } catch (e) {
       print(e);
     }
+    supabaseModel.getUserVariableFavorites(reload: true);
   }
 }

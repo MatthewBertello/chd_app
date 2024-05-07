@@ -7,10 +7,11 @@ class PregnancyCountdown extends StatelessWidget {
   final Widget? centerWidget;
   final EdgeInsetsGeometry? margin;
 
-  const PregnancyCountdown({
+  const PregnancyCountdown({  
+    ///this shows a countdown based on the curent date and the users entered due date
     super.key,
-    required this.currentDays,
-    required this.totalDays,
+    required this.currentDays, 
+    required this.totalDays, 
     this.centerWidget,
     this.margin,
   });
@@ -24,7 +25,7 @@ class PregnancyCountdown extends StatelessWidget {
         children: [
           // Contains the progress indicator and the text inside it
           CircularProgressIndicator(
-            value: currentDays / totalDays,
+            value: (totalDays == 0) ? 0 : currentDays / totalDays,
             valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.primary),
             backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(.5),
           ),

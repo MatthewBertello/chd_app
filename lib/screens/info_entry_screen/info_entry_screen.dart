@@ -19,6 +19,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
 
   @override
   void initState() {
+    // Initialize the model if it has not been loaded
     if (Provider.of<InfoEntryModel>(context, listen: false).loaded == false &&
         Provider.of<InfoEntryModel>(context, listen: false).loading == false) {
       Provider.of<InfoEntryModel>(context, listen: false).init();
@@ -30,6 +31,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the list of variables that should be displayed
     var displayedVariables = Provider.of<InfoEntryModel>(context)
         .variableDefinitions
         .where((element) => element['checkbox'] == true)
@@ -46,6 +48,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
+                // Date picker for the entry
                 child: DateTimeFormField(
                   initialValue:
                       Provider.of<InfoEntryModel>(context).selectedDate,
@@ -57,31 +60,35 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
                   },
                 ),
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                itemCount: displayedVariables.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(displayedVariables[index]['name'] ?? ""),
-                    subtitle: Text(displayedVariables[index]['unit'] ?? ""),
-                    trailing: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: 100,
-                        child: displayedVariables[index]['form'] ??
-                            const Text("Error"),
+              // List of displayed variables
+              Expanded(
+                child: ListView.separated(
+                  itemCount: displayedVariables.length,
+                  itemBuilder: (context, index) {
+                    // Display a list tile with the title, unit, and a form field
+                    return ListTile(
+                      title: Text(displayedVariables[index]['name'] ?? ""),
+                      subtitle: Text(displayedVariables[index]['unit'] ?? ""),
+                      trailing: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 100,
+                          child: displayedVariables[index]['form'] ??
+                              const Text("Error"),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    height: 1,
-                  );
-                },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider(
+                      height: 1,
+                    );
+                  },
+                ),
               ),
             ],
           ),
+          // If the model is loading, display a loading animation
           loading || !Provider.of<InfoEntryModel>(context, listen: false).loaded
               ? Stack(
                   children: [
@@ -100,6 +107,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
               : const SizedBox(),
         ],
       ),
+      // The plus button to add a new variable
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           var future = showModalBottomSheet(
@@ -116,6 +124,8 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
     );
   }
 
+  // The save button
+  // When pressed, the model will submit the entry to the database
   Widget _saveButton() {
     return IconButton(
         onPressed: () {
@@ -125,7 +135,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
           final future =
               Provider.of<InfoEntryModel>(context, listen: false).submit();
           future.then((value) {
-            Provider.of<VariableEntriesModel>(context, listen:false).init();
+            Provider.of<VariableEntriesModel>(context, listen: false).init();
             setState(() {
               loading = false;
             });
@@ -140,6 +150,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
         color: Theme.of(context).colorScheme.onPrimary);
   }
 
+  // The loading animation
   Widget _loadingWidget() {
     if (loading || !Provider.of<InfoEntryModel>(context).loaded) {
       return const SizedBox();

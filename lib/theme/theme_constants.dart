@@ -56,6 +56,7 @@ ButtonThemeData buttonTheme({required ColorScheme colorScheme}) {
   );
 }
 
+// Input decoration theme
 InputDecorationTheme inputDecorationTheme({required ColorScheme colorScheme}) {
   return InputDecorationTheme(
     filled: true,
