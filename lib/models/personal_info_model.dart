@@ -65,11 +65,14 @@ class PersonalInfoModel extends ChangeNotifier {
 
     final valuesQuery = await supabaseModel.supabase!
         .from('public_pg_enum')
-        .select('enumlabel')
+        .select('enumlabel, enumsortorder')
         .eq('enumtypid', oid);
-    List<String> values = [];
+    List<Map<String, dynamic>> values = [];
     for (var value in valuesQuery) {
-      values.add(value['enumlabel']);
+      values.add({
+        'enumlabel': value['enumlabel'],
+        'enumsortorder': value['enumsortorder']
+      });
     }
     return values;
   }
@@ -82,6 +85,16 @@ class PersonalInfoModel extends ChangeNotifier {
         if (!notEnumTypes.contains(variables[key]!['unit'])) {
           variables[key]!['values'] =
               await getEnumValues(variables[key]!['unit']);
+          print(variables[key]!['values']);
+          variables[key]!['values'].sort((a, b) {
+            if (a['enumsortorder'].toInt() > b['enumsortorder'].toInt()) {
+              return 1;
+            } else if (a['enumsortorder'].toInt() <
+                b['enumsortorder'].toInt()) {
+              return -1;
+            }
+            return 0;
+          });
         } else {
           variables[key]!['values'] = variables[key]!['unit'];
         }

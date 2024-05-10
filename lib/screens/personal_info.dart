@@ -133,7 +133,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     // Add a radio button to all of the different types in the variable category
     for (var type in userInfo[key]!['values']) {
       var radioButton = Radio<String>(
-        value: type,
+        value: type['enumlabel'],
         groupValue: userInfo[key]!['value'],
         onChanged: (value) {
           setState(() {
@@ -142,7 +142,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         },
       );
 
-      var title = Text(type);
+      var title = Text(type['enumlabel']);
 
       varWithRadioButtons.add(Row(children: [radioButton, title]));
     }
