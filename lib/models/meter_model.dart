@@ -19,7 +19,14 @@ class VariableEntriesModel extends ChangeNotifier {
     dates = [];
     loaded = false;
   }
+  
+  ///sorts filters by dates and adds to new list when first encountered. upon next encounter, checks to see
+  // if its in the defn. if it is, ignores. if not add.
+  void filterFiles() {
+   
 
+  }
+  
   // Initialize the model
   Future<dynamic> init() async {
     // If this model is already loading, wait for it to finish
