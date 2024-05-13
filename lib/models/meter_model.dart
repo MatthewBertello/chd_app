@@ -23,8 +23,20 @@ class VariableEntriesModel extends ChangeNotifier {
   ///sorts filters by dates and adds to new list when first encountered. upon next encounter, checks to see
   // if its in the defn. if it is, ignores. if not add.
   void filterFiles() {
-   
-
+   variableEntries.where((entry) {
+    return entry['date'].isAfter(DateTime.now().subtract(Duration(days:7)));
+    });
+    variableEntries.sort((a, b) {
+      return - a['date'].compareTo(b['date']);
+    },);
+    Set<String> foundEntries = {};
+    var filtered = [];
+    for(var entry in variableEntries){
+     if (!foundEntries.contains(entry['name'])){
+      filtered.add(entry);
+      foundEntries.add(entry['name']);
+     }
+    }
   }
   
   // Initialize the model
