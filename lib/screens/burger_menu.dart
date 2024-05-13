@@ -67,20 +67,6 @@ class BurgerMenu extends StatelessWidget {
                 },
                 "No": () => Navigator.pop(context) ///if not, pop back to the burger menu
               })
-    },
-    {
-      'Switch Theme': (context) { ///on tapped, switch theme
-        bool isDark = 
-            Provider.of<ThemeManager>(context, listen: false).themeMode ==
-                ThemeMode.dark;///if the current theme of the app is lightmode, switch to darkMode (and vice versa)
-        Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
-      }
-    },
-    {
-      'Demo Theme (Dev only)': (context) {
-        Navigator.push(context, ///on tapped, shows the colors of the theme 
-            MaterialPageRoute(builder: (context) => const ColorDemo()));
-      }
     }
   ];
 
