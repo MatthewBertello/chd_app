@@ -4,7 +4,6 @@ import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:chd_app/models/variable_entries_model.dart';
 import 'package:chd_app/screens/personal_info.dart';
 import 'package:chd_app/screens/login_screen.dart';
-import 'package:chd_app/theme/theme_manager.dart';
 import 'package:chd_app/utils/show_default_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:chd_app/screens/other_info_screen.dart';
@@ -12,7 +11,6 @@ import 'package:chd_app/screens/settings_screen.dart';
 import 'package:chd_app/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
-import 'package:chd_app/theme/color_demo.dart';
 import 'package:chd_app/screens/community_page.dart';
 
 // Burger menu that can navigate to other pages
@@ -67,20 +65,6 @@ class BurgerMenu extends StatelessWidget {
                 },
                 "No": () => Navigator.pop(context) ///if not, pop back to the burger menu
               })
-    },
-    {
-      'Switch Theme': (context) { ///on tapped, switch theme
-        bool isDark = 
-            Provider.of<ThemeManager>(context, listen: false).themeMode ==
-                ThemeMode.dark;///if the current theme of the app is lightmode, switch to darkMode (and vice versa)
-        Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
-      }
-    },
-    {
-      'Demo Theme (Dev only)': (context) {
-        Navigator.push(context, ///on tapped, shows the colors of the theme 
-            MaterialPageRoute(builder: (context) => const ColorDemo()));
-      }
     }
   ];
 

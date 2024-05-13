@@ -1,4 +1,5 @@
 import 'package:chd_app/components/default_app_bar.dart';
+import 'package:chd_app/main.dart';
 import 'package:chd_app/models/personal_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -107,7 +108,16 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: 100,
-                    child: items[index]['input'] ?? const Text("Error"),
+                    child: Focus(
+                      child: items[index]['input'] ?? const Text("Error"),
+                      onFocusChange: (value) {
+                        if (!value) {
+                          Provider.of<PersonalInfoModel>(context, listen: false)
+                              .saveSelectedToDb(items[index]['key'],
+                                  items[index]['input']!.controller!.text);
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -138,6 +148,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
         onChanged: (value) {
           setState(() {
             userInfo[key]!['value'] = value;
+            Provider.of<PersonalInfoModel>(context, listen: false)
+                .saveSelectedToDb(userInfo[key]['unit'], value);
           });
         },
       );

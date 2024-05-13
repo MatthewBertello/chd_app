@@ -70,6 +70,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false // Get rid of the format button
                 ),
+                onPageChanged: (focusedDay) => today = focusedDay,
                 focusedDay: today,
                 firstDay: DateTime(today.year - 1, DateTime.january, 1), // first day of the month
                 lastDay: DateTime(today.year + 1, DateTime.december, 0), // last day of the month

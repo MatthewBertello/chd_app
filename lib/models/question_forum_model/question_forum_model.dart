@@ -3,6 +3,15 @@ import 'package:chd_app/main.dart';
 import 'question.dart';
 import 'reply.dart';
 
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: This is the model for the questions and replies. It pulls from the database and also inserts into the database.
+Every method in here does one thing or another with questions and replies.
+Bugs: None I currently know of
+Reflection: This model has been quite the project, but it is cool seeing it all work together
+*/
+
 class QuestionForumModel extends ChangeNotifier {
   final List<Question> questionsList = []; // the list of questions to be displayed
   final List<Question> myQuestionsList = []; // list of questions you posted
@@ -154,6 +163,7 @@ class QuestionForumModel extends ChangeNotifier {
     }
   }
 
+  // loads all of the current user's question's into list
   void getMyQuestions() async {
     try {  
       loaded = false;
@@ -167,6 +177,7 @@ class QuestionForumModel extends ChangeNotifier {
         myQuestionsList.add(Question(response[i]['question'], response [i]['question_id'], response[i]['user_id'],response[i]['datetime']));
       }
 
+      // load number of likes for each question
       for (int i = 0; i < myQuestionsList.length; i++){
         var likesResponse = await supabaseModel.supabase!
           .from('forum_question_likes')
