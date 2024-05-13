@@ -9,6 +9,16 @@ import 'add_question_screen.dart';
 import 'question_replies_screen.dart';
 import 'package:chd_app/main.dart';
 
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: This page shows all of the questions in the forum. From there you can sort, add new questions, or see your own questions
+Bugs: None I currently know of
+Reflection: This page was quite the treat to implement. It took a minute to figure out where to start. Once I got a basic forum with
+questions and replies working from the local machine, I hooked it up to the database, which was also a treat. Very satisfying to see
+it all work together
+*/
+
 // Where the user sees the questions and has the option to add a question or reply to the questions
 class QuestionListView extends StatefulWidget{
   const QuestionListView({super.key, required this.questionForumModel});

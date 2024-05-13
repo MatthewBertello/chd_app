@@ -1,3 +1,11 @@
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: This is the class that makes up a reply. It holds all the information of the reply
+Bugs: None I currently know of
+Reflection: This was fairly easy to implement, and it seems to work fine
+*/
+
 // a class for replies to a question
 class Reply{
   String reply = ""; // the reply the user posted

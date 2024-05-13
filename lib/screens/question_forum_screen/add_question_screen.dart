@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:flutter/services.dart';
 
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: This page allows you to add a question to the forum
+Bugs: None I currently know of
+Reflection: This page was fairly easy to implement, and it seems to work fine
+*/
+
 // add a question to the forum
 class AddQuestion extends StatefulWidget {
   const AddQuestion({super.key, required this.questionForumModel});

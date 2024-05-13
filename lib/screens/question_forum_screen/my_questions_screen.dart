@@ -6,6 +6,14 @@ import 'package:like_button/like_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: this page shows all the questions the current user has posted. From there you can choose to delete any of your questions
+Bugs: None I currently know of
+Reflection: This page was fairly simple to implement, and it seemes to work fine
+*/
+
 class MyQuestions extends StatefulWidget {
   const MyQuestions({super.key, required this.questionForumModel});
 
