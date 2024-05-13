@@ -1,6 +1,15 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
+// for the date, since I was unable to figure out what type the database returned for the datetime
 
 import 'reply.dart';
+
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: This is the class that makes up a question. It holds all the data of a question for the forum
+Bugs: None I currently know of
+Reflection: This was fairly easy to implement, and it seems to work fine
+*/
 
 // class to form the backbone of the questions
 class Question {
