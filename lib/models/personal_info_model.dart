@@ -141,38 +141,15 @@ class PersonalInfoModel extends ChangeNotifier {
     );
   }
 
-  List<Widget> createRadioButtons(
-      String selectedValue, List variableTypes, String variableCategory) {
-    List<Widget> varWithRadioButtons = [];
-
-    // Add a radio button to all of the different types in the variable category
-    for (var type in variableTypes) {
-      var radioButton = Radio<String>(
-        value: type,
-        groupValue: variables[variableCategory]!['value'],
-        onChanged: (value) {
-          print(value);
-          variables[variableCategory]!['value'] = value;
-          // saveSelectedToDb(variableCategory, value);
-          notifyListeners();
-        },
-      );
-
-      var title = Text(type);
-
-      varWithRadioButtons.add(Row(children: [radioButton, title]));
-    }
-
-    return varWithRadioButtons;
-  }
-
   Future<dynamic> saveSelectedToDb(
-      String variableCategory, String value) async {
+      String variableCategory, String? value) async {
     try {
+      print(
+          "update user ${supabaseModel.supabase!.auth.currentUser!.id} type $variableCategory to $value");
       await supabaseModel.supabase!
           .from('user_info')
-          .update({variableCategory: value}).eq(
-              'user_id', supabaseModel.supabase!.auth.currentUser!.id);
+          .update({variableCategory: value}).match(
+              {'user_id': supabaseModel.supabase!.auth.currentUser!.id});
 
       notifyListeners();
     } catch (e) {
