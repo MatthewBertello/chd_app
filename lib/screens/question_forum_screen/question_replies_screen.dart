@@ -7,6 +7,15 @@ import 'package:flutter/services.dart';
 import 'package:like_button/like_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: This page shows all of the questions in the forum. From there you can sort, add new questions, or see your own questions
+Bugs: None I currently know of
+Reflection: This was fairly easy to implement, since I did it after figuring out how to make the question list view screen,
+however it took a bunch of time to do.
+*/
+
 class QuestionReplies extends StatefulWidget {
   const QuestionReplies({super.key, required this.questionForumModel, required this.questionIndex});
 

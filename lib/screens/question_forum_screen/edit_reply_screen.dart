@@ -3,6 +3,14 @@ import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/*
+Name: Matthew Steffens
+Date: 5/13/2024
+Description: This is the page where you can edit a reply
+Bugs: None I currently know of
+Reflection: This was fairly simple to make, and it seems to work fine
+*/
+
 class EditReply extends StatefulWidget {
   const EditReply({super.key,required this.questionForumModel, required this.reply, required this.questionIndex, required this.replyIndex});
 
