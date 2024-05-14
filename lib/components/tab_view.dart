@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heart_safe/models/main_model.dart';
 import 'package:provider/provider.dart';
-import 'package:heart_safe/screens/overview_screen.dart';
+import 'package:heart_safe/screens/overview/overview_screen.dart';
 import 'package:heart_safe/screens/health_screen.dart';
 import 'package:heart_safe/screens/info_entry_screen/info_entry_screen.dart';
 import 'package:heart_safe/screens/burger_menu.dart';

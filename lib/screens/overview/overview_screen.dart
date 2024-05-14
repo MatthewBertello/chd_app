@@ -3,7 +3,7 @@ import 'package:heart_safe/components/health_meter.dart';
 import 'package:heart_safe/components/pregnancy_countdown.dart';
 import 'package:heart_safe/components/tile.dart';
 import 'package:heart_safe/models/main_model.dart';
-import 'package:heart_safe/screens/pregnancy_planner.dart';
+import 'package:heart_safe/screens/overview/pregnancy_planner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
