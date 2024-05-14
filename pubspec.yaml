@@ -37,3 +37,4 @@ flutter:
   assets:
     - .env
     - assets/HeartSafe.png
+    - assets/logo.png
