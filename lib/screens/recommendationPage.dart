@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:chd_app/components/default_app_bar.dart';
 import 'package:chd_app/components/tile.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class RecommendationPage extends StatelessWidget {
   final String? recommendation;
   final String? goal;

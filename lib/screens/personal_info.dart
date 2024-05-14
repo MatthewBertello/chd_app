@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:provider/provider.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key}); //creates class
 

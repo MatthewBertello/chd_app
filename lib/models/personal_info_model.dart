@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:chd_app/main.dart';
-
+///Author: Pachia lee, Grace Kiesau
+///Date: 5/14/24
+///Description: 
+///Bugs: None Known
 class PersonalInfoModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;

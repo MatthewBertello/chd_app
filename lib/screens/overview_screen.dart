@@ -9,6 +9,10 @@ import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
 import 'package:chd_app/models/pregnancy_model.dart';
 import 'package:provider/provider.dart';
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 
 // Builds the Overview screen
 class Overview extends StatelessWidget {

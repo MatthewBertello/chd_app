@@ -12,6 +12,10 @@ import 'package:chd_app/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:chd_app/main.dart';
 import 'package:chd_app/screens/community_page.dart';
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors
