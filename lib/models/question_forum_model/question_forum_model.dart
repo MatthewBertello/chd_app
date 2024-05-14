@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chd_app/main.dart';
+import 'package:heart_safe/main.dart';
 import 'question.dart';
 import 'reply.dart';
 

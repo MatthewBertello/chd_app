@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/components/tile.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/components/tile.dart';
 
 class RecommendationPage extends StatelessWidget {
   final String? recommendation;

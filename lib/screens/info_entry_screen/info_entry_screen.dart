@@ -1,7 +1,7 @@
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/models/info_entry_model.dart';
-import 'package:chd_app/models/variable_entries_model.dart';
-import 'package:chd_app/screens/info_entry_screen/variable_select_bottom_sheet.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/models/info_entry_model.dart';
+import 'package:heart_safe/models/variable_entries_model.dart';
+import 'package:heart_safe/screens/info_entry_screen/variable_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

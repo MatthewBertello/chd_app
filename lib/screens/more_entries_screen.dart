@@ -1,5 +1,5 @@
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/models/variable_entries_model.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/models/variable_entries_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

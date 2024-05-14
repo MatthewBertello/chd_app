@@ -1,5 +1,5 @@
-import 'package:chd_app/components/tile.dart';
-import 'package:chd_app/models/info_entry_model.dart';
+import 'package:heart_safe/components/tile.dart';
+import 'package:heart_safe/models/info_entry_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:like_button/like_button.dart';

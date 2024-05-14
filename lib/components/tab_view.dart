@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:chd_app/models/main_model.dart';
+import 'package:heart_safe/models/main_model.dart';
 import 'package:provider/provider.dart';
-import 'package:chd_app/screens/overview_screen.dart';
-import 'package:chd_app/screens/health_screen.dart';
-import 'package:chd_app/screens/info_entry_screen/info_entry_screen.dart';
-import 'package:chd_app/screens/burger_menu.dart';
+import 'package:heart_safe/screens/overview_screen.dart';
+import 'package:heart_safe/screens/health_screen.dart';
+import 'package:heart_safe/screens/info_entry_screen/info_entry_screen.dart';
+import 'package:heart_safe/screens/burger_menu.dart';
 ///this is the navigation bar used across the app. Allows for easy navigation between pages we anticipate the 
 ///user will use most often
 class TabView extends StatelessWidget {

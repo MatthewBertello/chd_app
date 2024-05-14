@@ -1,6 +1,6 @@
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/main.dart';
-import 'package:chd_app/models/personal_info_model.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/main.dart';
+import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:searchable_listview/searchable_listview.dart';

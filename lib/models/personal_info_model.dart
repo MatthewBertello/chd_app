@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:chd_app/main.dart';
+import 'package:heart_safe/main.dart';
 
 class PersonalInfoModel extends ChangeNotifier {
   bool loaded = false;

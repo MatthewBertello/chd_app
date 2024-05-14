@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:chd_app/components/tab_view.dart';
-import 'package:chd_app/models/info_entry_model.dart';
-import 'package:chd_app/models/variable_entries_model.dart';
-import 'package:chd_app/screens/settings_screen.dart';
+import 'package:heart_safe/components/tab_view.dart';
+import 'package:heart_safe/models/info_entry_model.dart';
+import 'package:heart_safe/models/variable_entries_model.dart';
+import 'package:heart_safe/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
-import 'package:chd_app/main.dart';
+import 'package:heart_safe/main.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

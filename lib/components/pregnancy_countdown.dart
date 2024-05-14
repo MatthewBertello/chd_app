@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chd_app/components/tile.dart';
+import 'package:heart_safe/components/tile.dart';
 
 class PregnancyCountdown extends StatelessWidget {
   final int currentDays;
