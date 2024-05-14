@@ -5,7 +5,7 @@ import 'package:chd_app/screens/overview_screen.dart';
 import 'package:chd_app/screens/health_screen.dart';
 import 'package:chd_app/screens/info_entry_screen/info_entry_screen.dart';
 import 'package:chd_app/screens/burger_menu.dart';
-///Author: Grace Kiesau
+///Author: 
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
 ///Bugs: None Known
