@@ -1,4 +1,4 @@
-import 'package:chd_app/main.dart';
+import 'package:heart_safe/main.dart';
 import 'package:flutter/material.dart';
 ///Author:
 ///Date: 5/14/24

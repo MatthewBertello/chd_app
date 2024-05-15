@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:chd_app/components/tab_view.dart';
-import 'package:chd_app/models/info_entry_model.dart';
-import 'package:chd_app/models/variable_entries_model.dart';
-import 'package:chd_app/screens/settings_screen.dart';
+import 'package:heart_safe/components/tab_view.dart';
+import 'package:heart_safe/models/info_entry_model.dart';
+import 'package:heart_safe/models/variable_entries_model.dart';
+import 'package:heart_safe/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
-import 'package:chd_app/main.dart';
+import 'package:heart_safe/main.dart';
+
 ///Author: 
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
@@ -113,12 +114,9 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                    // Congenital heart disease ribbon
+                    // Logo Image
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: Image.network(
-                        'https://www.conqueringchd.org/wp-content/uploads/2020/07/awareness-ribbon-300x300.png',
-                        width: 100.0,
-                        fit: BoxFit.cover)),
+                    child: Image.asset('assets/logo.png')),
                 SupaEmailAuth(
                   redirectTo: 'io.supabase.chd://login-callback/',
                   onSignInComplete: (response) {},
@@ -135,16 +133,6 @@ class _LoginState extends State<Login> {
                       ),
                     );
                   },
-                ),
-                ElevatedButton(
-                  onPressed: () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TabView(),
-                    ),
-                  ),
-                  child: const Text(
-                      'Skip Login (Dev only, partial functionality)'),
                 ),
               ],
             ),

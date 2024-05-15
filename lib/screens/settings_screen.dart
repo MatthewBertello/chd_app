@@ -1,7 +1,7 @@
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/main.dart';
-import 'package:chd_app/theme/color_demo.dart';
-import 'package:chd_app/theme/theme_manager.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/main.dart';
+import 'package:heart_safe/theme/color_demo.dart';
+import 'package:heart_safe/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';

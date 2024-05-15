@@ -1,13 +1,13 @@
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/screens/question_forum_screen/my_questions_screen.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/screens/question_forum_screen/my_questions_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
+import 'package:heart_safe/models/question_forum_model/question_forum_model.dart';
 import 'package:like_button/like_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'add_question_screen.dart';
 import 'question_replies_screen.dart';
-import 'package:chd_app/main.dart';
+import 'package:heart_safe/main.dart';
 
 /*
 Name: Matthew Steffens

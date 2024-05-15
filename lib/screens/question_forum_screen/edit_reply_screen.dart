@@ -1,5 +1,5 @@
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/models/question_forum_model/question_forum_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

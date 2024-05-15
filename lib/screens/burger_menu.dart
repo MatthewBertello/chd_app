@@ -1,17 +1,17 @@
-import 'package:chd_app/components/default_app_bar.dart';
-import 'package:chd_app/models/info_entry_model.dart';
-import 'package:chd_app/models/question_forum_model/question_forum_model.dart';
-import 'package:chd_app/models/variable_entries_model.dart';
-import 'package:chd_app/screens/personal_info.dart';
-import 'package:chd_app/screens/login_screen.dart';
-import 'package:chd_app/utils/show_default_dialog.dart';
+import 'package:heart_safe/components/default_app_bar.dart';
+import 'package:heart_safe/models/info_entry_model.dart';
+import 'package:heart_safe/models/question_forum_model/question_forum_model.dart';
+import 'package:heart_safe/models/variable_entries_model.dart';
+import 'package:heart_safe/screens/personal_info.dart';
+import 'package:heart_safe/screens/login_screen.dart';
+import 'package:heart_safe/utils/show_default_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:chd_app/screens/other_info_screen.dart';
-import 'package:chd_app/screens/settings_screen.dart';
-import 'package:chd_app/screens/user_search_screen.dart';
+import 'package:heart_safe/screens/other_info_screen.dart';
+import 'package:heart_safe/screens/settings_screen.dart';
+import 'package:heart_safe/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:chd_app/main.dart';
-import 'package:chd_app/screens/community_page.dart';
+import 'package:heart_safe/main.dart';
+import 'package:heart_safe/screens/community_page.dart';
 ///Author: Pachia lee, Grace Kiesau
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
