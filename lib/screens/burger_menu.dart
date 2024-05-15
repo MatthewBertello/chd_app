@@ -12,6 +12,10 @@ import 'package:heart_safe/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:heart_safe/main.dart';
 import 'package:heart_safe/screens/community_page.dart';
+///Author: Pachia lee, Grace Kiesau
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 
 // Burger menu that can navigate to other pages
 // ignore: use_key_in_widget_constructors

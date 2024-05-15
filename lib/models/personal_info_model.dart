@@ -3,15 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:heart_safe/main.dart';
 
+///Author: Pachia lee, Grace Kiesau
+///Date: 5/14/24
+///Description: 
+///Bugs: None Known
 class PersonalInfoModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;
   DateTime selectedDate = DateTime.now();
 
-  Map<String, dynamic> userInfo = {};
-  Map<String, Map<String, dynamic>> userInfoMap = {};
-  List<Map<String, dynamic>> personalInfoVariables = [];
-  Map<String, Map<String, dynamic>> variables = {};
+  dynamic userInfo = {};
+  Map<String, dynamic> userInfoMap = {};
+  List<dynamic> personalInfoVariables = [];
+  Map<String, dynamic> variables = {};
   final List<String> notEnumTypes = ['text', 'date', 'int'];
 
   Future<dynamic> reset() async {
@@ -67,7 +71,7 @@ class PersonalInfoModel extends ChangeNotifier {
         .from('public_pg_enum')
         .select('enumlabel, enumsortorder')
         .eq('enumtypid', oid);
-    List<Map<String, dynamic>> values = [];
+    List<dynamic> values = [];
     for (var value in valuesQuery) {
       values.add({
         'enumlabel': value['enumlabel'],

@@ -1,5 +1,6 @@
 import 'package:heart_safe/models/info_entry_model.dart';
 import 'package:heart_safe/models/main_model.dart';
+import 'package:heart_safe/models/meter_model.dart';
 import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:heart_safe/models/pregnancy_model.dart';
 import 'package:heart_safe/models/question_forum_model/question_forum_model.dart';
@@ -10,7 +11,10 @@ import 'package:heart_safe/theme/theme_constants.dart';
 import 'package:heart_safe/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 
 final SupabaseModel supabaseModel = SupabaseModel();
 
@@ -25,7 +29,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => InfoEntryModel()),
         ChangeNotifierProvider(create: (context) => VariableEntriesModel()),
         ChangeNotifierProvider(create: (context) => PregnancyModel()),
-        ChangeNotifierProvider(create:(context) => PersonalInfoModel(),)
+        ChangeNotifierProvider(create:(context) => PersonalInfoModel(),),
+        ChangeNotifierProvider(create: (context) => MeterModel()),
       ],
       child: const MyApp(),
     ),

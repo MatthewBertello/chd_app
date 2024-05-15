@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:provider/provider.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key}); //creates class
 
@@ -43,10 +46,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   Widget buildBody(BuildContext context) {
-    List<Map<String, dynamic>> demoItems = [];
-    List<Map<String, dynamic>> socialItems = [];
-    List<Map<String, dynamic>> physicalItems = [];
-    List<Map<String, dynamic>> mentalItems = [];
+    List<dynamic> demoItems = [];
+    List<dynamic> socialItems = [];
+    List<dynamic> physicalItems = [];
+    List<dynamic> mentalItems = [];
 
     for (var key in userInfo.keys) {
       if (userInfo[key]!['category'] == 'Demographic') {
@@ -86,7 +89,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
-  Widget createListView(List<Map<String, dynamic>> items) {
+  Widget createListView(List<dynamic> items) {
     return ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),

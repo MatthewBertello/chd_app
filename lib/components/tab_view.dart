@@ -5,6 +5,10 @@ import 'package:heart_safe/screens/overview/overview_screen.dart';
 import 'package:heart_safe/screens/health_screen.dart';
 import 'package:heart_safe/screens/info_entry_screen/info_entry_screen.dart';
 import 'package:heart_safe/screens/burger_menu.dart';
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 ///this is the navigation bar used across the app. Allows for easy navigation between pages we anticipate the 
 ///user will use most often
 class TabView extends StatelessWidget {

@@ -3,6 +3,10 @@
 import 'package:heart_safe/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 
 // Pregnancy model that helps with the pregnancy planner and the pregnancy countdown
 class PregnancyModel extends ChangeNotifier {
@@ -14,7 +18,7 @@ class PregnancyModel extends ChangeNotifier {
   int totalPregnantDays = 0; 
   int currentPregnantDays = 0;
   DateTime lastMenstrualPeriod = DateTime.now(); //assumes the date of the last menstrual period is the current date
-  List<Map<String, dynamic>> events = []; 
+  List<dynamic> events = []; 
   DateTime currentEventDay = DateTime.now();
 
   ///Initialize the model

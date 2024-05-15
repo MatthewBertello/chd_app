@@ -1,11 +1,14 @@
 import 'package:heart_safe/main.dart';
 import 'package:flutter/material.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class InfoEntryModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;
-  List<Map<String, dynamic>> variableDefinitions = [];
-  Map<String, List<Map<String, dynamic>>> categorizedVariableDefinitions = {};
+  List<dynamic> variableDefinitions = [];
+  Map<String, List<dynamic>> categorizedVariableDefinitions = {};
   List<int> favorites = [];
   DateTime selectedDate = DateTime.now();
 

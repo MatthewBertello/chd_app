@@ -1,7 +1,10 @@
 import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class OtherInfo extends StatelessWidget {
   const OtherInfo({super.key});
 

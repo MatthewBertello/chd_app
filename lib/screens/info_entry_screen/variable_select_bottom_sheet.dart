@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:like_button/like_button.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class VariableSelectBottomSheet extends StatefulWidget {
   const VariableSelectBottomSheet({super.key});
 
@@ -27,7 +30,7 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             // Searchable List widget
-            child: SearchableList<Map<String, dynamic>>.expansion(
+            child: SearchableList<dynamic>.expansion(
               hideEmptyExpansionItems: true,
               closeKeyboardWhenScrolling: true,
               // Builds the category headers
@@ -82,7 +85,7 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
   }
 
   // Creates the ListTile widget for each item
-  Widget listItemBuilder(int index, Map<String, dynamic> item) {
+  Widget listItemBuilder(int index, dynamic item) {
     return ListTile(
       title: Text(item['name']),
       trailing: SizedBox(

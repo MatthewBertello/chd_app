@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heart_safe/main.dart';
 
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class MainModel extends ChangeNotifier {
   String test = "hello";
   List membersSearched = [];
 
-  List<Map<String, dynamic>>? variableDefinitions;
+  List<dynamic>? variableDefinitions;
 
-  Future<List<Map<String, dynamic>>?> getVariableDefinitions() async {
+  Future<List<dynamic>?> getVariableDefinitions() async {
     final data = await supabaseModel.supabase!.from('variable_definitions').select();
     notifyListeners();
     return data;

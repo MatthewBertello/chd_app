@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
+
 
 ///circular meter is used to give user a visual of how their health is. 'health' is calculated by rolling
 ///data that is self entered. these values are then averaged based on catagory and the dial changes  
