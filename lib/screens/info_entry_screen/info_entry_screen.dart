@@ -1,5 +1,6 @@
 import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:heart_safe/models/info_entry_model.dart';
+import 'package:heart_safe/models/meter_model.dart';
 import 'package:heart_safe/models/variable_entries_model.dart';
 import 'package:heart_safe/screens/info_entry_screen/variable_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -139,6 +140,7 @@ class _DailyInfoWidgetState extends State<DailyInfoWidget> {
               Provider.of<InfoEntryModel>(context, listen: false).submit();
           future.then((value) {
             Provider.of<VariableEntriesModel>(context, listen: false).init();
+            Provider.of<MeterModel>(context, listen: false).init();
             setState(() {
               loading = false;
             });
