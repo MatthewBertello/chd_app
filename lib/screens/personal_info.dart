@@ -2,7 +2,7 @@ import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-///Author: 
+///Author: Grace Kiesau, Pachia Lee
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
 ///Bugs: None Known

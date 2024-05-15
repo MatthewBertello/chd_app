@@ -6,7 +6,7 @@ import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-///Author: 
+///Author: Matthew Bertello, Pachia Lee
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
 ///Bugs: None Known
