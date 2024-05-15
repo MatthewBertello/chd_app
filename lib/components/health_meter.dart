@@ -1,7 +1,7 @@
 import 'package:heart_safe/components/circular_meter.dart';
 import 'package:heart_safe/components/tile.dart';
 import 'package:flutter/material.dart';
-///Author: 
+///Author: Pachia lee, Matthew Bertello, Grace Kiesau
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
 ///Bugs: None Known
