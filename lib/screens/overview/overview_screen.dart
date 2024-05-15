@@ -3,6 +3,7 @@ import 'package:heart_safe/components/health_meter.dart';
 import 'package:heart_safe/components/pregnancy_countdown.dart';
 import 'package:heart_safe/components/tile.dart';
 import 'package:heart_safe/models/main_model.dart';
+import 'package:heart_safe/models/meter_model.dart';
 import 'package:heart_safe/screens/overview/pregnancy_planner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,6 +25,13 @@ class Overview extends StatelessWidget {
 ///This shows the overview screen
   @override
   Widget build(BuildContext context) {
+    if (Provider.of<MeterModel>(context, listen: false).loaded ==
+            false &&
+        Provider.of<MeterModel>(context, listen: false).loading ==
+            false) {
+      Provider.of<MeterModel>(context, listen: false).init();
+    }
+    
     Provider.of<PregnancyModel>(context, listen: false).setDueDate(); // Find the user's due date and set it
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -53,7 +61,7 @@ class Overview extends StatelessWidget {
                     width: screenWidth / 2 - outerPadding,
                     height: screenWidth / 2 - outerPadding,
                     child: HealthMeter(
-                      value: 90,
+                      value: Provider.of<MeterModel>(context).getTotalStatusPercentage() * 100,
                       margin: EdgeInsets.all(innerMargin),
                     ),
                     

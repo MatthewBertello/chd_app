@@ -100,9 +100,9 @@ class _LoginState extends State<Login> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.inversePrimary,
               Theme.of(context).colorScheme.secondary,
+              Theme.of(context).colorScheme.inversePrimary,
+              Theme.of(context).colorScheme.primary
             ],
           ),
         )),
