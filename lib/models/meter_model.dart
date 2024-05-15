@@ -1,5 +1,5 @@
-import 'package:chd_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_safe/main.dart';
 ///Author: Grace Kiesau
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
