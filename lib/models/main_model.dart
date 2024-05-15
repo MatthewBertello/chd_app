@@ -9,9 +9,9 @@ class MainModel extends ChangeNotifier {
   String test = "hello";
   List membersSearched = [];
 
-  List<Map<String, dynamic>>? variableDefinitions;
+  List<dynamic>? variableDefinitions;
 
-  Future<List<Map<String, dynamic>>?> getVariableDefinitions() async {
+  Future<List<dynamic>?> getVariableDefinitions() async {
     final data = await supabaseModel.supabase!.from('variable_definitions').select();
     notifyListeners();
     return data;

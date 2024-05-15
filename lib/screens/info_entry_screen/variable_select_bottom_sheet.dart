@@ -30,7 +30,7 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             // Searchable List widget
-            child: SearchableList<Map<String, dynamic>>.expansion(
+            child: SearchableList<dynamic>.expansion(
               hideEmptyExpansionItems: true,
               closeKeyboardWhenScrolling: true,
               // Builds the category headers
@@ -85,7 +85,7 @@ class _VariableSelectBottomSheetState extends State<VariableSelectBottomSheet> {
   }
 
   // Creates the ListTile widget for each item
-  Widget listItemBuilder(int index, Map<String, dynamic> item) {
+  Widget listItemBuilder(int index, dynamic item) {
     return ListTile(
       title: Text(item['name']),
       trailing: SizedBox(

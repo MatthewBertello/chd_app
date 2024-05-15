@@ -3,13 +3,13 @@ import 'package:heart_safe/components/health_meter.dart';
 import 'package:heart_safe/components/pregnancy_countdown.dart';
 import 'package:heart_safe/components/tile.dart';
 import 'package:heart_safe/models/main_model.dart';
-import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:heart_safe/models/variable_entries_model.dart';
 import 'package:heart_safe/screens/entry_screen.dart';
 import 'package:heart_safe/screens/more_entries_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:heart_safe/models/meter_model.dart';
 ///Author: 
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
@@ -27,6 +27,12 @@ class HealthWidget extends StatelessWidget {
         Provider.of<VariableEntriesModel>(context, listen: false).loading ==
             false) {
       Provider.of<VariableEntriesModel>(context, listen: false).init();
+    }
+    if (Provider.of<MeterModel>(context, listen: false).loaded ==
+            false &&
+        Provider.of<MeterModel>(context, listen: false).loading ==
+            false) {
+      Provider.of<MeterModel>(context, listen: false).init();
     }
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -55,7 +61,7 @@ class HealthWidget extends StatelessWidget {
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
                   child: HealthMeter(
-                    value: 90,
+                    value:Provider.of<MeterModel>(context).getTotalStatusPercentage() * 100,
                     margin: EdgeInsets.all(innerMargin),
                   ),
                 )

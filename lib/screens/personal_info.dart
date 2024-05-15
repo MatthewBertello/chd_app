@@ -46,10 +46,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   Widget buildBody(BuildContext context) {
-    List<Map<String, dynamic>> demoItems = [];
-    List<Map<String, dynamic>> socialItems = [];
-    List<Map<String, dynamic>> physicalItems = [];
-    List<Map<String, dynamic>> mentalItems = [];
+    List<dynamic> demoItems = [];
+    List<dynamic> socialItems = [];
+    List<dynamic> physicalItems = [];
+    List<dynamic> mentalItems = [];
 
     for (var key in userInfo.keys) {
       if (userInfo[key]!['category'] == 'Demographic') {
@@ -89,7 +89,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
-  Widget createListView(List<Map<String, dynamic>> items) {
+  Widget createListView(List<dynamic> items) {
     return ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),

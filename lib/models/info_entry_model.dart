@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 class InfoEntryModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;
-  List<Map<String, dynamic>> variableDefinitions = [];
-  Map<String, List<Map<String, dynamic>>> categorizedVariableDefinitions = {};
+  List<dynamic> variableDefinitions = [];
+  Map<String, List<dynamic>> categorizedVariableDefinitions = {};
   List<int> favorites = [];
   DateTime selectedDate = DateTime.now();
 

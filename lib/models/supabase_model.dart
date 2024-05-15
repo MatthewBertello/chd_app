@@ -2,6 +2,7 @@
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:convert';
 ///Author: 
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
@@ -9,14 +10,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class SupabaseModel {
   bool isLoading = false;
   SupabaseClient? supabase;
-  List<Map<String, dynamic>> forumQuestions = [];
-  List<Map<String, dynamic>> forumReplies = [];
-  List<Map<String, dynamic>> stringVariableDefinitions = [];
-  Map<String, dynamic> userInfo = {};
-  List<Map<String, dynamic>> userVariableFavorites = [];
-  List<Map<String, dynamic>> variableDefinitions = [];
-  List<Map<String, dynamic>> variableEntries = [];
-  List<Map<String, dynamic>> personalInfoVariables = [];
+  List<dynamic> forumQuestions = [];
+  List<dynamic> forumReplies = [];
+  List<dynamic> stringVariableDefinitions = [];
+  dynamic userInfo = {};
+  List<dynamic> userVariableFavorites = [];
+  List<dynamic> variableDefinitions = [];
+  List<dynamic> variableEntries = [];
+  List<dynamic> personalInfoVariables = [];
   bool forumQuestionsLoaded = false;
   bool forumRepliesLoaded = false;
   bool stringVariableDefinitionsLoaded = false;
@@ -206,7 +207,8 @@ class SupabaseModel {
       }
       variableEntriesLoaded = true;
     }
-    return variableEntries;
+    List<dynamic> deepCopy = jsonDecode(jsonEncode(variableEntries));
+    return deepCopy;
   }
 
   // Gets the personal info variables from the database

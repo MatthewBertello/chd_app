@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 class VariableEntriesModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;
-  List<Map<String, dynamic>> variableDefinitions = [];
-  List<Map<String, dynamic>> variableEntries = [];
+  List<dynamic> variableDefinitions = [];
+  List<dynamic> variableEntries = [];
   List<DateTime> dates = [];
 
   // Reset the model
@@ -73,8 +73,8 @@ class VariableEntriesModel extends ChangeNotifier {
   }
 
   // Get the variable entries from a specific date
-  List<Map<String, dynamic>> getVariableEntriesFromDate(
-      {required DateTime date, required List<Map<String, dynamic>> entries}) {
+  List<dynamic> getVariableEntriesFromDate(
+      {required DateTime date, required List<dynamic> entries}) {
     var filteredEntries = entries.where((element) {
       return element['date'].year == date.year &&
           element['date'].month == date.month &&
@@ -85,8 +85,8 @@ class VariableEntriesModel extends ChangeNotifier {
   }
 
   // Get the variable entries by the variable id
-  List<Map<String, dynamic>> getVariableEntriesById(
-      {required int id, required List<Map<String, dynamic>> entries}) {
+  List<dynamic> getVariableEntriesById(
+      {required int id, required List<dynamic> entries}) {
     var filteredEntries = entries.where((element) {
       return element['variable_id'] == id;
     }).toList();
