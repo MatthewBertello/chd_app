@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/main_model.dart';
 import 'package:chd_app/components/default_app_bar.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class ShareScreen extends StatefulWidget {
   const ShareScreen({super.key});
 

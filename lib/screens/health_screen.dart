@@ -10,7 +10,10 @@ import 'package:chd_app/screens/more_entries_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
   final MainModel model;

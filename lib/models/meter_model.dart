@@ -27,18 +27,18 @@ class VariableEntriesModel extends ChangeNotifier {
   // if its in the defn. if it is, ignores. if not add.
   void filterFiles() {
    variableEntries.where((entry) {
-    return entry['date'].isAfter(DateTime.now().subtract(Duration(days:7)));
+     return entry['date'].isAfter(DateTime.now().subtract(Duration(days:7)));
     });
     variableEntries.sort((a, b) {
       return - a['date'].compareTo(b['date']);
     },);
     Set<String> foundEntries = {};
     var filtered = [];
-    for(var entry in variableEntries){
-     if (!foundEntries.contains(entry['name'])){
-      filtered.add(entry);
-      foundEntries.add(entry['name']);
-     }
+     for(var entry in variableEntries){
+      if (!foundEntries.contains(entry['name'])){
+       filtered.add(entry);
+       foundEntries.add(entry['name']);
+      }
     }
   }
   

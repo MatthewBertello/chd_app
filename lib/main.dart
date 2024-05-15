@@ -10,7 +10,10 @@ import 'package:chd_app/theme/theme_constants.dart';
 import 'package:chd_app/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 
 final SupabaseModel supabaseModel = SupabaseModel();
 

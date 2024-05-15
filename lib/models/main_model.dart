@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:chd_app/main.dart';
-
+///Author: 
+///Date: 5/14/24
+///Description: This is the file that allows the meter to change based on the rolling data entered
+///Bugs: None Known
 class MainModel extends ChangeNotifier {
   String test = "hello";
   List membersSearched = [];
