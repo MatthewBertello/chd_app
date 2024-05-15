@@ -42,6 +42,8 @@ class VariableEntriesModel extends ChangeNotifier {
     }
   }
   
+ //
+
   // Initialize the model
   Future<dynamic> init() async {
     // If this model is already loading, wait for it to finish
