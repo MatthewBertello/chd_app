@@ -136,6 +136,7 @@ class QuestionForumModel extends ChangeNotifier {
           },
         ]);
         //loadQuestionList();
+        notifyListeners();
     }
     catch (e){
       print(e);

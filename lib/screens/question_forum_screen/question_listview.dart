@@ -235,7 +235,8 @@ class _QuestionListViewState extends State<QuestionListView> {
 
   // adds a question
   void _addQuestion() {    
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddQuestion(questionForumModel: widget.questionForumModel)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddQuestion(questionForumModel: widget.questionForumModel)))
+    .then((_) => setState((){widget.questionForumModel.loadQuestionList();}));
   }
 
   // deletes a question
