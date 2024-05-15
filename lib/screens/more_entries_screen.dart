@@ -10,6 +10,8 @@ import 'entry_screen.dart';
 ///Description: This is the file that allows the meter to change based on the rolling data entered
 ///Bugs: None Known
 class MoreEntriesScreen extends StatelessWidget {
+  const MoreEntriesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

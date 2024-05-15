@@ -6,7 +6,6 @@ import 'package:heart_safe/models/main_model.dart';
 import 'package:heart_safe/models/meter_model.dart';
 import 'package:heart_safe/screens/overview/pregnancy_planner.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'recommendationPage.dart';
 import 'package:heart_safe/models/pregnancy_model.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +43,7 @@ class Overview extends StatelessWidget {
           children: [
             GestureDetector(  // For the pregnancy countdown
               behavior: HitTestBehavior.opaque,
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PregnancyProgress())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PregnancyProgress())),
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 SizedBox(
                   width: screenWidth / 2 - outerPadding,

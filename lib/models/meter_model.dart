@@ -113,7 +113,7 @@ class MeterModel extends ChangeNotifier {
   // if its in the defn. if it is, ignores. if not add.
   void processFilteredVariableEntries() {
     variableEntries.where((entry) {
-      return entry['date'].isAfter(DateTime.now().subtract(Duration(days: 7)));
+      return entry['date'].isAfter(DateTime.now().subtract(const Duration(days: 7)));
     });
     variableEntries.sort(
       (a, b) {

@@ -1,9 +1,6 @@
 import 'package:heart_safe/components/default_app_bar.dart';
-import 'package:heart_safe/main.dart';
 import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:searchable_listview/searchable_listview.dart';
 import 'package:provider/provider.dart';
 ///Author: 
 ///Date: 5/14/24

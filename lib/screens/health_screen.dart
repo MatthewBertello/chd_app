@@ -175,7 +175,7 @@ class HealthWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MoreEntriesScreen(),
+                      builder: (context) => const MoreEntriesScreen(),
                     ),
                   );
                 },

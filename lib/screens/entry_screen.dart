@@ -1,5 +1,4 @@
 import 'package:heart_safe/components/default_app_bar.dart';
-import 'package:heart_safe/models/info_entry_model.dart';
 import 'package:heart_safe/models/variable_entries_model.dart';
 import 'package:heart_safe/screens/variable_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ class EntryScreen extends StatelessWidget {
   final DateTime startDate;
 
   @override
-  EntryScreen({required this.startDate, super.key});
+  const EntryScreen({required this.startDate, super.key});
 
   @override
   Widget build(BuildContext context) {
