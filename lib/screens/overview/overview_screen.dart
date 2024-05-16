@@ -82,30 +82,24 @@ class Overview extends StatelessWidget {
 ///Displays recommendations for users based on average values of the rolling data entered (triggered if they are too low)
   Widget displayRecommendations(BuildContext context) {
     // List of recommendations, hardcoded for now, will need to get it from database later
-    List recommendations = [
-      {
-        'recommendation': 'Increase sleep',
-        'icon': const Icon(Icons.night_shelter, color: Colors.red),
-        'goal': 'Try to get 8-10 hours of sleep per night',
-        'educational info': 'Sleep is essential for all sorts of vital bodily functions, restoring energy and allowing the brain to process new information it has taken in while awake.'
-      }
-    ];
-
+  
     return ListView.separated( 
       separatorBuilder: (context, index) => const Divider(),
-      itemCount: recommendations.length,
+      itemCount:Provider.of<MeterModel>(context).outOfRangeVars.length,
       itemBuilder: (context, index) {
         return ListTile(
           // Display each recommendation and corresponding icon
-          title: Text(recommendations[index]['recommendation']),
-          trailing: recommendations[index]['icon'],
+          title: Text(Provider.of<MeterModel>(context).outOfRangeVars[index]['name']),
           onTap: () => Navigator.push(context, 
                         MaterialPageRoute(builder: (context) =>
-                        RecommendationPage(recommendation: recommendations[index]['recommendation'],
-                        goal: recommendations[index]['goal'],
-                        educationalInfo: recommendations[index]['educational info'],)))
+                       RecommendationPage(name: Provider.of<MeterModel>(context).outOfRangeVars[index]['name'],
+                       recommendation: Provider.of<MeterModel>(context).outOfRangeVars[index]['description'],
+                        ),
+                        ),
+                        )
         );
       },
     );
   }
 }
+

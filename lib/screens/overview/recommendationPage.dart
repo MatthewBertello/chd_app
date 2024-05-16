@@ -9,20 +9,19 @@ import 'package:heart_safe/components/tile.dart';
 ///reflection: 
 class RecommendationPage extends StatelessWidget {
   final String? recommendation;
-  final String? goal;
-  final String? educationalInfo;
+  final String? name;
   final double innerMargin = 15;
+
   
-  const RecommendationPage({super.key, this.recommendation, this.goal, this.educationalInfo});
+  const RecommendationPage({super.key, this.name, this.recommendation });
 
   Column makeRecommendationText(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text('$recommendation', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-        (goal != null) ? Text('\nGoal: $goal\n') : const Text(''),
-        (educationalInfo != null) ? Text('$educationalInfo'): const Text('')
+        (name != null) ? Text('\nGoal: $name\n') : const Text(''),
+        (recommendation != null) ? Text('$recommendation'): const Text('')
       ],
     );
   }
