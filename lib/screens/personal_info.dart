@@ -1,3 +1,4 @@
+import 'package:date_field/date_field.dart';
 import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:flutter/material.dart';
@@ -99,28 +100,29 @@ class _PersonalInfoState extends State<PersonalInfo> {
         itemCount: items.length,
         itemBuilder: (context, index) {
           if (items[index]['unit'] == 'text' ||
-              items[index]['unit'] == 'date' ||
               items[index]['unit'] == 'int') {
             return ListTile(
               title: Text(items[index]['title']),
-              trailing: Padding(
+              subtitle: Padding(
                 padding: const EdgeInsets.all(8),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 100,
-                    child: Focus(
-                      child: items[index]['input'] ?? const Text("Error"),
-                      onFocusChange: (value) {
-                        if (!value) {
-                          Provider.of<PersonalInfoModel>(context, listen: false)
-                              .saveSelectedToDb(items[index]['key'],
-                                  items[index]['input']!.controller!.text);
-                        }
-                      },
-                    ),
-                  ),
+                child: Focus(
+                  child: items[index]['input'] ?? const Text("Error"),
+                  onFocusChange: (value) {
+                    if (!value) {
+                      Provider.of<PersonalInfoModel>(context, listen: false)
+                          .saveSelectedToDb(items[index]['key'],
+                              items[index]['input']!.controller!.text);
+                    }
+                  },
                 ),
+              ),
+            );
+          } else if (items[index]['unit'] == 'date') {
+            return ListTile(
+              title: Text(items[index]['title']),
+              subtitle: Padding(
+                padding: const EdgeInsets.all(8),
+                child: items[index]['input'] ?? const Text("Error"),
               ),
             );
           } else {

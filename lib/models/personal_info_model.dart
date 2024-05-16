@@ -1,11 +1,12 @@
 // ignore_for_file: avoid_print, unused_local_variable
 
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_safe/main.dart';
 
 ///Author: Pachia Lee, Grace Kiesau, Matthew Bertello
 ///Date: 5/14/24
-///Description: 
+///Description:
 ///Bugs: None Known
 class PersonalInfoModel extends ChangeNotifier {
   bool loaded = false;
@@ -111,8 +112,28 @@ class PersonalInfoModel extends ChangeNotifier {
   void addForms() {
     for (var key in variables.keys) {
       if (!notEnumTypes.contains(variables[key]!['unit'])) {
+      } else if (variables[key]!['unit'] == 'int') {
+        var numField = TextFormField(
+          keyboardType: TextInputType.number,
+          controller: TextEditingController(text: variables[key]!['value']),
+          minLines: 1,
+          maxLines: 10,
+          maxLength: 1000,
+        );
+        variables[key]!['input'] = numField;
+      } else if (variables[key]!['unit'] == 'date') {
+        var dateTimeField = DateTimeFormField(
+          mode: DateTimeFieldPickerMode.date,
+          initialValue: variables[key]!['value'] != null
+              ? DateTime.parse(variables[key]!['value'])
+              : null,
+          onChanged: (DateTime? value) {
+            saveSelectedToDb(variables[key]!['key'], value?.toIso8601String());
+          },
+        );
+        variables[key]!['input'] = dateTimeField;
       } else {
-        var textField = createTextFormField();
+        var textField = createTextFormField(variables[key]!['value']);
         variables[key]!['input'] = textField;
       }
     }
@@ -139,20 +160,22 @@ class PersonalInfoModel extends ChangeNotifier {
     return title;
   }
 
-  TextFormField createTextFormField() {
+  TextFormField createTextFormField(String? initialValue) {
     return TextFormField(
-      controller: TextEditingController(),
+      controller: TextEditingController(text: initialValue),
+      minLines: 1,
+      maxLines: 10,
+      maxLength: 1000,
     );
   }
 
-  Future<dynamic> saveSelectedToDb(
-      String variableCategory, String? value) async {
+  Future<dynamic> saveSelectedToDb(String variable, String? value) async {
     try {
       print(
-          "update user ${supabaseModel.supabase!.auth.currentUser!.id} type $variableCategory to $value");
+          "update user ${supabaseModel.supabase!.auth.currentUser!.id} type $variable to $value");
       await supabaseModel.supabase!
           .from('user_info')
-          .update({variableCategory: value}).match(
+          .update({variable: value}).match(
               {'user_id': supabaseModel.supabase!.auth.currentUser!.id});
 
       notifyListeners();
