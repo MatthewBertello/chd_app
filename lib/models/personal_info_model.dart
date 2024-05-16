@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:heart_safe/main.dart';
 
-///Author: Pachia lee, Grace Kiesau, Matthew Bertello
+///Author: Pachia Lee, Grace Kiesau, Matthew Bertello
 ///Date: 5/14/24
 ///Description: 
 ///Bugs: None Known

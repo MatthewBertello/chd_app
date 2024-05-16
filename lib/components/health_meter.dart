@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 ///Description: health meter is used to give the user an interactive visual of their health (physical, mental and social)
 ///the health meter is circled by the circular_meter
 ///Bugs: None Known
-///reflection:
+///reflection: this was pretty straightforward
 
 
 class HealthMeter extends StatelessWidget {
