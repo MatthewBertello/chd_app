@@ -115,7 +115,7 @@ class PersonalInfoModel extends ChangeNotifier {
       } else if (variables[key]!['unit'] == 'int') {
         var numField = TextFormField(
           keyboardType: TextInputType.number,
-          controller: TextEditingController(text: variables[key]!['value']),
+          controller: TextEditingController(text: variables[key]!['value']?.toString()),
           minLines: 1,
           maxLines: 10,
           maxLength: 1000,
