@@ -93,12 +93,12 @@ class Overview extends StatelessWidget {
           // Display each recommendation and corresponding icon
           title: Text(Provider.of<MeterModel>(context).outOfRangeVars[index]['name']),
           onTap: () => Navigator.push(context, 
-                        MaterialPageRoute(builder: (context) =>
-                       RecommendationPage(name: Provider.of<MeterModel>(context).outOfRangeVars[index]['name'],
-                       recommendation: Provider.of<MeterModel>(context).outOfRangeVars[index]['description'],
-                        ),
-                        ),
-                        )
+                  MaterialPageRoute(builder: (context) =>
+                  RecommendationPage(name: Provider.of<MeterModel>(context).outOfRangeVars[index]['name'],
+                  recommendation: Provider.of<MeterModel>(context).outOfRangeVars[index]['description'],
+               ),
+             ),
+           )
         );
       },
     );
