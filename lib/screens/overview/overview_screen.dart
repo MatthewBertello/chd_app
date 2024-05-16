@@ -35,45 +35,47 @@ class Overview extends StatelessWidget {
 
     return Scaffold(
       appBar: DefaultAppBar(context: context, title: const Text("Overview")),
-      body: Padding(
-        padding: EdgeInsets.all(outerPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            GestureDetector(  // For the pregnancy countdown
-              behavior: HitTestBehavior.opaque,
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PregnancyProgress())),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                SizedBox(
-                  width: screenWidth / 2 - outerPadding,
-                  height: screenWidth / 2 - outerPadding,
-                  child: PregnancyCountdown(
-                    currentDays: Provider.of<PregnancyModel>(context).currentPregnantDays,
-                    totalDays: Provider.of<PregnancyModel>(context).totalPregnantDays,
-                    margin: EdgeInsets.all(innerMargin),
-                  ),
-                ),
-                GestureDetector( // For the health meter
-                  onTap: () => DefaultTabController.of(context).animateTo(1),
-                  child: SizedBox(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(outerPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              GestureDetector(  // For the pregnancy countdown
+                behavior: HitTestBehavior.opaque,
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PregnancyProgress())),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  SizedBox(
                     width: screenWidth / 2 - outerPadding,
                     height: screenWidth / 2 - outerPadding,
-                    child: HealthMeter(
-                      value: Provider.of<MeterModel>(context).getTotalStatusPercentage() * 100,
+                    child: PregnancyCountdown(
+                      currentDays: Provider.of<PregnancyModel>(context).currentPregnantDays,
+                      totalDays: Provider.of<PregnancyModel>(context).totalPregnantDays,
                       margin: EdgeInsets.all(innerMargin),
                     ),
-                    
                   ),
-                )
-              ]),
-            ),
-            Expanded( // Displays all the recommendations
-              child: Tile(
-                margin: EdgeInsets.all(innerMargin),
-                child: displayRecommendations(context),
+                  GestureDetector( // For the health meter
+                    onTap: () => DefaultTabController.of(context).animateTo(1),
+                    child: SizedBox(
+                      width: screenWidth / 2 - outerPadding,
+                      height: screenWidth / 2 - outerPadding,
+                      child: HealthMeter(
+                        value: Provider.of<MeterModel>(context).getTotalStatusPercentage() * 100,
+                        margin: EdgeInsets.all(innerMargin),
+                      ),
+                      
+                    ),
+                  )
+                ]),
               ),
-            )
-          ],
+               // Displays all the recommendations
+              Tile(
+                  margin: EdgeInsets.all(innerMargin),
+                  child: displayRecommendations(context),
+                ),
+              
+            ],
+          ),
         ),
       ),
     );
@@ -81,9 +83,9 @@ class Overview extends StatelessWidget {
 
 ///Displays recommendations for users based on average values of the rolling data entered (triggered if they are too low)
   Widget displayRecommendations(BuildContext context) {
-    // List of recommendations, hardcoded for now, will need to get it from database later
-  
     return ListView.separated( 
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       separatorBuilder: (context, index) => const Divider(),
       itemCount:Provider.of<MeterModel>(context).outOfRangeVars.length,
       itemBuilder: (context, index) {
