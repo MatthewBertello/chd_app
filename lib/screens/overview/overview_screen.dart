@@ -89,18 +89,6 @@ class Overview extends StatelessWidget {
         'icon': const Icon(Icons.night_shelter, color: Colors.red),
         'goal': 'Try to get 8-10 hours of sleep per night',
         'educational info': 'Sleep is essential for all sorts of vital bodily functions, restoring energy and allowing the brain to process new information it has taken in while awake.'
-      },
-      {
-        'recommendation': 'Increase water intake',
-        'icon': const Icon(Icons.water_drop, color: Colors.red),
-        'goal': 'During pregnancy you should drink 8 to 12 cups (64 to 96 ounces) of water every day.',
-        'educational info': 'Water has many benefits. It aids digestion and helps form the amniotic fluid around the fetus. Water also helps nutrients circulate in the body and helps waste leave the body.'
-      },
-      {
-        'recommendation': 'Call PMD or OB for swelling in legs',
-        'icon': const Icon(Icons.call, color: Colors.red),
-        'goal': null,
-        'educational info': 'For additional information, kindly refer to your provider.'
       }
     ];
 
