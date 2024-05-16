@@ -16,6 +16,7 @@ class MeterModel extends ChangeNotifier {
   List<dynamic> variableEntriesFiltered = [];
   List<DateTime> dates = [];
   Map<String, Map<Status, int>> statusCount = {};
+  List<dynamic> outOfRangeVars = [];
 
   // Reset the model
   // This should be called when the user logs out
@@ -71,6 +72,7 @@ class MeterModel extends ChangeNotifier {
     variableEntriesFiltered = [];
     statusCount = {};
     processFilteredVariableEntries();
+    setOutOfRangeVariables();
 
     loaded = true;
     loading = false;
@@ -189,5 +191,16 @@ class MeterModel extends ChangeNotifier {
     var percentage = (total - failed) / total;
     print("Percentage: $percentage");
     return percentage;
+  }
+
+  void setOutOfRangeVariables() {
+    for(var variable in variableEntriesFiltered) {
+      if(variable['status'] == Status.low || variable['status'] == Status.high) {
+        var varInfo = {"name": variable['name'], "description": variable['description']};
+        outOfRangeVars.add(varInfo);
+      }
+    }
+
+    print(outOfRangeVars);
   }
 }

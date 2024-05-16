@@ -31,7 +31,6 @@ class Overview extends StatelessWidget {
       Provider.of<MeterModel>(context, listen: false).init();
     }
     
-    Provider.of<PregnancyModel>(context, listen: false).setDueDate(); // Find the user's due date and set it
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
