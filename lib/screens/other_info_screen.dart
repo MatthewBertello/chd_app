@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 ///Author: Matthew Bertello, Pachia Lee
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: 
 ///Bugs: None Known
 class OtherInfo extends StatelessWidget {
   const OtherInfo({super.key});

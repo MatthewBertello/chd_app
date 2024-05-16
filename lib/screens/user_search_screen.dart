@@ -6,7 +6,7 @@ import 'package:heart_safe/components/default_app_bar.dart';
 
 ///Author: 
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: not implimented
 ///Bugs: None Known
 class ShareScreen extends StatefulWidget {
   const ShareScreen({super.key});

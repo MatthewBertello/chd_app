@@ -7,10 +7,11 @@ import 'package:heart_safe/screens/info_entry_screen/info_entry_screen.dart';
 import 'package:heart_safe/screens/burger_menu.dart';
 ///Author: 
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
-///Bugs: None Known
-///this is the navigation bar used across the app. Allows for easy navigation between pages we anticipate the 
+///Description: this is the navigation bar used across the app. Allows for easy navigation between pages we anticipate the 
 ///user will use most often
+///Bugs: None Known
+///reflection: this was pretty straightforward
+
 class TabView extends StatelessWidget {
   final List<Tab> tabs = [
     const Tab(icon: Icon(Icons.dashboard)), ///displays the users health, pregnancy progress, and recomendations

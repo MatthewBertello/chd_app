@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 ///Author: Matthew Bertello, Grace Kiesau, Pachia Lee
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: allows user to change passowrd and change the theme
 ///Bugs: None Known
+///reflection: pretty straightforward
 class Settings extends StatelessWidget {
   const Settings({super.key});
 

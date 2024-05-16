@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:heart_safe/components/tile.dart';
 ///Author: Pachia lee
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: changes the color of the circle meter depending on how close you are to the due date
+///the circle is more green depending on how closer you are to your due date
 ///Bugs: None Known
+///reflection:
 
 
 class PregnancyCountdown extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 ///Author: Pachia lee, Grace Kiesau
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: methods to give the calender view functionality
 ///Bugs: None Known
 
 // Pregnancy model that helps with the pregnancy planner and the pregnancy countdown

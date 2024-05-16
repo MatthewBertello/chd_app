@@ -3,8 +3,10 @@ import 'package:heart_safe/components/tile.dart';
 import 'package:flutter/material.dart';
 ///Author: Pachia lee, Matthew Bertello, Grace Kiesau
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: health meter is used to give the user an interactive visual of their health (physical, mental and social)
+///the health meter is circled by the circular_meter
 ///Bugs: None Known
+///reflection:
 
 
 class HealthMeter extends StatelessWidget {
@@ -16,8 +18,7 @@ class HealthMeter extends StatelessWidget {
     required this.value,
     this.margin,
   });
-///health meter is used to give the user an interactive visual of their health (physical, mental and social)
-///the health meter is circled by the circular_meter
+
   @override
   Widget build(BuildContext context) {
     return Tile(

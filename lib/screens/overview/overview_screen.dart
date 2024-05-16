@@ -11,7 +11,7 @@ import 'package:heart_safe/models/pregnancy_model.dart';
 import 'package:provider/provider.dart';
 ///Author: Matthew Bertello, Pachia Lee, Grace Kiesau
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: diaplays health status, pregnancy countdown and some recomendations
 ///Bugs: None Known
 
 // Builds the Overview screen

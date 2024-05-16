@@ -7,6 +7,7 @@ enum Status { low, high, target, na }
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
 ///Bugs: None Known
+///reflection: overall this was pretty straightforward
 class MeterModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;

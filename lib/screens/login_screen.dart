@@ -11,8 +11,9 @@ import 'package:heart_safe/main.dart';
 
 ///Author: Pachia Lee, Grace Kiesau 
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: allows user to login, create a new account, and authenticates user
 ///Bugs: None Known
+///reflection: pretty straightforward
 class Login extends StatefulWidget {
   const Login({super.key});
 
