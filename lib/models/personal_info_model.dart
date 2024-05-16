@@ -112,9 +112,15 @@ class PersonalInfoModel extends ChangeNotifier {
   void addForms() {
     for (var key in variables.keys) {
       if (!notEnumTypes.contains(variables[key]!['unit'])) {
-      } else if (variables[key]!['unit'] == 'text') {
-        var textField = createTextFormField(variables[key]!['value']);
-        variables[key]!['input'] = textField;
+      } else if (variables[key]!['unit'] == 'int') {
+        var numField = TextFormField(
+          keyboardType: TextInputType.number,
+          controller: TextEditingController(text: variables[key]!['value']),
+          minLines: 1,
+          maxLines: 10,
+          maxLength: 1000,
+        );
+        variables[key]!['input'] = numField;
       } else if (variables[key]!['unit'] == 'date') {
         var dateTimeField = DateTimeFormField(
           mode: DateTimeFieldPickerMode.date,
@@ -126,6 +132,9 @@ class PersonalInfoModel extends ChangeNotifier {
           },
         );
         variables[key]!['input'] = dateTimeField;
+      } else {
+        var textField = createTextFormField(variables[key]!['value']);
+        variables[key]!['input'] = textField;
       }
     }
   }
