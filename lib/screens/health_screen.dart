@@ -3,6 +3,7 @@ import 'package:heart_safe/components/health_meter.dart';
 import 'package:heart_safe/components/pregnancy_countdown.dart';
 import 'package:heart_safe/components/tile.dart';
 import 'package:heart_safe/models/main_model.dart';
+import 'package:heart_safe/models/pregnancy_model.dart';
 import 'package:heart_safe/models/variable_entries_model.dart';
 import 'package:heart_safe/screens/entry_screen.dart';
 import 'package:heart_safe/screens/more_entries_screen.dart';
@@ -34,6 +35,12 @@ class HealthWidget extends StatelessWidget {
             false) {
       Provider.of<MeterModel>(context, listen: false).init();
     }
+    if (Provider.of<PregnancyModel>(context, listen: false).loaded ==
+            false &&
+        Provider.of<PregnancyModel>(context, listen: false).loading ==
+            false) {
+      Provider.of<PregnancyModel>(context, listen: false).init();
+    }
 
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -52,8 +59,8 @@ class HealthWidget extends StatelessWidget {
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
                   child: PregnancyCountdown(
-                    currentDays: 131,
-                    totalDays: 270,
+                    currentDays: Provider.of<PregnancyModel>(context).currentPregnantDays,
+                    totalDays: Provider.of<PregnancyModel>(context).totalPregnantDays,
                     margin: EdgeInsets.all(innerMargin),
                   ),
                 ),
