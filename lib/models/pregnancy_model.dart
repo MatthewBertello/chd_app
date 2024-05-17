@@ -150,6 +150,19 @@ class PregnancyModel extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteEvent(int eventID) async {
+    try {
+      await supabaseModel.supabase!
+      .from('user_events')
+      .delete()
+      .eq('event_id', eventID);
+
+    getToDos(); // Call get to dos to update the todo list
+    } catch(e) {
+      print(e);
+    }
+  }
+
   // Adds an event to the calender in the db
   Future<void> addEvent(String event, String location, DateTime? date) async {
     String supabaseDate = date!.toIso8601String(); // get the supabase date format

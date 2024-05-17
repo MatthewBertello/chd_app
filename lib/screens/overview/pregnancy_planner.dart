@@ -422,6 +422,12 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
     });
   }
 
+  Future<void> deleteEvent(int eventID, DateTime currentDate) async {
+    await Provider.of<PregnancyModel>(context, listen: false).deleteEvent(eventID);
+    Navigator.of(context).pop();
+    await _onDaySelected(currentDate);
+  }
+
   // Updates an event to the database according to the text fields
   Future<void> updateEvent(int eventID) async {
     // Update the event
@@ -451,7 +457,10 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
   Widget showEvents() {
     events = Provider.of<PregnancyModel>(context).events; // Get the events from the model
 
-    return ListView.builder(
+    if(events.isEmpty) {
+      return const Text('No events');
+    } else {
+      return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: events.length,
@@ -486,9 +495,20 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
             // Event time
             trailing: (events[index]['event_time'] == null)
                 ? null
-                : Text(formatStringTime(events[index]['event_time'])),
+                : SizedBox(
+                  height: 40,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(formatStringTime(events[index]['event_time']), style: TextStyle()),
+                      Center(child: IconButton(onPressed: () async => await deleteEvent(events[index]['event_id'], DateTime.parse(events[index]['event_date'])), icon: const Icon(Icons.delete)))
+                  ]),
+                ),
           );
         });
+    }
   }
 
   // Formats a military time to a normal time
