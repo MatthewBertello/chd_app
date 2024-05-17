@@ -116,7 +116,7 @@ class Overview extends StatelessWidget {
                 title: Text(Provider.of<MeterModel>(context)
                     .outOfRangeVars[index]['name']),
                 subtitle: Text(
-                    '${(Provider.of<MeterModel>(context).outOfRangeVars[index]['description']) ?? "".split('.')[0]}...'),
+                    '${((Provider.of<MeterModel>(context).outOfRangeVars[index]['description']) ?? "").substring(0, 70)}...'),
                 onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
