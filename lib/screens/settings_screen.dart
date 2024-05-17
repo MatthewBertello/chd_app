@@ -20,10 +20,11 @@ class Settings extends StatelessWidget {
   TextEditingController usernameController = TextEditingController();
 
   void switchTheme(context) {
-    bool isDark = 
-            Provider.of<ThemeManager>(context, listen: false).themeMode ==
-                ThemeMode.dark;///if the current theme of the app is light mode, switch to darkMode (and vice versa)
-        Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
+    bool isDark = Provider.of<ThemeManager>(context, listen: false).themeMode ==
+        ThemeMode.dark;
+
+    ///if the current theme of the app is light mode, switch to darkMode (and vice versa)
+    Provider.of<ThemeManager>(context, listen: false).toggleTheme(!isDark);
   }
 
   void demoTheme(context) {
@@ -35,8 +36,9 @@ class Settings extends StatelessWidget {
   }
 
   void updateUsername(String username, context) {
-    Provider.of<PersonalInfoModel>(context, listen: false).updateUsername(username);
-    usernameController.clear();      
+    Provider.of<PersonalInfoModel>(context, listen: false)
+        .updateUsername(username);
+    usernameController.clear();
   }
 
   @override
@@ -47,19 +49,26 @@ class Settings extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(40.0),
             child: Column(
-
               children: [
-                TextButton(onPressed: () => switchTheme(context),child: const Text('Switch Theme')),
-                TextButton(onPressed: () => demoTheme(context),child: const Text('Demo Theme')),
+                SizedBox(
+                  width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: () => switchTheme(context),
+                        child: const Text('Switch Theme'))),
+                // TextButton(onPressed: () => demoTheme(context),child: const Text('Demo Theme')),
                 const SizedBox(height: 30),
 
                 TextFormField(
-                  decoration: const InputDecoration(hintText: 'Enter your username'),
+                  decoration:
+                      const InputDecoration(hintText: 'Enter your username'),
                   controller: usernameController,
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(onPressed: () => updateUsername(usernameController.text, context), child: const Text('Update Username'))),
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                        onPressed: () =>
+                            updateUsername(usernameController.text, context),
+                        child: const Text('Update Username'))),
 
                 const SizedBox(height: 30),
                 SupaResetPassword(

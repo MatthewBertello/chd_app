@@ -128,7 +128,7 @@ class PregnancyModel extends ChangeNotifier {
 
   // Method that counts the number of pregnant days
   void countCurrentPregnantDays() {
-    currentPregnantDays = dueDateCountDown() - totalPregnantDays.abs();
+    currentPregnantDays = totalPregnantDays.abs() - dueDateCountDown();
   }
 
   // Method that counts the total number of days in the 9 months of pregnancy
@@ -145,6 +145,7 @@ class PregnancyModel extends ChangeNotifier {
 
       // Put together the last time the pregnant person had their period
       totalPregnantDays = dueDate!.difference(lastMenstrualPeriod).inDays; // Subtract the due date from the last menstrual period
+      totalPregnantDays = 270;
     } catch(e) {
       print(e);
     }
