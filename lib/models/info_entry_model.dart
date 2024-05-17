@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 ///Author: Matthew Bertello
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: allows rolling data to be entered into the db
 ///Bugs: None Known
+///reflection: straightforward
 class InfoEntryModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;

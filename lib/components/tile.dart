@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 ///Author:
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: gives components on the screen the look of a tile
 ///Bugs: None Known
 class Tile extends StatelessWidget {
   final Widget child;

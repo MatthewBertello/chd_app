@@ -4,9 +4,9 @@ import 'package:heart_safe/screens/variable_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-///Author: 
+///Author: Pachia Lee, Grace Kiesau, Matthew Bertello 
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: gets variable entries from the db
 ///Bugs: None Known
 class EntryScreen extends StatelessWidget {
   final DateTime startDate;

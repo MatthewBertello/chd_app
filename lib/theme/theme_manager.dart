@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 ///Author: 
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: allows theme to change depending on user action
 ///Bugs: None Known
 class ThemeManager with ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;

@@ -6,8 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 ///Author: 
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: displays averages of entered data by category
 ///Bugs: None Known
+///Reflection: pretty straightforward
 
 class VariableScreen extends StatelessWidget {
   final int variableId;

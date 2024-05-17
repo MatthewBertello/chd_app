@@ -9,8 +9,9 @@ import 'package:table_calendar/table_calendar.dart';
 
 ///Author: Matthew Bertello, Pachia Lee
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: lets user set events on a calender and make a custom to do list
 ///Bugs: None Known
+///reflection: straightforward
 
 // Builds the pregnancy planner
 class PregnancyProgress extends StatefulWidget {

@@ -5,9 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:convert';
 ///Author: Matthew Bertello
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: interfaces with db
 ///Bugs: None Known
-///reflection:
+///reflection: pretty straightforward
 class SupabaseModel {
   bool isLoading = false;
   SupabaseClient? supabase;

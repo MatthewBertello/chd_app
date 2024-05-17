@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 ///Date: 5/14/24
 ///Description: methods to give the calender view functionality
 ///Bugs: None Known
+///reflection: straightforward
 
 // Pregnancy model that helps with the pregnancy planner and the pregnancy countdown
 class PregnancyModel extends ChangeNotifier {
