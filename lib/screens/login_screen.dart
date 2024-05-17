@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:heart_safe/components/tab_view.dart';
 import 'package:heart_safe/models/info_entry_model.dart';
+import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:heart_safe/models/variable_entries_model.dart';
 import 'package:heart_safe/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,12 @@ class _LoginState extends State<Login> {
                 false) {
           Provider.of<VariableEntriesModel>(context, listen: false).init();
         }
+        if (Provider.of<PersonalInfoModel>(context, listen: false).loaded ==
+                false &&
+            Provider.of<PersonalInfoModel>(context, listen: false).loading ==
+                false) {
+          Provider.of<PersonalInfoModel>(context, listen: false).init();
+        }
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -72,6 +79,12 @@ class _LoginState extends State<Login> {
             Provider.of<VariableEntriesModel>(context, listen: false).loading ==
                 false) {
           Provider.of<VariableEntriesModel>(context, listen: false).init();
+        }
+        if (Provider.of<PersonalInfoModel>(context, listen: false).loaded ==
+                false &&
+            Provider.of<PersonalInfoModel>(context, listen: false).loading ==
+                false) {
+          Provider.of<PersonalInfoModel>(context, listen: false).init();
         }
         Navigator.pushReplacement(
           context,
@@ -110,32 +123,34 @@ class _LoginState extends State<Login> {
         Padding(
           padding: const EdgeInsets.all(45.0),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                    // Logo Image
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Image.asset('assets/logo.png')),
-                SupaEmailAuth(
-                  redirectTo: 'io.supabase.chd://login-callback/',
-                  onSignInComplete: (response) {},
-                  onSignUpComplete: (response) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Login(),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Sign up successful!'),
-                      ),
-                    );
-                  },
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      // Logo Image
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Image.asset('assets/logo.png')),
+                  SupaEmailAuth(
+                    redirectTo: 'io.supabase.chd://login-callback/',
+                    onSignInComplete: (response) {},
+                    onSignUpComplete: (response) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Login(),
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Sign up successful!'),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

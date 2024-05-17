@@ -31,7 +31,6 @@ class MoreEntriesScreen extends StatelessWidget {
   Widget buildPreviousEntries(BuildContext context) {
     List entries = Provider.of<VariableEntriesModel>(context).dates;
 
-    print(entries);
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

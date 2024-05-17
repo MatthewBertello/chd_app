@@ -206,8 +206,6 @@ class PregnancyModel extends ChangeNotifier {
       .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id)
       .eq('event_date', day.toIso8601String());
     
-    print(day.toIso8601String());
-    print(response);
     events = response;
     notifyListeners();
   }

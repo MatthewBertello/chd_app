@@ -115,9 +115,9 @@ class QuestionRepliesState extends State<QuestionReplies> {
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: (widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getAuthor() == 'NULL')
       ?
-      const Text("Anonymous", style: TextStyle(color: Colors.red),)
+      Text("Anonymous ● ${widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].date.toString().substring(0,10)}")
       :
-      Text(widget.questionForumModel.questionsList[questionIndex].getAuthor()), // prints the author just hardcoded for now
+      Text("${widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getAuthor()} ● ${widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].date.toString().substring(0,10)}"), // prints the author just hardcoded for now
       tileColor: Theme.of(context).colorScheme.primaryContainer,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       trailing: Row(
@@ -138,9 +138,9 @@ class QuestionRepliesState extends State<QuestionReplies> {
       title: Text(widget.questionForumModel.questionsList[widget.questionIndex].replies[replyIndex].getReply()),
       subtitle: (widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getAuthor() == 'NULL')
       ?
-      const Text("Anonymous", style: TextStyle(color: Colors.red),)
+      Text("Anonymous ● ${widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].date.toString().substring(0,10)}")
       :
-      Text(widget.questionForumModel.questionsList[questionIndex].getAuthor()), // prints the author just hardcoded for now
+      Text("${widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].getAuthor()} ● ${widget.questionForumModel.questionsList[questionIndex].replies[replyIndex].date.toString().substring(0,10)}"), // prints the author just hardcoded for now
       tileColor: Theme.of(context).colorScheme.primaryContainer,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       trailing: likeButton(questionIndex, replyIndex)

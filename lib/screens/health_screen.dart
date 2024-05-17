@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:heart_safe/models/meter_model.dart';
+
 ///Author: Pachia Lee, Grace Kiesau, Matthew Bertello
 ///Date: 5/14/24
 ///Description: displays health scores and pregnancy counter
@@ -29,16 +30,12 @@ class HealthWidget extends StatelessWidget {
             false) {
       Provider.of<VariableEntriesModel>(context, listen: false).init();
     }
-    if (Provider.of<MeterModel>(context, listen: false).loaded ==
-            false &&
-        Provider.of<MeterModel>(context, listen: false).loading ==
-            false) {
+    if (Provider.of<MeterModel>(context, listen: false).loaded == false &&
+        Provider.of<MeterModel>(context, listen: false).loading == false) {
       Provider.of<MeterModel>(context, listen: false).init();
     }
-    if (Provider.of<PregnancyModel>(context, listen: false).loaded ==
-            false &&
-        Provider.of<PregnancyModel>(context, listen: false).loading ==
-            false) {
+    if (Provider.of<PregnancyModel>(context, listen: false).loaded == false &&
+        Provider.of<PregnancyModel>(context, listen: false).loading == false) {
       Provider.of<PregnancyModel>(context, listen: false).init();
     }
 
@@ -59,8 +56,10 @@ class HealthWidget extends StatelessWidget {
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
                   child: PregnancyCountdown(
-                    currentDays: Provider.of<PregnancyModel>(context).currentPregnantDays,
-                    totalDays: Provider.of<PregnancyModel>(context).totalPregnantDays,
+                    currentDays: Provider.of<PregnancyModel>(context)
+                        .currentPregnantDays,
+                    totalDays:
+                        Provider.of<PregnancyModel>(context).totalPregnantDays,
                     margin: EdgeInsets.all(innerMargin),
                   ),
                 ),
@@ -68,7 +67,9 @@ class HealthWidget extends StatelessWidget {
                   width: screenWidth / 2 - outerPadding,
                   height: screenWidth / 2 - outerPadding,
                   child: HealthMeter(
-                    value:Provider.of<MeterModel>(context).getTotalStatusPercentage() * 100,
+                    value: Provider.of<MeterModel>(context)
+                            .getTotalStatusPercentage() *
+                        100,
                     margin: EdgeInsets.all(innerMargin),
                   ),
                 )
@@ -93,11 +94,18 @@ class HealthWidget extends StatelessWidget {
   // Returns a widget that displays the category summaries
   Widget buildCategorySummary(BuildContext context) {
     // A list of categories, hardcoded for now, will need to get it from database later
-    List categories = [
-      {'category': 'Mental', 'progress': 80},
-      {'category': 'Physical', 'progress': 60},
-      {'category': 'Social', 'progress': 40}
-    ];
+    List categories = [];
+
+    for (var key in Provider.of<MeterModel>(context).statusCount.keys) {
+      categories.add(
+        {
+          'category': key,
+          'progress': Provider.of<MeterModel>(context)
+                  .getCategoryStatusPercentage(category: key) *
+              100
+        },
+      );
+    }
     return Column(
       children: [
         const Text("Category Summary"),
@@ -198,7 +206,7 @@ class HealthWidget extends StatelessWidget {
     );
   }
 
-  Color getProgressColor(int progress) {
+  Color getProgressColor(double progress) {
     if (progress >= 80) {
       return Colors.green;
     } else if (progress >= 60) {

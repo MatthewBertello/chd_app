@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:heart_safe/components/tile.dart';

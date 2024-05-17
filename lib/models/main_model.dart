@@ -27,7 +27,6 @@ class MainModel extends ChangeNotifier {
     // Add the member into the membersSearched list if the userID is similar to each member in the response
     for (var currentMember in response) {
       if (currentMember['id'].contains(userID)) {
-        print(currentMember['id']);
         membersSearched.add(currentMember['id']);
       }
     }
