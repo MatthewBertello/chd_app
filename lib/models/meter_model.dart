@@ -27,6 +27,9 @@ class MeterModel extends ChangeNotifier {
     outOfRangeVars = [];
     variableDefinitions = [];
     variableEntries = [];
+    variableEntriesFiltered = [];
+    statusCount = {};
+    outOfRangeVars = [];
     dates = [];
     loaded = false;
   }
@@ -38,6 +41,14 @@ class MeterModel extends ChangeNotifier {
       continue;
     }
     loading = true;
+
+    outOfRangeVars = [];
+    variableDefinitions = [];
+    variableEntries = [];
+    variableEntriesFiltered = [];
+    statusCount = {};
+    outOfRangeVars = [];
+    dates = [];
 
     // Get the variable definitions and entries
     await getVariableDefinitions();
@@ -180,6 +191,22 @@ class MeterModel extends ChangeNotifier {
         } else if (status == Status.target) {
           total += statusCount[category]![status]!;
         }
+      }
+    }
+    total = total == 0 ? 1 : total;
+    var percentage = (total - failed) / total;
+    return percentage;
+  }
+
+  double getCategoryStatusPercentage({required String category}) {
+    double total = 0;
+    double failed = 0;
+    for (var status in statusCount[category]!.keys) {
+      if (status == Status.low || status == Status.high) {
+        failed += statusCount[category]![status]!;
+        total += statusCount[category]![status]!;
+      } else if (status == Status.target) {
+        total += statusCount[category]![status]!;
       }
     }
     total = total == 0 ? 1 : total;
