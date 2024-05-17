@@ -30,6 +30,12 @@ class Overview extends StatelessWidget {
             false) {
       Provider.of<MeterModel>(context, listen: false).init();
     }
+    if (Provider.of<PregnancyModel>(context, listen: false).loaded ==
+            false &&
+        Provider.of<PregnancyModel>(context, listen: false).loading ==
+            false) {
+      Provider.of<PregnancyModel>(context, listen: false).init();
+    }
     
     final screenWidth = MediaQuery.of(context).size.width;
 
