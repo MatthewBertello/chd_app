@@ -5,6 +5,7 @@ import 'package:heart_safe/main.dart';
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
 ///Bugs: None Known
+///reflection: not in use
 class MainModel extends ChangeNotifier {
   String test = "hello";
   List membersSearched = [];

@@ -2,8 +2,9 @@ import 'package:heart_safe/main.dart';
 import 'package:flutter/material.dart';
 ///Author:Matthew Bertello, Pachia lee
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: gives functionality to rolling info entry
 ///Bugs: None Known
+///reflection: straightforward
 class VariableEntriesModel extends ChangeNotifier {
   bool loaded = false;
   bool loading = false;

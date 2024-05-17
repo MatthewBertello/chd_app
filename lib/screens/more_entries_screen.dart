@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'entry_screen.dart';
 ///Author: Pachia Lee, Matthew Bertello
 ///Date: 5/14/24
-///Description: 
+///Description: shows all entries
 ///Bugs: None Known
 class MoreEntriesScreen extends StatelessWidget {
   const MoreEntriesScreen({super.key});

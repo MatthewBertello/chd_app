@@ -5,10 +5,10 @@ import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:heart_safe/components/tile.dart';
 
 ///Author: Matthew Bertello
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: displays recomendations based on entered data
 ///Date: 5/14/24
 ///Bugs: None Known
-///reflection: 
+///reflection: straightforward
 class RecommendationPage extends StatelessWidget {
   final String? recommendation;
   final String? name;

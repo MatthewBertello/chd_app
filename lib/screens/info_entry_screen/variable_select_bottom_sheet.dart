@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:like_button/like_button.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-///Author: 
+///Author: Pachia lee, Grace Kiesau, Matthew Bertello
 ///Date: 5/14/24
-///Description: This is the file that allows the meter to change based on the rolling data entered
+///Description: allows user to select variables 
 ///Bugs: None Known
+///reflection: straightforward
 class VariableSelectBottomSheet extends StatefulWidget {
   const VariableSelectBottomSheet({super.key});
 

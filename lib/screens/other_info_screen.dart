@@ -1,7 +1,7 @@
 import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-///Author: Matthew Bertello, Pachia Lee
+///Author: Matthew Bertello, Pachia Lee, Grace Kiesau
 ///Date: 5/14/24
 ///Description: 
 ///Bugs: None Known
