@@ -26,7 +26,7 @@ class BurgerMenu extends StatelessWidget {
     {
 
       'Settings': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Settings())) ///on tapped, Re-routes to settings page
+          context, MaterialPageRoute(builder: (context) => Settings())) ///on tapped, Re-routes to settings page
     },
     {
       'Personal Information': (context) => Navigator.push(context, ///

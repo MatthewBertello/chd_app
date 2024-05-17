@@ -50,6 +50,16 @@ class PersonalInfoModel extends ChangeNotifier {
     userInfo = await supabaseModel.getUserInfo();
   }
 
+  Future<dynamic> updateUsername(String username) async {
+    final response = await supabaseModel.supabase!
+      .from('user_info')
+      .update({'user_name': username})
+      .eq('user_id', supabaseModel.supabase!.auth.currentUser!.id);
+
+    print(response);
+      notifyListeners();
+  }
+
   Future<dynamic> getPersonalInfoVariables() async {
     personalInfoVariables = await supabaseModel.getPersonalInfoVariables();
     for (var row in personalInfoVariables) {
