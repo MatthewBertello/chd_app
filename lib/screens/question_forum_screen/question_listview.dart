@@ -152,10 +152,9 @@ class _QuestionListViewState extends State<QuestionListView> {
       style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
       subtitle: (widget.questionForumModel.questionsList[questionIndex].getAuthor() == 'NULL')
       ?
-      const Text("Anonymous", style: TextStyle(color: Colors.red),)
+      Text("Anonymous ● ${widget.questionForumModel.questionsList[questionIndex].date.toString().substring(0,10)}")
       :
-      Text(widget.questionForumModel.questionsList[questionIndex].getAuthor())
-      ,//const Text("The Author"),
+      Text("${widget.questionForumModel.questionsList[questionIndex].getAuthor()} ● ${widget.questionForumModel.questionsList[questionIndex].date.toString().substring(0,10)}"),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children:[
@@ -183,9 +182,9 @@ class _QuestionListViewState extends State<QuestionListView> {
       style: const TextStyle(fontWeight: FontWeight.bold)), // prints question
       subtitle: (widget.questionForumModel.questionsList[questionIndex].getAuthor() == 'NULL')
       ?
-      const Text("Anonymous", style: TextStyle(color: Colors.red),)
+      Text("Anonymous ● ${widget.questionForumModel.questionsList[questionIndex].date.toString().substring(0,10)}")
       :
-      Text(widget.questionForumModel.questionsList[questionIndex].getAuthor()),//const Text("The Author"),
+      Text("${widget.questionForumModel.questionsList[questionIndex].getAuthor()} ● ${widget.questionForumModel.questionsList[questionIndex].date.toString().substring(0,10)}"),
       tileColor: Theme.of(context).colorScheme.primaryContainer,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       onTap: () {
