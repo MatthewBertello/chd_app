@@ -9,6 +9,8 @@ Reflection: This was fairly easy to implement, and it seems to work fine
 */
 
 // a class for replies to a question
+import 'package:heart_safe/main.dart';
+
 class Reply{
   String reply = ""; // the reply the user posted
   String replyID = "NULL"; // the uuid of the reply
@@ -60,11 +62,16 @@ class Reply{
     reply = editedReply;
   }
 
-  // retrieves the author of the reply
-  String getAuthor() {
-    return author;
-  }
+  // retrieve who wrote the question
+  Future<String> getAuthor() async {
+    var userInfo = await supabaseModel.supabase!
+        .from('user_info')
+        .select()
+        .eq('user_id', userWhoPosted);
 
+    var username = userInfo[0]['user_name'];
+    return username;
+  }
   // sets the author of the reply
   void setAuthor(String newAuthor){
     author = newAuthor;

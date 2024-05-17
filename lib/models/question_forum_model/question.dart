@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 // for the date, since I was unable to figure out what type the database returned for the datetime
 
+import 'package:heart_safe/main.dart';
+import 'package:heart_safe/models/supabase_model.dart';
+
 import 'reply.dart';
 
 /*
@@ -22,7 +25,8 @@ class Question {
   var date; // date it was posted
 
   // constructor for question
-  Question(String newQuestion, String newID, String newUser, var newDate /*String newAuthor*/){ 
+  Question(String newQuestion, String newID, String newUser,
+      var newDate /*String newAuthor*/) {
     question = newQuestion;
     questionID = newID;
     userWhoPosted = newUser;
@@ -31,62 +35,68 @@ class Question {
   }
 
   // adds a reply to the replies list
-  void addReply(Reply newReply) { 
+  void addReply(Reply newReply) {
     replies.add(newReply);
   }
 
   // edits a question, might need later
-  void editQuestion(newQuestion){ 
+  void editQuestion(newQuestion) {
     question = newQuestion;
   }
 
   // retrieves the question
-  String getQuestion() { 
+  String getQuestion() {
     return question;
   }
 
   // gets the whole list of replies
-  List<Reply> getReplies() { 
+  List<Reply> getReplies() {
     return replies;
   }
 
   // retrieve questionID
-  String getQuestionID() { 
+  String getQuestionID() {
     return questionID;
   }
 
   // set the questionID
-  void setQuestionID(String newID) { 
+  void setQuestionID(String newID) {
     questionID = newID;
   }
 
   // get the user's id
-  String getUserWhoPosted() { 
+  String getUserWhoPosted() {
     return userWhoPosted;
   }
 
   // set the user's id
-  void setUserWhoPosted(String newUser){ 
+  void setUserWhoPosted(String newUser) {
     userWhoPosted = newUser;
   }
 
   // clears the all the replies from a question in app
-  void clearReplies() { 
+  void clearReplies() {
     replies.clear();
   }
 
   // sets number of likes for each question
-  void setNumLikes(int newNumLikes){ 
+  void setNumLikes(int newNumLikes) {
     numLikes = newNumLikes;
   }
 
   // retrieve who wrote the question
-  String getAuthor() {
-    return author;
+  Future<String> getAuthor() async {
+    var userInfo = await supabaseModel.supabase!
+        .from('user_info')
+        .select()
+        .eq('user_id', userWhoPosted);
+
+    var username = userInfo[0]['user_name'];
+    return username;
   }
 
   // sets the author of the question
-  void setAuthor(String newAuthor){
+  void setAuthor(String newAuthor) {
     author = newAuthor;
   }
 
@@ -94,5 +104,4 @@ class Question {
   // DateTime getDate() {
   //   return date;
   // }
-
 } // end of Question class

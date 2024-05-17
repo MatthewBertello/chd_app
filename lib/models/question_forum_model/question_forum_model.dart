@@ -134,7 +134,7 @@ class QuestionForumModel extends ChangeNotifier {
         .from('forum_questions')
         .insert([{ 
           'question': newQuestion,
-          'user_id': supabaseModel.supabase!.auth.currentUser!.id, 
+          'user_id': supabaseModel.supabase!.auth.currentUser!.id,
           },
         ]);
         //loadQuestionList();
