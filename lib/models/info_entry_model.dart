@@ -1,5 +1,6 @@
 import 'package:heart_safe/main.dart';
 import 'package:flutter/material.dart';
+
 ///Author: Matthew Bertello
 ///Date: 5/14/24
 ///Description: This is the file that allows the meter to change based on the rolling data entered
@@ -46,7 +47,7 @@ class InfoEntryModel extends ChangeNotifier {
     for (var element in variableDefinitions) {
       element['favorite'] = favorites.contains(element['id']);
       element['checkbox'] = element['favorite'];
-      element['form'] = TextFormField( 
+      element['form'] = TextFormField(
         controller: TextEditingController(),
         keyboardType: TextInputType.number,
       );
@@ -81,7 +82,9 @@ class InfoEntryModel extends ChangeNotifier {
   /// Submits the variable entries to the database
   Future<dynamic> submit() async {
     for (var element in variableDefinitions) {
-      if (element['checkbox'] && element['form'].controller!.text.isNotEmpty) {
+      if (element['checkbox'] &&
+          element['form'].controller!.text.isNotEmpty &&
+          double.tryParse(element['form'].controller!.text) != null) {
         try {
           await supabaseModel.supabase!.from('variable_entries').insert([
             {
