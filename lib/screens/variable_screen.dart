@@ -76,7 +76,7 @@ class VariableScreen extends StatelessWidget {
                         isCurved: true,
                         dotData: const FlDotData(show: false),
                         belowBarData: BarAreaData(show: false),
-                        curveSmoothness: 0.01,
+                        curveSmoothness: 0.05,
                       )
                     ],
                     titlesData: FlTitlesData(

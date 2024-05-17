@@ -116,8 +116,13 @@ class Overview extends StatelessWidget {
                 // Display each recommendation and corresponding icon
                 title: Text(Provider.of<MeterModel>(context)
                     .outOfRangeVars[index]['name']),
-                subtitle: Text(
-                    '${((Provider.of<MeterModel>(context).outOfRangeVars[index]['description']) ?? "").substring(0, 70)}...'),
+                subtitle: Provider.of<MeterModel>(context).outOfRangeVars[index]
+                            ['description'] ==
+                        null
+                    ? null
+                    : Text(
+                        '${((Provider.of<MeterModel>(context).outOfRangeVars[index]['description']) ?? "").substring(0, Provider.of<MeterModel>(context).outOfRangeVars[index]['description'].length > 70 ? 70 : Provider.of<MeterModel>(context).outOfRangeVars[index]['description'].length - 1)}...',
+                      ),
                 onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
