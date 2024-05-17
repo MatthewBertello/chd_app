@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:heart_safe/main.dart';
 import 'package:heart_safe/theme/color_demo.dart';

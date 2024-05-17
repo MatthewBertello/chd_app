@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:heart_safe/main.dart';
 import 'package:flutter/material.dart';
 

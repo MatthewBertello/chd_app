@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:heart_safe/components/default_app_bar.dart';
 import 'package:heart_safe/models/info_entry_model.dart';
 import 'package:heart_safe/models/meter_model.dart';
