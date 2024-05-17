@@ -177,8 +177,6 @@ class PregnancyModel extends ChangeNotifier {
         .from('user_events')
         .update({'event': event, 'event_date': date, 'event_time': time, 'location': location})
         .eq('event_id', eventID);
-
-      notifyListeners();
         
     } catch(e) {
       print(e);
