@@ -24,6 +24,7 @@ class MeterModel extends ChangeNotifier {
     while (loading) {
       continue;
     }
+    outOfRangeVars = [];
     variableDefinitions = [];
     variableEntries = [];
     dates = [];
@@ -41,8 +42,6 @@ class MeterModel extends ChangeNotifier {
     // Get the variable definitions and entries
     await getVariableDefinitions();
     await getVariableEntries();
-
-    print(variableEntries);
 
     // Add name, unit, and description to each entry
     for (var entry in variableEntries) {
