@@ -57,7 +57,7 @@ class PregnancyModel extends ChangeNotifier {
 
     // If there is a due date present, calculate the pregnant days
     if(response['due_date'] != null) {
-      dueDate = response['due_date'];
+      dueDate = DateTime.parse(response['due_date']);
       countTotalPregnantDays();
       countCurrentPregnantDays();
       setlastMenstrualPeriod();
