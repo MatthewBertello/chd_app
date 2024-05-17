@@ -65,7 +65,6 @@ class PersonalInfoModel extends ChangeNotifier {
         .from('public_pg_type')
         .select('oid')
         .eq('typname', enumName);
-    print(enumName);
     var oid = oidQuery[0]['oid'];
 
     final valuesQuery = await supabaseModel.supabase!
@@ -90,7 +89,6 @@ class PersonalInfoModel extends ChangeNotifier {
         if (!notEnumTypes.contains(variables[key]!['unit'])) {
           variables[key]!['values'] =
               await getEnumValues(variables[key]!['unit']);
-          print(variables[key]!['values']);
           variables[key]!['values'].sort((a, b) {
             if (a['enumsortorder'].toInt() > b['enumsortorder'].toInt()) {
               return 1;
@@ -171,8 +169,6 @@ class PersonalInfoModel extends ChangeNotifier {
 
   Future<dynamic> saveSelectedToDb(String variable, String? value) async {
     try {
-      print(
-          "update user ${supabaseModel.supabase!.auth.currentUser!.id} type $variable to $value");
       await supabaseModel.supabase!
           .from('user_info')
           .update({variable: value}).match(

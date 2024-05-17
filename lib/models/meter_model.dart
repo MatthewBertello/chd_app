@@ -183,12 +183,7 @@ class MeterModel extends ChangeNotifier {
       }
     }
     total = total == 0 ? 1 : total;
-    print("Status Count -----------------------------------------------");
-    print(statusCount);
-    print("Total: $total");
-    print("Failed: $failed");
     var percentage = (total - failed) / total;
-    print("Percentage: $percentage");
     return percentage;
   }
 
@@ -199,7 +194,5 @@ class MeterModel extends ChangeNotifier {
         outOfRangeVars.add(varInfo);
       }
     }
-
-    print(outOfRangeVars);
   }
 }
