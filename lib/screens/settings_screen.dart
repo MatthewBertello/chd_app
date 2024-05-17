@@ -45,7 +45,7 @@ class Settings extends StatelessWidget {
                         onPressed: () => switchTheme(context),
                         child: const Text('Switch Theme'))),
                 // TextButton(onPressed: () => demoTheme(context),child: const Text('Demo Theme')),
-                Divider(),
+                const Divider(),
                 SupaResetPassword(
                   accessToken:
                       supabaseModel.supabase!.auth.currentSession?.accessToken,

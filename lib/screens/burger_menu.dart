@@ -3,7 +3,6 @@ import 'package:heart_safe/models/info_entry_model.dart';
 import 'package:heart_safe/models/meter_model.dart';
 import 'package:heart_safe/models/personal_info_model.dart';
 import 'package:heart_safe/models/question_forum_model/question_forum_model.dart';
-import 'package:heart_safe/models/supabase_model.dart';
 import 'package:heart_safe/models/variable_entries_model.dart';
 import 'package:heart_safe/screens/personal_info.dart';
 import 'package:heart_safe/screens/login_screen.dart';

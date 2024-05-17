@@ -502,7 +502,7 @@ class _PregnancyProgressState extends State<PregnancyProgress> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(formatStringTime(events[index]['event_time']), style: TextStyle()),
+                      Text(formatStringTime(events[index]['event_time']), style: const TextStyle()),
                       Center(child: IconButton(onPressed: () async => await deleteEvent(events[index]['event_id'], DateTime.parse(events[index]['event_date'])), icon: const Icon(Icons.delete)))
                   ]),
                 ),
