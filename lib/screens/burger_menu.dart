@@ -74,8 +74,6 @@ class BurgerMenu extends StatelessWidget {
                       .reset();
                   await Provider.of<PersonalInfoModel>(context, listen: false)
                       .reset();
-                  await Provider.of<SupabaseModel>(context, listen: false)
-                      .signOut();
                   Provider.of<QuestionForumModel>(context, listen: false)
                       .reset();
                   Navigator.of(context).pop();
