@@ -8,7 +8,6 @@ import 'package:heart_safe/utils/show_default_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_safe/screens/other_info_screen.dart';
 import 'package:heart_safe/screens/settings_screen.dart';
-import 'package:heart_safe/screens/user_search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:heart_safe/main.dart';
 import 'package:heart_safe/screens/community_page.dart';
@@ -43,11 +42,7 @@ class BurgerMenu extends StatelessWidget {
       }
     },
     {
-      'User Search': (context) => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const ShareScreen())) ///on tapped, Re-Routes to share screen
-    },
-    {
-      'Other Info': (context) => Navigator.push(
+      'Resources': (context) => Navigator.push(
           context, MaterialPageRoute(builder: (context) => const OtherInfo())) ///on tapped, Re-routes to 
     },
     {

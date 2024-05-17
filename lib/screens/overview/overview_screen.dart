@@ -95,25 +95,31 @@ class Overview extends StatelessWidget {
           height: MediaQuery.of(context).size.height/2,
           child: const Center(child: Text('No recommendations to display.')));
     } else {
-        return ListView.separated( 
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: Provider.of<MeterModel>(context).outOfRangeVars.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            // Display each recommendation and corresponding icon
-            title: Text(Provider.of<MeterModel>(context).outOfRangeVars[index]['name']),
-            onTap: () => Navigator.push(context, 
-                    MaterialPageRoute(builder: (context) =>
-                    RecommendationPage(name: Provider.of<MeterModel>(context).outOfRangeVars[index]['name'],
-                    recommendation: Provider.of<MeterModel>(context).outOfRangeVars[index]['description'],
+        return Column(
+          children: [
+          const Text("Targeted Suggestions", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            
+          ListView.separated( 
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: Provider.of<MeterModel>(context).outOfRangeVars.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              // Display each recommendation and corresponding icon
+              title: Text(Provider.of<MeterModel>(context).outOfRangeVars[index]['name']),
+              subtitle: Text('${Provider.of<MeterModel>(context).outOfRangeVars[index]['description'].split('.')[0]}...'),
+              onTap: () => Navigator.push(context, 
+                      MaterialPageRoute(builder: (context) =>
+                      RecommendationPage(name: Provider.of<MeterModel>(context).outOfRangeVars[index]['name'],
+                      recommendation: Provider.of<MeterModel>(context).outOfRangeVars[index]['description'],
+                  ),
                 ),
-              ),
-            ) 
-          );
-        },
-      );
+              ) 
+            );
+          },
+                ),
+        ]);
     }
   }
 }

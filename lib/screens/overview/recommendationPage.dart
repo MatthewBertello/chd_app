@@ -20,7 +20,7 @@ class RecommendationPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        (name != null) ? Text('$name\n') : const Text(''),
+        (name != null) ? Text('$name\n', style: const TextStyle(fontWeight: FontWeight.bold),) : const Text(''),
         (recommendation != null) ? Text('$recommendation'): const Text('')
       ],
     );

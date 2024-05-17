@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:heart_safe/models/meter_model.dart';
 ///Author: Pachia Lee, Grace Kiesau, Matthew Bertello
 ///Date: 5/14/24
-///Description: diaplays health scores and pregnancy counter
+///Description: displays health scores and pregnancy counter
 ///Bugs: None Known
 class HealthWidget extends StatelessWidget {
   const HealthWidget({super.key, required this.model});
@@ -145,7 +145,6 @@ class HealthWidget extends StatelessWidget {
   Widget buildPreviousEntries(BuildContext context) {
     List entries = Provider.of<VariableEntriesModel>(context).dates;
 
-    print(entries);
     return Column(
       children: [
         const Text("Previous Entries"),
