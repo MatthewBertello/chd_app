@@ -123,32 +123,34 @@ class _LoginState extends State<Login> {
         Padding(
           padding: const EdgeInsets.all(45.0),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                    // Logo Image
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Image.asset('assets/logo.png')),
-                SupaEmailAuth(
-                  redirectTo: 'io.supabase.chd://login-callback/',
-                  onSignInComplete: (response) {},
-                  onSignUpComplete: (response) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Login(),
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Sign up successful!'),
-                      ),
-                    );
-                  },
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      // Logo Image
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Image.asset('assets/logo.png')),
+                  SupaEmailAuth(
+                    redirectTo: 'io.supabase.chd://login-callback/',
+                    onSignInComplete: (response) {},
+                    onSignUpComplete: (response) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Login(),
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Sign up successful!'),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
